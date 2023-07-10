@@ -17,7 +17,7 @@ services:
       - POSTGRESQL_DATABASE=adoptgram_social
     volumes:
       - 'db-data:/bitnami/postgresql'
-  
+
   queue:
     image: bitnami/redis:7.0
     container_name: "adoptgram-social-redis-queue"
@@ -27,9 +27,7 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
 
   dev:
-    build:
-      context: .
-      dockerfile: "dev.Dockerfile"
+    build: .
     ports:
       - 3000:3000
     depends_on:
@@ -37,12 +35,3 @@ services:
       - queue
     volumes:
       - .:/usr/app
-
-  # prod:
-  #   build: "./.docker/prod"
-  #   environment:
-  #     NODE_ENV: production
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - database
