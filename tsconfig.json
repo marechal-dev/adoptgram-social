@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "es2021",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "types": [
+      "vitest/globals"
+    ],
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "@Configs/*": [
+        "./src/configs/*"
+      ],
+      "@Core/*": [
+        "./src/core/*"
+      ],
+      "@Domain/*": [
+        "./src/domain/*"
+      ],
+      "@Application/*": [
+        "./src/application/*"
+      ],
+      "@Infra/*": [
+        "./src/infra/*"
+      ],
+      "@Testing/*": [
+        "./test/*"
+      ]
+    },
+    "incremental": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": false,
+    "noImplicitAny": true,
+    "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": false
+  }
+}

@@ -1,0 +1,167 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Models
+model CommonUserProfile {
+  id        String @id @default(uuid())
+  firstName String @map("first_name")
+  surname   String
+  cpf       String @unique
+
+  user   Account @relation(fields: [userId], references: [id])
+  userId String  @unique
+
+  following Follow[]
+
+  @@map("common_users")
+}
+
+model Follow {
+  commonUser          CommonUserProfile @relation(fields: [commonUserProfileId], references: [id])
+  commonUserProfileId String
+
+  organization          OrganizationProfile @relation(fields: [organizationProfileId], references: [id])
+  organizationProfileId String
+
+  followedAt DateTime @default(now())
+
+  @@id([commonUserProfileId, organizationProfileId])
+  @@index([commonUserProfileId], map: "follow_common_user_profile_idx")
+  @@index([organizationProfileId], map: "follow_organization_profile_idx")
+  @@map("follows")
+}
+
+model OrganizationProfile {
+  id                 String  @id @default(uuid())
+  title              String
+  representativeName String  @map("representative_name")
+  bio                String?
+  residentialNumber  String? @map("residential_number")
+
+  availablePets Pet[]
+  address       Address?
+
+  user   Account @relation(fields: [userId], references: [id])
+  userId String  @unique
+
+  followers Follow[]
+
+  @@index(fields: [title], map: "org_title_idx")
+  @@map("organizations")
+}
+
+model Address {
+  id           String  @id @default(uuid())
+  firstLine    String  @map("first_line")
+  secondLine   String? @map("second_line")
+  number       String /// "number" is a text because it can be an alphanumeric value, like: "123a"
+  neighborhood String
+  city         String
+  state        String
+  cep          String
+
+  organization   OrganizationProfile @relation(fields: [organizationId], references: [id])
+  organizationId String              @unique @map("organization_id")
+
+  @@index([organizationId], map: "address_org_id_idx", type: BTree)
+  @@index([cep], map: "address_cep_idx", type: Hash)
+  @@map("organizations_addresses")
+}
+
+model Pet {
+  id                      String  @id @default(uuid())
+  name                    String
+  bio                     String
+  age                     Int
+  isCastrated             Boolean @map("is_castrated")
+  requireMedicalAttention Boolean @map("require_medical_attention")
+  isVaccinated            Boolean @map("is_vaccinated")
+
+  size        PetSize
+  energyLevel PetEnergyLevel @map("energy_level")
+
+  organization   OrganizationProfile @relation(fields: [organizationId], references: [id])
+  organizationId String              @map("organization_id")
+
+  adoptionRequirements AdoptionRequirement[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index(fields: [organizationId], map: "org_id_fk_idx", type: BTree)
+  @@index(fields: [isCastrated], map: "is_castrated_idx", type: BTree)
+  @@map("pets")
+}
+
+model AdoptionRequirement {
+  id   String @id @default(uuid())
+  info String
+
+  requirementType AdoptionRequirementType
+
+  Pet   Pet    @relation(fields: [petId], references: [id])
+  petId String
+
+  @@index(fields: [petId], map: "adoption_requirements_pet_id_idx", type: BTree)
+  @@map("adoption_requirements")
+}
+
+model Account {
+  id           String @id @default(uuid())
+  email        String @unique
+  passwordHash String @map("password_hash")
+
+  commonUserProfile     CommonUserProfile?
+  organizationProfile   OrganizationProfile?
+  AccountProfilePicture AccountProfilePicture?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("accounts")
+}
+
+model AccountProfilePicture {
+  id  String @id @default(uuid())
+  url String
+
+  account   Account @relation(fields: [accountId], references: [id])
+  accountId String  @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("accounts_profile_pictures")
+}
+
+// Enums
+enum PetSize {
+  Small  @map("SMALL")
+  Medium @map("MEDIUM")
+  Big    @map("BIG")
+
+  @@map("pet_sizes")
+}
+
+enum PetEnergyLevel {
+  VeryLow  @map("VERY_LOW")
+  Low      @map("LOW")
+  Medium   @map("MEDIUM")
+  High     @map("HIGH")
+  VeryHigh @map("VERY_HIGH")
+
+  @@map("pet_energy_levels")
+}
+
+enum AdoptionRequirementType {
+  Space   @map("SPACE")
+  Medical @map("MEDICAL")
+
+  @@map("adoption_requirement_types")
+}
