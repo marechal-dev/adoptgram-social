@@ -2,6 +2,10 @@
 /dist
 /node_modules
 
+# Env vars
+.env
+.env.test
+
 # Compodocs output
 documentation
 
