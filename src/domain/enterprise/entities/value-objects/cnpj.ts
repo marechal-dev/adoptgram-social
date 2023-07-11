@@ -7,11 +7,11 @@ export class Cnpj {
 
   public static createFromText(value: string): Cnpj {
     if (!this.isLengthValid(value)) {
-      // Do something
+      throw new Error('Invalid CNPJ length');
     }
 
     if (!this.isFormatValid(value)) {
-      // Do something
+      throw new Error('Invalid CNPJ format');
     }
 
     const cnpj = new Cnpj(value);

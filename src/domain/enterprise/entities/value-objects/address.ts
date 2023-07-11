@@ -8,12 +8,6 @@ interface AddressProps {
   state: string;
 }
 
-/**
- * 5 digits + 1 dash + 3 digits
- */
-const CEP_LENGTH = 5 + 1 + 3;
-const CEP_FORMAT_REGEXP = /[0-9]{5}[-]{1}[0-9]{3}/;
-
 export class Address {
   private readonly props: AddressProps;
 
@@ -36,10 +30,17 @@ export class Address {
   }
 
   private static isCepLengthValid(value: string): boolean {
+    /**
+     * 5 digits + 1 dash + 3 digits
+     */
+    const CEP_LENGTH = 5 + 1 + 3;
+
     return value.length === CEP_LENGTH;
   }
 
   private static isCepFormatValid(value: string): boolean {
+    const CEP_FORMAT_REGEXP = /[0-9]{5}[-]{1}[0-9]{3}/;
+
     return CEP_FORMAT_REGEXP.test(value);
   }
 

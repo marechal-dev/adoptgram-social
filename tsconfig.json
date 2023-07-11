@@ -9,9 +9,6 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "types": [
-      "vitest/globals"
-    ],
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {

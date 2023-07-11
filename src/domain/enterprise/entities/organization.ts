@@ -1,9 +1,9 @@
 import { UniqueEntityId } from '@Core/entities/value-objects/unique-entity-id';
+import { Optional } from '@Core/types/optional';
 import { User, UserProps } from './user';
 import { Address } from './value-objects/address';
 import { Cnpj } from './value-objects/cnpj';
 import { Pet } from './pet';
-import { Optional } from '@Core/types/optional';
 import { Follow } from './follow';
 
 interface OrganizationProps extends UserProps {
