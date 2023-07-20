@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { hash } from 'bcrypt';
 
-import { ResourceAlreadyExistsError } from '@Application/errors/resource-already-exists';
+import { ResourceAlreadyExistsError } from '@Application/exceptions/resource-already-exists';
 import { OrganizationsRepository } from '@Application/repositories/organizations-repository';
 import { Organization } from '@Domain/enterprise/entities/organization';
 import {

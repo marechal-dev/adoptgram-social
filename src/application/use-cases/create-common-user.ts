@@ -5,7 +5,7 @@ import { hash } from 'bcrypt';
 import { Cpf } from '@Domain/enterprise/entities/value-objects/cpf';
 import { CommonUser } from '@Domain/enterprise/entities/common-user';
 import { CommonUsersRepository } from '@Application/repositories/common-users-repository';
-import { ResourceAlreadyExistsError } from '@Application/errors/resource-already-exists';
+import { ResourceAlreadyExistsError } from '@Application/exceptions/resource-already-exists';
 
 export interface CreateCommonUserUseCaseRequest {
   username: string;

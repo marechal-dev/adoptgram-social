@@ -7,15 +7,18 @@ import env from '@Configs/env';
 export class PrismaService extends PrismaClient implements OnModuleInit {
   public constructor() {
     super({
-      log: env.NODE_ENV === 'development' ? ['query'] : [],
+      log:
+        env.NODE_ENV === 'development'
+          ? ['query', 'info', 'warn', 'error']
+          : [],
     });
   }
 
-  async onModuleInit() {
+  public async onModuleInit() {
     await this.$connect();
   }
 
-  async enableShutdownHooks(app: INestApplication) {
+  public async enableShutdownHooks(app: INestApplication) {
     this.$on('beforeExit', async () => {
       await app.close();
     });
