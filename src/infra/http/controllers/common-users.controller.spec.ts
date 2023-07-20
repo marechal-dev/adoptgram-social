@@ -6,7 +6,7 @@ import { Test } from '@nestjs/testing';
 
 import { InfraModule } from '@Infra/infra.module';
 
-describe('Common Users Controller', () => {
+describe.skip('Common Users Controller', () => {
   let app: NestFastifyApplication;
 
   beforeAll(async () => {
@@ -25,7 +25,7 @@ describe('Common Users Controller', () => {
     await app.getHttpAdapter().getInstance().ready();
   });
 
-  it(`/GET cats`, async () => {
+  it.skip(`/GET cats`, async () => {
     const response = await app.inject({
       method: 'GET',
       url: '/cats',

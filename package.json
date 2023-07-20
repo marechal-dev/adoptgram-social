@@ -20,10 +20,10 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main.js",
     "start:docs": "npx @compodoc/compodoc -p tsconfig.json -s",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test": "jest --config ./jest.config.ts",
+    "test:watch": "jest --watch --config ./jest.config.ts",
+    "test:cov": "jest --coverage --config ./jest.config.ts",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand --config ./jest.config.ts",
     "test:e2e": "jest --config ./jest-e2e.config.ts"
   },
   "dependencies": {

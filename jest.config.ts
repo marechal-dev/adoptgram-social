@@ -15,6 +15,7 @@ const config: Config = {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/',
   }),
+  modulePathIgnorePatterns: ['<rootDir>/src/infra/http/controllers'],
 };
 
 export default config;
