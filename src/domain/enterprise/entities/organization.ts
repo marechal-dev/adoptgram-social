@@ -1,25 +1,25 @@
 import { UniqueEntityId } from '@Core/entities/value-objects/unique-entity-id';
 import { Optional } from '@Core/types/optional';
-import { User, UserProps } from './user';
 import { Address } from './value-objects/address';
-import { Cnpj } from './value-objects/cnpj';
 import { Pet } from './pet';
 import { Follow } from './follow';
+import { User, UserProps } from './user';
 
 interface OrganizationProps extends UserProps {
   title: string;
-  cnpj: Cnpj;
   bio?: string;
+  representativeName: string;
+  whatsapp: string;
   residentialPhone?: string;
   address: Address;
   pixKey?: string;
   availablePets: Pet[];
-  followers: Follow[];
+  follows: Follow[];
 }
 
 export class Organization extends User<OrganizationProps> {
   public static create(
-    props: Optional<OrganizationProps, 'availablePets' | 'followers'>,
+    props: Optional<OrganizationProps, 'availablePets' | 'follows'>,
     id?: UniqueEntityId,
     createdAt?: Date,
     updatedAt?: Date,
@@ -28,7 +28,7 @@ export class Organization extends User<OrganizationProps> {
       {
         ...props,
         availablePets: props.availablePets ?? [],
-        followers: props.followers ?? [],
+        follows: props.follows ?? [],
       },
       id,
       createdAt,
@@ -47,16 +47,30 @@ export class Organization extends User<OrganizationProps> {
     this.touch();
   }
 
-  public get cnpj(): Cnpj {
-    return this.props.cnpj;
-  }
-
   public get bio(): string | undefined {
     return this.props.bio;
   }
 
   public set bio(bio: string | undefined) {
     this.props.bio = bio;
+    this.touch();
+  }
+
+  public get representativeName(): string {
+    return this.props.representativeName;
+  }
+
+  public set representativeName(representativeName: string) {
+    this.props.representativeName = representativeName;
+    this.touch();
+  }
+
+  public get whatsapp(): string {
+    return this.props.whatsapp;
+  }
+
+  public set whatsapp(whatsapp: string) {
+    this.props.whatsapp = whatsapp;
     this.touch();
   }
 
@@ -85,5 +99,19 @@ export class Organization extends User<OrganizationProps> {
   public set pixKey(pixKey: string | undefined) {
     this.props.pixKey = pixKey;
     this.touch();
+  }
+
+  public addPet(pet: Pet): void {
+    this.props.availablePets.push(pet);
+  }
+
+  public removePet(petId: UniqueEntityId): void {
+    const index = this.props.availablePets.findIndex(
+      (item) => item.id.toString() === petId.toString(),
+    );
+
+    if (index >= 0) {
+      this.props.availablePets.splice(index, 1);
+    }
   }
 }

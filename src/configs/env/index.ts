@@ -7,6 +7,7 @@ const envSchemaValidator = z.object({
     .enum(['development', 'test', 'production'] as const)
     .default('production'),
   PORT: z.coerce.number().default(3000),
+  JWT_SECRET: z.string().default('JWT_SECRET_DEV'),
   MAILER_EDGE_FUNCTION_URL: z.string().url(),
   REDIS_HOST: z.string(),
   REDIS_PORT: z.coerce.number().default(6379),

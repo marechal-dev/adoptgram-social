@@ -1,7 +1,9 @@
-import { Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { UsePipes, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import { ZodValidationPipe } from 'nestjs-zod';
 
-@Controller('ngos')
-export class NonGovernamentalOrganizationsController {
+@UsePipes(ZodValidationPipe)
+@Controller('orgs')
+export class OrganizationsController {
   @Get()
   public async fetch() {
     //
@@ -9,6 +11,11 @@ export class NonGovernamentalOrganizationsController {
 
   @Get(':id')
   public async getById() {
+    //
+  }
+
+  @Get(':id/posts')
+  public async getPostsById() {
     //
   }
 

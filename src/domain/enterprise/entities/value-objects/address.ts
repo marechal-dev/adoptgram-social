@@ -1,4 +1,4 @@
-interface AddressProps {
+export interface AddressProps {
   firstLine: string;
   secondLine?: string;
   number: string;

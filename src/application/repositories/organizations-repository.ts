@@ -7,6 +7,7 @@ export abstract class OrganizationsRepository {
   abstract delete(organization: Organization): Promise<boolean>;
   abstract getMany(params: PaginationParams): Promise<Organization[]>;
   abstract searchMany(query: string): Promise<Organization[]>;
-  abstract findOneById(id: string): Promise<Organization | null>;
-  abstract findOneByCnpj(cnpj: string): Promise<Organization | null>;
+  abstract findById(id: string): Promise<Organization | null>;
+  abstract findByUsername(username: string): Promise<Organization | null>;
+  abstract findByEmail(email: string): Promise<Organization | null>;
 }

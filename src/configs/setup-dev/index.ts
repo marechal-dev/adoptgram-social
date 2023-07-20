@@ -15,7 +15,7 @@ function setupSwagger(app: NestFastifyApplication) {
     )
     .setVersion('1.0')
     .addTag('common-users')
-    .addTag('non-governamental-organizations')
+    .addTag('organizations')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

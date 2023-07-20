@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 
 import { CommonUsersController } from './controllers/common-users.controller';
-import { NonGovernamentalOrganizationsController } from './controllers/non-governamental-organizations.controller';
+import { OrganizationsController } from './controllers/organizations.controller';
 
 @Module({
-  controllers: [CommonUsersController, NonGovernamentalOrganizationsController],
+  controllers: [CommonUsersController, OrganizationsController],
   providers: [],
 })
 export class HttpModule {}

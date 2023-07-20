@@ -8,70 +8,41 @@ datasource db {
 }
 
 // Models
-model CommonUserProfile {
-  id        String @id @default(uuid())
-  firstName String @map("first_name")
-  surname   String
-  cpf       String @unique
-
-  user   Account @relation(fields: [userId], references: [id])
-  userId String  @unique
+model CommonUser {
+  id                String  @id @default(uuid())
+  username          String  @unique
+  email             String  @unique
+  passwordHash      String  @map("password_hash")
+  profilePictureUrl String? @map("profile_picture_url")
+  firstName         String  @map("first_name")
+  surname           String
+  cpf               String  @unique
 
   following Follow[]
 
   @@map("common_users")
 }
 
-model Follow {
-  commonUser          CommonUserProfile @relation(fields: [commonUserProfileId], references: [id])
-  commonUserProfileId String
-
-  organization          OrganizationProfile @relation(fields: [organizationProfileId], references: [id])
-  organizationProfileId String
-
-  followedAt DateTime @default(now())
-
-  @@id([commonUserProfileId, organizationProfileId])
-  @@index([commonUserProfileId], map: "follow_common_user_profile_idx")
-  @@index([organizationProfileId], map: "follow_organization_profile_idx")
-  @@map("follows")
-}
-
-model OrganizationProfile {
+model Organization {
   id                 String  @id @default(uuid())
+  username           String  @unique
+  email              String  @unique
+  passwordHash       String  @map("password_hash")
+  profilePictureUrl  String? @map("profile_picture_url")
   title              String
   representativeName String  @map("representative_name")
   bio                String?
+  pixKey             String? @map("pix_key")
+  whatsapp           String
   residentialNumber  String? @map("residential_number")
 
   availablePets Pet[]
+  posts         Post[]
   address       Address?
-
-  user   Account @relation(fields: [userId], references: [id])
-  userId String  @unique
 
   followers Follow[]
 
-  @@index(fields: [title], map: "org_title_idx")
   @@map("organizations")
-}
-
-model Address {
-  id           String  @id @default(uuid())
-  firstLine    String  @map("first_line")
-  secondLine   String? @map("second_line")
-  number       String /// "number" is a text because it can be an alphanumeric value, like: "123a"
-  neighborhood String
-  city         String
-  state        String
-  cep          String
-
-  organization   OrganizationProfile @relation(fields: [organizationId], references: [id])
-  organizationId String              @unique @map("organization_id")
-
-  @@index([organizationId], map: "address_org_id_idx", type: BTree)
-  @@index([cep], map: "address_cep_idx", type: Hash)
-  @@map("organizations_addresses")
 }
 
 model Pet {
@@ -86,8 +57,8 @@ model Pet {
   size        PetSize
   energyLevel PetEnergyLevel @map("energy_level")
 
-  organization   OrganizationProfile @relation(fields: [organizationId], references: [id])
-  organizationId String              @map("organization_id")
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String       @map("organization_id")
 
   adoptionRequirements AdoptionRequirement[]
 
@@ -99,45 +70,88 @@ model Pet {
   @@map("pets")
 }
 
+model Post {
+  id          String  @id @default(uuid())
+  textContent String?
+  likes       Int
+
+  organizationProfile   Organization @relation(fields: [organizationProfileId], references: [id], onDelete: Cascade)
+  organizationProfileId String       @map("organization_profile_id")
+
+  medias   Media[]
+  comments Comment[]
+
+  @@index([organizationProfileId], map: "post_org_id_idx")
+  @@map("posts")
+}
+
+model Comment {
+  id      String @id @default(uuid())
+  content String
+
+  Post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String @map("post_Id")
+
+  @@index([postId], map: "comment_post_id_idx")
+  @@map("comments")
+}
+
+model Follow {
+  commonUser          CommonUser @relation(fields: [commonUserProfileId], references: [id], onDelete: Cascade)
+  commonUserProfileId String     @map("common_user_profile_id")
+
+  organization          Organization @relation(fields: [organizationProfileId], references: [id], onDelete: Cascade)
+  organizationProfileId String       @map("organization_profile_id")
+
+  followedAt DateTime @default(now())
+
+  @@id([commonUserProfileId, organizationProfileId])
+  @@index([commonUserProfileId], map: "follow_common_user_profile_idx")
+  @@index([organizationProfileId], map: "follow_organization_profile_idx")
+  @@map("follows")
+}
+
+model Address {
+  id           String  @id @default(uuid())
+  firstLine    String  @map("first_line")
+  secondLine   String? @map("second_line")
+  number       String /// "number" is a text because it can be an alphanumeric value, like: "123a"
+  neighborhood String
+  city         String
+  state        String
+  cep          String
+
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String       @unique @map("organization_id")
+
+  @@index([organizationId], map: "address_org_id_idx")
+  @@index([cep], map: "address_cep_idx", type: Hash)
+  @@map("organizations_addresses")
+}
+
 model AdoptionRequirement {
   id   String @id @default(uuid())
   info String
 
   requirementType AdoptionRequirementType
 
-  Pet   Pet    @relation(fields: [petId], references: [id])
-  petId String
+  Pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade)
+  petId String @map("pet_id")
 
   @@index(fields: [petId], map: "adoption_requirements_pet_id_idx", type: BTree)
   @@map("adoption_requirements")
 }
 
-model Account {
-  id           String @id @default(uuid())
-  email        String @unique
-  passwordHash String @map("password_hash")
+model Media {
+  id   String    @id @default(uuid())
+  type MediaType
+  url  String
 
-  commonUserProfile     CommonUserProfile?
-  organizationProfile   OrganizationProfile?
-  AccountProfilePicture AccountProfilePicture?
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String @map("post_id")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("accounts")
-}
-
-model AccountProfilePicture {
-  id  String @id @default(uuid())
-  url String
-
-  account   Account @relation(fields: [accountId], references: [id])
-  accountId String  @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("accounts_profile_pictures")
+  @@index([postId], map: "media_post_id_idx")
+  @@map("medias")
 }
 
 // Enums
@@ -146,7 +160,7 @@ enum PetSize {
   Medium @map("MEDIUM")
   Big    @map("BIG")
 
-  @@map("pet_sizes")
+  @@map("pet_size")
 }
 
 enum PetEnergyLevel {
@@ -156,12 +170,19 @@ enum PetEnergyLevel {
   High     @map("HIGH")
   VeryHigh @map("VERY_HIGH")
 
-  @@map("pet_energy_levels")
+  @@map("pet_energy_level")
 }
 
 enum AdoptionRequirementType {
   Space   @map("SPACE")
   Medical @map("MEDICAL")
 
-  @@map("adoption_requirement_types")
+  @@map("adoption_requirement_type")
+}
+
+enum MediaType {
+  Image @map("IMAGE")
+  Video @map("VIDEO")
+
+  @@map("media_type")
 }

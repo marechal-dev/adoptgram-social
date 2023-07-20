@@ -4,11 +4,11 @@ import env from '@Configs/env';
 
 @Injectable()
 export class MailService {
-  public async dispatchSendAccountCreationSuccessfulEmailJob() {
+  public async sendAccountCreationSuccessfulEmailJob() {
     // ...
   }
 
-  public async dispatchSendResetPasswordEmailJob() {
+  public async sendResetPasswordEmailJob() {
     // ...
   }
 }

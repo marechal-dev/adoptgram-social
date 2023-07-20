@@ -1,8 +1,8 @@
+import { Optional } from '@Core/types/optional';
 import { UniqueEntityId } from '@Core/entities/value-objects/unique-entity-id';
-import { User, UserProps } from './user';
 import { Cpf } from './value-objects/cpf';
 import { Follow } from './follow';
-import { Optional } from '@Core/types/optional';
+import { User, UserProps } from './user';
 
 interface CommonUserProps extends UserProps {
   firstName: string;
@@ -49,21 +49,20 @@ export class CommonUser extends User<CommonUserProps> {
     this.touch();
   }
 
-  public get email(): string {
-    return this.props.email;
+  public get cpf(): Cpf {
+    return this.props.cpf;
   }
 
-  public set email(value: string) {
-    this.props.email = value;
+  public set cpf(cpf: Cpf) {
+    this.props.cpf = cpf;
     this.touch();
   }
 
-  public get passwordHash(): string {
-    return this.props.passwordHash;
+  public get following(): Follow[] {
+    return this.props.following;
   }
 
-  public set passwordHash(value: string) {
-    this.props.passwordHash = value;
-    this.touch();
+  public follow(follow: Follow): void {
+    this.props.following.push(follow);
   }
 }

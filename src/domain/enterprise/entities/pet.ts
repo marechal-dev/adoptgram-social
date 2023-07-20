@@ -1,14 +1,15 @@
+import { Optional } from '@Core/types/optional';
+import { UniqueEntityId } from '@Core/entities/value-objects/unique-entity-id';
 import { AuditableEntity } from '@Core/entities/auditable-entity';
 import { PetSize } from './enums/pet-size';
 import { PetEnergyLevel } from './enums/pet-energy-level';
-import { UniqueEntityId } from '@Core/entities/value-objects/unique-entity-id';
 import { AdoptionRequirement } from './adoption-requirement';
-import { Optional } from '@Core/types/optional';
 
 interface PetProps {
   name: string;
   bio: string;
   age: number;
+  profilePictureUrl: string;
   isCastrated: boolean;
   requireMedicalAttention: boolean;
   isVaccinated: boolean;
