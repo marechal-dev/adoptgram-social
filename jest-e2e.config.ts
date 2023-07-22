@@ -11,11 +11,12 @@ const config: Config = {
     '^.+\\.(t|j)s$': '@swc/jest',
   },
   collectCoverageFrom: ['**/*.(t|j)s'],
-  coverageDirectory: '../coverage',
+  coverageDirectory: './coverage-e2e',
   testEnvironment: 'node',
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/',
   }),
+  setupFiles: ['dotenv/config'],
 };
 
 export default config;

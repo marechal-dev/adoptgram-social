@@ -1,7 +1,18 @@
-import { UsePipes, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  UsePipes,
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+  UseFilters,
+} from '@nestjs/common';
 import { ZodValidationPipe } from 'nestjs-zod';
+import { DomainExceptionFilter } from '../exception-filters/domain-exception.filter';
+import { ZodValidationExceptionFilter } from '../exception-filters/zod-validation-exception.filter';
 
 @UsePipes(ZodValidationPipe)
+@UseFilters(DomainExceptionFilter, ZodValidationExceptionFilter)
 @Controller('orgs')
 export class OrganizationsController {
   @Get()

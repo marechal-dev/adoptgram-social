@@ -5,7 +5,7 @@ import { hash } from 'bcrypt';
 import { Cpf } from '@Domain/enterprise/entities/value-objects/cpf';
 import { CommonUser } from '@Domain/enterprise/entities/common-user';
 import { CommonUsersRepository } from '@Application/repositories/common-users-repository';
-import { ResourceAlreadyExistsError } from '@Application/exceptions/resource-already-exists';
+import { ResourceAlreadyExistsException } from '@Application/exceptions/resource-already-exists';
 
 export interface CreateCommonUserUseCaseRequest {
   username: string;
@@ -37,7 +37,7 @@ export class CreateCommonUserUseCase {
     const alreadyExistsByUsername =
       await this.commonUsersRepository.findByUsername(username);
     if (alreadyExistsByUsername) {
-      throw new ResourceAlreadyExistsError(
+      throw new ResourceAlreadyExistsException(
         `Usuário com apelido ${username} já cadastrado!`,
       );
     }
@@ -46,14 +46,14 @@ export class CreateCommonUserUseCase {
       email,
     );
     if (alreadyExistsByEmail) {
-      throw new ResourceAlreadyExistsError(
+      throw new ResourceAlreadyExistsException(
         `Usuário com e-mail ${email} já cadastrado!`,
       );
     }
 
     const alreadyExistsByCpf = await this.commonUsersRepository.findByCpf(cpf);
     if (alreadyExistsByCpf) {
-      throw new ResourceAlreadyExistsError(
+      throw new ResourceAlreadyExistsException(
         `Usuário com CPF fornecido já cadastrado!`,
       );
     }

@@ -10,12 +10,17 @@ const config: Config = {
     '^.+\\.(t|j)s$': '@swc/jest',
   },
   collectCoverageFrom: ['**/*.(t|j)s'],
-  coverageDirectory: '../coverage',
+  coverageDirectory: './coverage',
+  coverageReporters: ['json', 'html'],
   testEnvironment: 'node',
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/',
   }),
-  modulePathIgnorePatterns: ['<rootDir>/src/infra/http/controllers'],
+  modulePathIgnorePatterns: [
+    '<rootDir>/src/infra/http/controllers',
+    '<rootDir>/documentation/',
+    '<rootDir>/dist/',
+  ],
 };
 
 export default config;

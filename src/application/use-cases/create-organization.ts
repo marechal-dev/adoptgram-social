@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 
 import { hash } from 'bcrypt';
 
-import { ResourceAlreadyExistsError } from '@Application/exceptions/resource-already-exists';
 import { OrganizationsRepository } from '@Application/repositories/organizations-repository';
 import { Organization } from '@Domain/enterprise/entities/organization';
 import {
   Address,
   AddressProps,
 } from '@Domain/enterprise/entities/value-objects/address';
+import { ResourceAlreadyExistsException } from '@Application/exceptions/resource-already-exists';
 
 export interface CreateOrganizationUseCaseRequest {
   username: string;
@@ -48,15 +48,16 @@ export class CreateOrganizationUseCase {
     const alreadyExistsByUsername =
       await this.organizationsRepository.findByUsername(username);
     if (alreadyExistsByUsername) {
-      throw new ResourceAlreadyExistsError(
+      throw new ResourceAlreadyExistsException(
         `Usuário com apelido ${username} já cadastrado!`,
       );
     }
 
-    const alreadyExistsByEmail =
-      await this.organizationsRepository.findByUsername(username);
+    const alreadyExistsByEmail = await this.organizationsRepository.findByEmail(
+      email,
+    );
     if (alreadyExistsByEmail) {
-      throw new ResourceAlreadyExistsError(
+      throw new ResourceAlreadyExistsException(
         `Usuário com e-amil ${email} já cadastrado!`,
       );
     }

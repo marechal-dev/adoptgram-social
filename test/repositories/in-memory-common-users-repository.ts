@@ -1,6 +1,6 @@
-import { CommonUsersRepository } from '@Application/repositories/common-users-repository';
 import { PaginationParams } from '@Core/repositories/pagination-params';
 import { CommonUser } from '@Domain/enterprise/entities/common-user';
+import { CommonUsersRepository } from '@Application/repositories/common-users-repository';
 
 export class InMemoryCommonUsersRepository extends CommonUsersRepository {
   public readonly items: CommonUser[] = [];
@@ -35,12 +35,21 @@ export class InMemoryCommonUsersRepository extends CommonUsersRepository {
     return false;
   }
 
-  public async getMany(params: PaginationParams): Promise<CommonUser[]> {
-    throw new Error('Method not implemented.');
+  public async getMany({
+    page,
+    pageSize,
+  }: PaginationParams): Promise<CommonUser[]> {
+    return this.items.slice((page - 1) * pageSize, page * pageSize);
   }
 
   public async findById(id: string): Promise<CommonUser | null> {
-    throw new Error('Method not implemented.');
+    const commonUser = this.items.find((item) => item.id.toString() === id);
+
+    if (!commonUser) {
+      return null;
+    }
+
+    return commonUser;
   }
 
   public async findByUsername(username: string): Promise<CommonUser | null> {
