@@ -6,6 +6,7 @@ import { compilerOptions } from './tsconfig.json';
 const config: Config = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: 'src/infra/http/controllers',
+  testEnvironmentOptions: {},
   testRegex: '.*\\.spec\\.ts$',
   transform: {
     '^.+\\.(t|j)s$': '@swc/jest',

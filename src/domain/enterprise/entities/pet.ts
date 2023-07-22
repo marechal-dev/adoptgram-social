@@ -16,6 +16,7 @@ interface PetProps {
   size: PetSize;
   energyLevel: PetEnergyLevel;
   adoptionRequirements: AdoptionRequirement[];
+  organizationId: UniqueEntityId;
 }
 
 export class Pet extends AuditableEntity<PetProps> {
@@ -109,5 +110,9 @@ export class Pet extends AuditableEntity<PetProps> {
     adoptionRequirement: AdoptionRequirement,
   ): void {
     this.props.adoptionRequirements.push(adoptionRequirement);
+  }
+
+  public get organizationId(): UniqueEntityId {
+    return this.props.organizationId;
   }
 }
