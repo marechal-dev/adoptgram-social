@@ -49,6 +49,10 @@ export class CommonUser extends User<CommonUserProps> {
     this.touch();
   }
 
+  public get fullName(): string {
+    return `${this.props.firstName} ${this.props.surname}`;
+  }
+
   public get cpf(): Cpf {
     return this.props.cpf;
   }

@@ -18,6 +18,9 @@ model CommonUser {
   surname           String
   cpf               String  @unique
 
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
   following Follow[]
 
   @@map("common_users")
@@ -39,6 +42,9 @@ model Organization {
   availablePets Pet[]
   posts         Post[]
   address       Address?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 
   followers Follow[]
 

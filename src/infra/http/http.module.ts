@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
 
-import { AuthController } from './controllers/auth.controller';
 import { CommonUsersController } from './controllers/common-users.controller';
-import { OrganizationsController } from './controllers/organizations.controller';
+// import { OrganizationsController } from './controllers/organizations.controller';
 
-import { AuthService } from '@Infra/services/auth/auth.service';
+import { CreateCommonUserUseCase } from '@Application/use-cases/create-common-user';
+import { PersistenceModule } from '@Infra/persistence/persistence.module';
 
 @Module({
-  controllers: [AuthController, CommonUsersController, OrganizationsController],
-  providers: [AuthService],
+  imports: [PersistenceModule],
+  controllers: [CommonUsersController],
+  providers: [CreateCommonUserUseCase],
 })
 export class HttpModule {}

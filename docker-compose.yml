@@ -7,7 +7,7 @@ volumes:
 services:
   database:
     image: bitnami/postgresql:15
-    container_name: "adoptgram-social-pg-db"
+    container_name: 'adoptgram-social-pg-db'
     restart: always
     ports:
       - 5432:5432
@@ -18,20 +18,20 @@ services:
     volumes:
       - 'db-data:/bitnami/postgresql'
 
-  queue:
-    image: bitnami/redis:7.0
-    container_name: "adoptgram-social-redis-queue"
-    ports:
-      - 6379:6379
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+  # queue:
+  #   image: bitnami/redis:7.0
+  #   container_name: 'adoptgram-social-redis-queue'
+  #   ports:
+  #     - 6379:6379
+  #   environment:
+  #     - ALLOW_EMPTY_PASSWORD=yes
 
-  dev:
-    build: .
-    ports:
-      - 3000:3000
-    depends_on:
-      - database
-      - queue
-    volumes:
-      - .:/usr/app
+  # dev:
+  #   build: .
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - database
+  #     - queue
+  #   volumes:
+  #     - .:/usr/app

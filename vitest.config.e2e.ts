@@ -6,8 +6,8 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   test: {
-    root: './src/infra/http/controllers',
     globals: true,
+    environmentMatchGlobs: [['src/infra/http/controllers/**', 'prisma']],
   },
   plugins: [
     //@ts-ignore

@@ -9,7 +9,7 @@ const envSchemaValidator = z.object({
   PORT: z.coerce.number().default(3000),
   JWT_SECRET: z.string().default('JWT_SECRET_DEV'),
   MAILER_EDGE_FUNCTION_URL: z.string().url(),
-  REDIS_HOST: z.string(),
+  REDIS_HOST: z.string().default('localhost'),
   REDIS_PORT: z.coerce.number().default(6379),
 });
 

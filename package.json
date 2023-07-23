@@ -27,8 +27,8 @@
     "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
     "test:install-prisma-environment": "npm link vitest-environment-prisma",
     "pretest:e2e": "run-s test:create-prisma-environment test:install-prisma-environment",
-    "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-    "test:e2e:watch": "vitest watch --config ./vitest.config.e2e.ts"
+    "test:e2e": "vitest run --config ./vitest.config.e2e.ts --dir src/infra/http/controllers",
+    "test:e2e:watch": "vitest watch --config ./vitest.config.e2e.ts --dir src/infra/http/controllers"
   },
   "dependencies": {
     "@nestjs/bull": "10.0.1",

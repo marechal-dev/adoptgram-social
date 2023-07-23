@@ -10,10 +10,6 @@ const createCommonUserSchema = z.object({
     .password()
     .min(8, 'A senha deve ter no mínimo 8 caracteres.')
     .max(64, 'A senha deve ter no máximo 64 caracteres.')
-    .atLeastOne('digit', 'A senha deve ter no mínimo 1 dígito.')
-    .atLeastOne('special', 'A senha deve ter no mínimo 1 caractere especial.')
-    .atLeastOne('lowercase', 'A senha deve ter no mínimo 1 letra minúscula.')
-    .atLeastOne('uppercase', 'A senha deve ter no mínimo 1 letra maiúscula.')
     .describe(
       'The desired password should be 8-64 characters long, with at least one digit, special character, uppercase and lowercase character.',
     ),
