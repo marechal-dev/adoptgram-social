@@ -4,7 +4,7 @@ export interface UserProps {
   username: string;
   email: string;
   passwordHash: string;
-  profilePictureUrl?: string;
+  profilePictureUrl?: string | null;
 }
 
 export abstract class User<
@@ -37,11 +37,11 @@ export abstract class User<
     this.touch();
   }
 
-  public get profilePictureUrl(): string | undefined {
+  public get profilePictureUrl(): string | null | undefined {
     return this.props.profilePictureUrl;
   }
 
-  public set profilePictureUrl(profilePictureUrl: string | undefined) {
+  public set profilePictureUrl(profilePictureUrl: string | null | undefined) {
     this.props.profilePictureUrl = profilePictureUrl;
     this.touch();
   }

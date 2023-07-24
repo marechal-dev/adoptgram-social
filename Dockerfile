@@ -1,6 +1,6 @@
 FROM node:lts-alpine
 
-RUN apk install musl
+RUN apk add musl
 
 ENV NODE_ENV development
 

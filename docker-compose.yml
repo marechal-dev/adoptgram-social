@@ -26,12 +26,11 @@ services:
   #   environment:
   #     - ALLOW_EMPTY_PASSWORD=yes
 
-  # dev:
-  #   build: .
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - database
-  #     - queue
-  #   volumes:
-  #     - .:/usr/app
+  dev:
+    build: .
+    ports:
+      - 3000:3000
+    depends_on:
+      - database
+    volumes:
+      - .:/usr/app

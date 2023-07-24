@@ -1,52 +1,30 @@
-import {
-  UsePipes,
-  Controller,
-  Delete,
-  Get,
-  Post,
-  Put,
-  UseFilters,
-} from '@nestjs/common';
+import { UsePipes, Controller, Post, UseFilters, Body } from '@nestjs/common';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { DomainExceptionFilter } from '../exception-filters/domain-exception.filter';
 import { ZodValidationExceptionFilter } from '../exception-filters/zod-validation-exception.filter';
+import { CreateOrganizationUseCase } from '@Application/use-cases/create-organization';
+import { CreateOrganizationDto } from '../dtos/organizations/create';
+import {
+  OrganizationHttpViewModel,
+  OrganizationViewModel,
+} from '../view-models/organizations/organization.view-model';
 
 @UsePipes(ZodValidationPipe)
 @UseFilters(DomainExceptionFilter, ZodValidationExceptionFilter)
-@Controller('orgs')
+@Controller('organizations')
 export class OrganizationsController {
-  @Get()
-  public async fetch() {
-    //
-  }
-
-  @Get(':id')
-  public async getById() {
-    //
-  }
-
-  @Get(':id/posts')
-  public async getPostsById() {
-    //
-  }
-
-  @Get('search')
-  public async search() {
-    //
-  }
+  public constructor(
+    private readonly createOrganizationUseCase: CreateOrganizationUseCase,
+  ) {}
 
   @Post()
-  public async create() {
-    //
-  }
+  public async create(
+    @Body() createOrganizationDto: CreateOrganizationDto,
+  ): Promise<OrganizationHttpViewModel> {
+    const { profile } = await this.createOrganizationUseCase.execute(
+      createOrganizationDto,
+    );
 
-  @Put(':id')
-  public async update() {
-    //
-  }
-
-  @Delete(':id')
-  public async delete() {
-    //
+    return OrganizationViewModel.toHttp(profile);
   }
 }

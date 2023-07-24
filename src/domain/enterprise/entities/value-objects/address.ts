@@ -1,6 +1,9 @@
+import { Entity } from '@Core/entities/entity';
+import { UniqueEntityId } from '@Core/entities/value-objects/unique-entity-id';
+
 export interface AddressProps {
   firstLine: string;
-  secondLine?: string;
+  secondLine?: string | null;
   number: string;
   cep: string;
   neighborhood: string;
@@ -8,14 +11,8 @@ export interface AddressProps {
   state: string;
 }
 
-export class Address {
-  private readonly props: AddressProps;
-
-  private constructor(props: AddressProps) {
-    this.props = props;
-  }
-
-  public static create(props: AddressProps) {
+export class Address extends Entity<AddressProps> {
+  public static create(props: AddressProps, id?: UniqueEntityId) {
     if (!this.isCepLengthValid(props.cep)) {
       throw new Error('Invalid CEP length');
     }
@@ -24,7 +21,7 @@ export class Address {
       throw new Error('Invalid CEP format');
     }
 
-    const address = new Address(props);
+    const address = new Address(props, id);
 
     return address;
   }
@@ -42,6 +39,34 @@ export class Address {
     const CEP_FORMAT_REGEXP = /[0-9]{5}[-]{1}[0-9]{3}/;
 
     return CEP_FORMAT_REGEXP.test(value);
+  }
+
+  public get firstLine(): string {
+    return this.props.firstLine;
+  }
+
+  public get secondLine(): string | null | undefined {
+    return this.props.secondLine;
+  }
+
+  public get number(): string {
+    return this.props.number;
+  }
+
+  public get cep(): string {
+    return this.props.cep;
+  }
+
+  public get neighborhood(): string {
+    return this.props.neighborhood;
+  }
+
+  public get city(): string {
+    return this.props.city;
+  }
+
+  public get state(): string {
+    return this.props.state;
   }
 
   public toValue(): AddressProps {

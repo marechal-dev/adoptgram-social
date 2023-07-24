@@ -7,12 +7,12 @@ import { User, UserProps } from './user';
 
 interface OrganizationProps extends UserProps {
   title: string;
-  bio?: string;
+  bio?: string | null;
   representativeName: string;
   whatsapp: string;
-  residentialPhone?: string;
+  residentialPhone?: string | null;
   address: Address;
-  pixKey?: string;
+  pixKey?: string | null;
   availablePets: Pet[];
   follows: Follow[];
 }
@@ -47,11 +47,11 @@ export class Organization extends User<OrganizationProps> {
     this.touch();
   }
 
-  public get bio(): string | undefined {
+  public get bio(): string | null | undefined {
     return this.props.bio;
   }
 
-  public set bio(bio: string | undefined) {
+  public set bio(bio: string | null | undefined) {
     this.props.bio = bio;
     this.touch();
   }
@@ -74,11 +74,11 @@ export class Organization extends User<OrganizationProps> {
     this.touch();
   }
 
-  public get residentialPhone(): string | undefined {
+  public get residentialPhone(): string | null | undefined {
     return this.props.residentialPhone;
   }
 
-  public set residentialPhone(residentialPhone: string | undefined) {
+  public set residentialPhone(residentialPhone: string | null | undefined) {
     this.props.residentialPhone = residentialPhone;
     this.touch();
   }
@@ -92,11 +92,11 @@ export class Organization extends User<OrganizationProps> {
     this.touch();
   }
 
-  public get pixKey(): string | undefined {
+  public get pixKey(): string | null | undefined {
     return this.props.pixKey;
   }
 
-  public set pixKey(pixKey: string | undefined) {
+  public set pixKey(pixKey: string | null | undefined) {
     this.props.pixKey = pixKey;
     this.touch();
   }

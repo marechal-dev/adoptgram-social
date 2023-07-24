@@ -1,13 +1,4 @@
-import {
-  UsePipes,
-  Controller,
-  Delete,
-  Get,
-  Post,
-  Put,
-  Body,
-  UseFilters,
-} from '@nestjs/common';
+import { UsePipes, Controller, Post, Body, UseFilters } from '@nestjs/common';
 import { ZodValidationPipe } from 'nestjs-zod';
 
 import { CreateCommonUserDto } from '../dtos/common-users/create-common-user.dto';
@@ -27,21 +18,6 @@ export class CommonUsersController {
     private readonly createCommonUserUseCase: CreateCommonUserUseCase,
   ) {}
 
-  @Get()
-  public async fetch() {
-    //
-  }
-
-  @Get(':id')
-  public async getById() {
-    //
-  }
-
-  @Get('search')
-  public async search() {
-    //
-  }
-
   @Post()
   public async create(
     @Body() createCommonUserDto: CreateCommonUserDto,
@@ -51,15 +27,5 @@ export class CommonUsersController {
     );
 
     return CommonUserViewModel.toHttp(profile);
-  }
-
-  @Put(':id')
-  public async update() {
-    //
-  }
-
-  @Delete(':id')
-  public async delete() {
-    //
   }
 }

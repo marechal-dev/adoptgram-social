@@ -15,10 +15,7 @@ describe('Common Users Controller', () => {
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [InfraModule],
-    })
-      // .overrideProvider(CatsService)
-      // .useValue(catsService)
-      .compile();
+    }).compile();
 
     app = moduleRef.createNestApplication<NestFastifyApplication>(
       new FastifyAdapter(),

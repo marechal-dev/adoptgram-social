@@ -15,7 +15,6 @@ export interface CreateOrganizationUseCaseRequest {
   email: string;
   password: string;
   title: string;
-  bio?: string;
   representativeName: string;
   whatsapp: string;
   residentialPhone?: string;
@@ -38,7 +37,6 @@ export class CreateOrganizationUseCase {
     email,
     password,
     title,
-    bio,
     representativeName,
     whatsapp,
     residentialPhone,
@@ -69,7 +67,6 @@ export class CreateOrganizationUseCase {
       email,
       passwordHash,
       title,
-      bio,
       representativeName,
       whatsapp,
       residentialPhone,

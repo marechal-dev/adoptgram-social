@@ -4,8 +4,6 @@ import { Module } from '@nestjs/common';
 // import env from '@Configs/env';
 
 import { InfraModule } from '@Infra/infra.module';
-import { JwtModule } from '@nestjs/jwt';
-import env from '@Configs/env';
 
 @Module({
   imports: [
@@ -15,10 +13,6 @@ import env from '@Configs/env';
     //     port: env.REDIS_PORT,
     //   },
     // }),
-    JwtModule.register({
-      global: true,
-      secret: env.JWT_SECRET,
-    }),
     InfraModule,
   ],
 })
