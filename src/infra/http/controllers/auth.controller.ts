@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { JwtService } from '@nestjs/jwt';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
 import { AuthenticateUserUseCase } from '@Application/use-cases/authenticate-user';
 
@@ -22,6 +23,7 @@ type LoginResponse = {
 
 @UsePipes(ZodValidationPipe)
 @UseFilters(DomainExceptionFilter, ZodValidationExceptionFilter)
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   public constructor(
@@ -31,6 +33,9 @@ export class AuthController {
 
   @Post('sessions')
   @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({
+    description: 'Login successful.',
+  })
   public async login(@Body() loginDto: LoginDto): Promise<LoginResponse> {
     const { user } = await this.authenticateUserUseCase.execute(loginDto);
 

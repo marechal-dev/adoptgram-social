@@ -1,5 +1,7 @@
 import { UsePipes, Controller, Post, UseFilters, Body } from '@nestjs/common';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'nestjs-zod';
+
 import { DomainExceptionFilter } from '../exception-filters/domain-exception.filter';
 import { ZodValidationExceptionFilter } from '../exception-filters/zod-validation-exception.filter';
 import { CreateOrganizationUseCase } from '@Application/use-cases/create-organization';
@@ -11,6 +13,7 @@ import {
 
 @UsePipes(ZodValidationPipe)
 @UseFilters(DomainExceptionFilter, ZodValidationExceptionFilter)
+@ApiTags('organizations')
 @Controller('organizations')
 export class OrganizationsController {
   public constructor(
@@ -18,6 +21,9 @@ export class OrganizationsController {
   ) {}
 
   @Post()
+  @ApiCreatedResponse({
+    description: 'Organization successfully created.',
+  })
   public async create(
     @Body() createOrganizationDto: CreateOrganizationDto,
   ): Promise<OrganizationHttpViewModel> {

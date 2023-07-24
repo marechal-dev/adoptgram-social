@@ -1,4 +1,5 @@
 import { UsePipes, Controller, Post, Body, UseFilters } from '@nestjs/common';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'nestjs-zod';
 
 import { CreateCommonUserDto } from '../dtos/common-users/create-common-user.dto';
@@ -12,6 +13,7 @@ import {
 
 @UsePipes(ZodValidationPipe)
 @UseFilters(DomainExceptionFilter, ZodValidationExceptionFilter)
+@ApiTags('common-users')
 @Controller('common-users')
 export class CommonUsersController {
   public constructor(
@@ -19,6 +21,9 @@ export class CommonUsersController {
   ) {}
 
   @Post()
+  @ApiCreatedResponse({
+    description: 'Common User successfully created.',
+  })
   public async create(
     @Body() createCommonUserDto: CreateCommonUserDto,
   ): Promise<CommonUserHttpViewModel> {
