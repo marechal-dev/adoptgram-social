@@ -2,6 +2,9 @@
   "name": "social",
   "version": "1.0.0",
   "description": "AdoptGram Main API",
+  "engines": {
+    "node": "18"
+  },
   "author": {
     "name": "Pietro Piva Vieira",
     "email": "pietro.developer@gmail.com"
