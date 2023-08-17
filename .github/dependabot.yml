@@ -3,11 +3,9 @@ version: 2
 updates:
   - package-ecosystem: npm
     directory: "/"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 50
     schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "14:00"
+      interval: "monthly"
       timezone: "America/Sao_Paulo"
     reviewers:
       - "marechal-dev"
