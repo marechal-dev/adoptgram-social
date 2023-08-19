@@ -2,7 +2,7 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 
 import env from '@Configs/env';
 
-const corsOptions: CorsOptions =
+export const corsOptions: CorsOptions =
   env.NODE_ENV === 'development'
     ? {
         origin: '*',
@@ -11,5 +11,3 @@ const corsOptions: CorsOptions =
     : {
         optionsSuccessStatus: 200,
       };
-
-export default corsOptions;

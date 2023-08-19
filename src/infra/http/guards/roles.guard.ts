@@ -7,13 +7,13 @@ import { Roles } from '../decorators/allowed-roles.decorator';
 export class RolesGuard implements CanActivate {
   public constructor(private readonly reflector: Reflector) {}
 
-  public canActivate(context: ExecutionContext): boolean {
-    const roles = this.reflector.get<Roles[]>('roles', context.getHandler());
+  public canActivate(ctx: ExecutionContext): boolean {
+    const roles = this.reflector.get<Roles[]>('roles', ctx.getHandler());
     if (!roles) {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest<FastifyRequest>();
+    const request = ctx.switchToHttp().getRequest<FastifyRequest>();
     const user = request.user;
     if (!user) {
       return false;
