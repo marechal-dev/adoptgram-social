@@ -15,6 +15,9 @@ import { cookieConfigs } from '@Configs/cookies';
 import { setupDevelopmentConfigs } from '@Configs/setup-dev';
 
 import { AppModule } from './app.module';
+import { ZodValidationExceptionFilter } from '@Infra/http/exception-filters/zod-validation-exception.filter';
+import { DomainExceptionFilter } from '@Infra/http/exception-filters/domain-exception.filter';
+import { ZodValidationPipe } from 'nestjs-zod';
 
 const APP_HOST = '0.0.0.0';
 
@@ -24,6 +27,14 @@ async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
+  );
+
+  app.useGlobalPipes(
+    new ZodValidationPipe(),
+  );
+  app.useGlobalFilters(
+    new DomainExceptionFilter(),
+    new ZodValidationExceptionFilter(),
   );
 
   await Promise.all([
