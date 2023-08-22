@@ -1,5 +1,3 @@
-import env from '@Configs/env';
-import { JwtPayload } from '@Infra/utils/jwt-payload';
 import {
   CanActivate,
   ExecutionContext,
@@ -8,6 +6,9 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { FastifyRequest } from 'fastify';
+
+import env from '@Configs/env';
+import { JwtPayload } from '@Infra/utils/jwt-payload';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

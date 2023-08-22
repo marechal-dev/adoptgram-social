@@ -1,10 +1,8 @@
-import { APP_GUARD, APP_PIPE } from '@nestjs/core';
+import { APP_GUARD } from '@nestjs/core';
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-
-import { ZodValidationPipe } from 'nestjs-zod';
 
 import env from '@Configs/env';
 
@@ -26,10 +24,6 @@ import { InfraModule } from '@Infra/infra.module';
     InfraModule,
   ],
   providers: [
-    {
-      provide: APP_PIPE,
-      useClass: ZodValidationPipe,
-    },
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,

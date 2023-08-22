@@ -31,6 +31,9 @@
         "./test/*"
       ]
     },
+    "types": [
+      "vitest/globals",
+    ],
     "incremental": true,
     "skipLibCheck": true,
     "strict": true,
