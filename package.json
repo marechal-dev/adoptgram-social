@@ -45,7 +45,7 @@
     "@nestjs/jwt": "10.1.0",
     "@nestjs/platform-fastify": "10.2.4",
     "@nestjs/throttler": "4.2.1",
-    "@prisma/client": "5.1.1",
+    "@prisma/client": "5.2.0",
     "bcrypt": "5.1.1",
     "bull": "4.11.3",
     "cache-manager": "5.2.3",
