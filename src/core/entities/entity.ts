@@ -1,15 +1,27 @@
-import { UniqueEntityId } from './value-objects/unique-entity-id';
+import { UniqueEntityID } from './unique-entity-id';
 
-export abstract class Entity<TProps> {
-  private readonly _id: UniqueEntityId;
-  protected readonly props: TProps;
+export abstract class Entity<Props> {
+  private _id: UniqueEntityID;
+  protected props: Props;
 
-  protected constructor(props: TProps, id?: UniqueEntityId) {
-    this._id = id ?? new UniqueEntityId();
+  protected constructor(props: Props, id?: UniqueEntityID) {
     this.props = props;
+    this._id = id ?? new UniqueEntityID();
   }
 
-  public get id(): UniqueEntityId {
+  get id() {
     return this._id;
+  }
+
+  public equals(entity: Entity<unknown>) {
+    if (entity === this) {
+      return true;
+    }
+
+    if (entity.id.toString() === this._id.toString()) {
+      return true;
+    }
+
+    return false;
   }
 }

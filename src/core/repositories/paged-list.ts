@@ -1,5 +1,5 @@
-export interface PagedListHttpPayload<TItems> {
-  items: TItems[];
+export interface PagedListHttpPayload<TItem> {
+  items: TItem[];
   currentPage: number;
   pageSize: number;
   totalCount: number;
@@ -7,14 +7,14 @@ export interface PagedListHttpPayload<TItems> {
   hasPreviousPage: boolean;
 }
 
-export class PagedList<TItems> {
-  private readonly items: TItems[];
+export class PagedList<TItem> {
+  private readonly items: TItem[];
   private readonly currentPage: number;
   private readonly pageSize: number;
   private readonly totalCount: number;
 
   public constructor(
-    items: TItems[],
+    items: TItem[],
     currentPage: number,
     pageSize: number,
     totalCount: number,
@@ -33,7 +33,7 @@ export class PagedList<TItems> {
     return this.currentPage > 1;
   }
 
-  public toHttpPayload(): PagedListHttpPayload<TItems> {
+  public toHttpPayload(): PagedListHttpPayload<TItem> {
     return {
       items: this.items,
       currentPage: this.currentPage,
