@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import fastify from 'fastify';
 
-type JwtPayload = {
+type UserPayload = {
   sub: string;
   username: string;
   email: string;
@@ -10,6 +10,6 @@ type JwtPayload = {
 
 declare module 'fastify' {
   export interface FastifyRequest {
-    user?: JwtPayload;
+    user?: UserPayload;
   }
 }
