@@ -8,157 +8,163 @@ datasource db {
 }
 
 // Models
-model CommonUser {
-  id                String  @id @default(uuid())
-  username          String  @unique
-  email             String  @unique
-  passwordHash      String  @map("password_hash")
-  profilePictureUrl String? @map("profile_picture_url")
-  firstName         String  @map("first_name")
-  surname           String
-  cpf               String  @unique
+// model Account {
+//   id                String  @id @default(uuid())
+//   username          String  @unique
+//   email             String  @unique
+//   passwordHash      String  @map("password_hash")
+//   profilePictureUrl String? @map("profile_picture_url")
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+//   CommonUser          CommonUser @relation(fields: [commonUserAccountId], references: [accountId])
+//   commonUserAccountId String
+// }
 
-  following Follow[]
+// model CommonUser {
+//   accountId String    @id @map("account_id")
+//   name      String
+//   cpf       String    @unique
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime? @updatedAt
 
-  @@map("common_users")
-}
+//   account Account @relation(fields: [accountId], references: [id])
+//   // following Follow[]
 
-model Organization {
-  id                 String  @id @default(uuid())
-  username           String  @unique
-  email              String  @unique
-  passwordHash       String  @map("password_hash")
-  profilePictureUrl  String? @map("profile_picture_url")
-  title              String
-  representativeName String  @map("representative_name")
-  bio                String?
-  pixKey             String? @map("pix_key")
-  whatsapp           String
-  residentialNumber  String? @map("residential_number")
+//   @@map("common_us ers")
+// }
 
-  availablePets Pet[]
-  posts         Post[]
-  address       Address?
+// model Organization {
+//   id                 String  @id @default(uuid())
+//   username           String  @unique
+//   email              String  @unique
+//   passwordHash       String  @map("password_hash")
+//   profilePictureUrl  String? @map("profile_picture_url")
+//   title              String
+//   representativeName String  @map("representative_name")
+//   bio                String?
+//   pixKey             String? @map("pix_key")
+//   whatsapp           String
+//   residentialNumber  String? @map("residential_number")
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+//   availablePets Pet[]
+//   posts         Post[]
+//   address       Address?
 
-  followers Follow[]
+//   createdAt DateTime  @default(now())
+//   updatedAt DateTime? @updatedAt
 
-  @@map("organizations")
-}
+//   followers Follow[]
 
-model Pet {
-  id                      String  @id @default(uuid())
-  name                    String
-  bio                     String
-  age                     Int
-  isCastrated             Boolean @map("is_castrated")
-  requireMedicalAttention Boolean @map("require_medical_attention")
-  isVaccinated            Boolean @map("is_vaccinated")
+//   @@map("organizations")
+// }
 
-  size        PetSize
-  energyLevel PetEnergyLevel @map("energy_level")
+// model Pet {
+//   id                      String  @id @default(uuid())
+//   name                    String
+//   bio                     String
+//   age                     Int
+//   isCastrated             Boolean @map("is_castrated")
+//   requireMedicalAttention Boolean @map("require_medical_attention")
+//   isVaccinated            Boolean @map("is_vaccinated")
 
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  organizationId String       @map("organization_id")
+//   size        PetSize
+//   energyLevel PetEnergyLevel @map("energy_level")
 
-  adoptionRequirements AdoptionRequirement[]
+//   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+//   organizationId String       @map("organization_id")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+//   adoptionRequirements AdoptionRequirement[]
 
-  @@index(fields: [organizationId], map: "org_id_fk_idx", type: BTree)
-  @@index(fields: [isCastrated], map: "is_castrated_idx", type: BTree)
-  @@map("pets")
-}
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
 
-model Post {
-  id          String  @id @default(uuid())
-  textContent String?
-  likes       Int
+//   @@index(fields: [organizationId], map: "org_id_fk_idx", type: BTree)
+//   @@index(fields: [isCastrated], map: "is_castrated_idx", type: BTree)
+//   @@map("pets")
+// }
 
-  organizationProfile   Organization @relation(fields: [organizationProfileId], references: [id], onDelete: Cascade)
-  organizationProfileId String       @map("organization_profile_id")
+// model Post {
+//   id          String  @id @default(uuid())
+//   textContent String?
+//   likes       Int
 
-  medias   Media[]
-  comments Comment[]
+//   organizationProfile   Organization @relation(fields: [organizationProfileId], references: [id], onDelete: Cascade)
+//   organizationProfileId String       @map("organization_profile_id")
 
-  @@index([organizationProfileId], map: "post_org_id_idx")
-  @@map("posts")
-}
+//   medias   Media[]
+//   comments Comment[]
 
-model Comment {
-  id      String @id @default(uuid())
-  content String
+//   @@index([organizationProfileId], map: "post_org_id_idx")
+//   @@map("posts")
+// }
 
-  Post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId String @map("post_Id")
+// model Comment {
+//   id      String @id @default(uuid())
+//   content String
 
-  @@index([postId], map: "comment_post_id_idx")
-  @@map("comments")
-}
+//   Post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+//   postId String @map("post_Id")
 
-model Follow {
-  commonUser          CommonUser @relation(fields: [commonUserProfileId], references: [id], onDelete: Cascade)
-  commonUserProfileId String     @map("common_user_profile_id")
+//   @@index([postId], map: "comment_post_id_idx")
+//   @@map("comments")
+// }
 
-  organization          Organization @relation(fields: [organizationProfileId], references: [id], onDelete: Cascade)
-  organizationProfileId String       @map("organization_profile_id")
+// model Follow {
+//   commonUser          CommonUser @relation(fields: [commonUserProfileId], references: [id], onDelete: Cascade)
+//   commonUserProfileId String     @map("common_user_profile_id")
 
-  followedAt DateTime @default(now())
+//   organization          Organization @relation(fields: [organizationProfileId], references: [id], onDelete: Cascade)
+//   organizationProfileId String       @map("organization_profile_id")
 
-  @@id([commonUserProfileId, organizationProfileId])
-  @@index([commonUserProfileId], map: "follow_common_user_profile_idx")
-  @@index([organizationProfileId], map: "follow_organization_profile_idx")
-  @@map("follows")
-}
+//   followedAt DateTime @default(now())
 
-model Address {
-  id           String  @id @default(uuid())
-  firstLine    String  @map("first_line")
-  secondLine   String? @map("second_line")
-  number       String /// "number" is a text because it can be an alphanumeric value, like: "123a"
-  neighborhood String
-  city         String
-  state        String
-  cep          String
+//   @@id([commonUserProfileId, organizationProfileId])
+//   @@index([commonUserProfileId], map: "follow_common_user_profile_idx")
+//   @@index([organizationProfileId], map: "follow_organization_profile_idx")
+//   @@map("follows")
+// }
 
-  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  organizationId String       @unique @map("organization_id")
+// model Address {
+//   id           String  @id @default(uuid())
+//   firstLine    String  @map("first_line")
+//   secondLine   String? @map("second_line")
+//   number       String /// "number" is a text because it can be an alphanumeric value, like: "123a"
+//   neighborhood String
+//   city         String
+//   state        String
+//   cep          String
 
-  @@index([organizationId], map: "address_org_id_idx")
-  @@index([cep], map: "address_cep_idx", type: Hash)
-  @@map("organizations_addresses")
-}
+//   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+//   organizationId String       @unique @map("organization_id")
 
-model AdoptionRequirement {
-  id   String @id @default(uuid())
-  info String
+//   @@index([organizationId], map: "address_org_id_idx")
+//   @@index([cep], map: "address_cep_idx", type: Hash)
+//   @@map("organizations_addresses")
+// }
 
-  requirementType AdoptionRequirementType
+// model AdoptionRequirement {
+//   id   String @id @default(uuid())
+//   info String
 
-  Pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade)
-  petId String @map("pet_id")
+//   requirementType AdoptionRequirementType
 
-  @@index(fields: [petId], map: "adoption_requirements_pet_id_idx", type: BTree)
-  @@map("adoption_requirements")
-}
+//   Pet   Pet    @relation(fields: [petId], references: [id], onDelete: Cascade)
+//   petId String @map("pet_id")
 
-model Media {
-  id   String    @id @default(uuid())
-  type MediaType
-  url  String
+//   @@index(fields: [petId], map: "adoption_requirements_pet_id_idx", type: BTree)
+//   @@map("adoption_requirements")
+// }
 
-  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId String @map("post_id")
+// model Media {
+//   id   String    @id @default(uuid())
+//   type MediaType
+//   url  String
 
-  @@index([postId], map: "media_post_id_idx")
-  @@map("medias")
-}
+//   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+//   postId String @map("post_id")
+
+//   @@index([postId], map: "media_post_id_idx")
+//   @@map("medias")
+// }
 
 // Enums
 enum PetSize {
