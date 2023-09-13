@@ -1,5 +1,8 @@
 import { Test } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 
 import request from 'supertest';
 import { hash } from 'bcrypt';
@@ -8,7 +11,7 @@ import { AppModule } from '@Infra/app.module';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
 
 describe('Authenticate Common User Controller E2E Test Suite', () => {
-  let app: INestApplication;
+  let app: NestFastifyApplication;
   let prisma: PrismaService;
 
   beforeAll(async () => {
@@ -16,10 +19,13 @@ describe('Authenticate Common User Controller E2E Test Suite', () => {
       imports: [AppModule],
     }).compile();
 
-    app = moduleRef.createNestApplication();
+    app = moduleRef.createNestApplication<NestFastifyApplication>(
+      new FastifyAdapter(),
+    );
     prisma = moduleRef.get(PrismaService);
 
     await app.init();
+    await app.getHttpAdapter().getInstance().ready();
   });
 
   afterAll(async () => {
@@ -42,14 +48,14 @@ describe('Authenticate Common User Controller E2E Test Suite', () => {
     });
 
     const response = await request(app.getHttpServer())
-      .post('/api/sessions/common-users')
+      .post('/sessions/common-users')
       .send({
         email,
         password,
       });
 
     expect(response.statusCode).toEqual(200);
-    expect(response.body).toBe(
+    expect(response.body).toEqual(
       expect.objectContaining({
         accessToken: expect.any(String),
       }),
