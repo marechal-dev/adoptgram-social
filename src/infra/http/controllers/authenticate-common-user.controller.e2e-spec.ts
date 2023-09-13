@@ -1,7 +1,7 @@
-import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { RawServerDefault } from 'fastify';
+
+import request from 'supertest';
 import { hash } from 'bcrypt';
 
 import { AppModule } from '@Infra/app.module';
@@ -9,24 +9,17 @@ import { PrismaService } from '@Infra/database/prisma/prisma.service';
 
 describe('Authenticate Common User Controller E2E Test Suite', () => {
   let app: INestApplication;
-  let httpServer: RawServerDefault;
   let prisma: PrismaService;
 
   beforeAll(async () => {
-    console.log(Test);
-
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
-
-    console.log(moduleRef);
 
     app = moduleRef.createNestApplication();
     prisma = moduleRef.get(PrismaService);
 
     await app.init();
-
-    httpServer = app.getHttpServer();
   });
 
   afterAll(async () => {
@@ -48,7 +41,7 @@ describe('Authenticate Common User Controller E2E Test Suite', () => {
       },
     });
 
-    const response = await request(httpServer)
+    const response = await request(app.getHttpServer())
       .post('/api/sessions/common-users')
       .send({
         email,

@@ -8,7 +8,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { FastifyRequest } from 'fastify';
 
-import env from '@Configs/env';
+import { env } from '@Configs/env';
 
 import { IS_PUBLIC_KEY } from './decorators/is-public-route.decorator';
 

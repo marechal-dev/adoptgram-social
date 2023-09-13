@@ -9,10 +9,6 @@ const envSchemaValidator = z.object({
   PORT: z.coerce.number().default(3000),
   JWT_PRIVATE_KEY: z.string(),
   JWT_PUBLIC_KEY: z.string(),
-  COOKIE_SECRET: z.string().default('COOKIE_SECRET_DEV'),
-  MAILER_EDGE_FUNCTION_URL: z.string().url(),
-  REDIS_HOST: z.string().default('localhost'),
-  REDIS_PORT: z.coerce.number().default(6379),
 });
 
 const validation = envSchemaValidator.safeParse(process.env);
@@ -21,6 +17,4 @@ if (!validation.success) {
   throw new Error(`Incorrect Environment Variables\n${process.env}`);
 }
 
-const env = validation.data;
-
-export default env;
+export const env = validation.data;

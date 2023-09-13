@@ -1,7 +1,7 @@
-import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { RawServerDefault } from 'fastify';
+
+import request from 'supertest';
 import { hash } from 'bcrypt';
 
 import { AppModule } from '@Infra/app.module';
@@ -9,7 +9,6 @@ import { PrismaService } from '@Infra/database/prisma/prisma.service';
 
 describe('Authenticate Organization Controller E2E Test Suite', () => {
   let app: INestApplication;
-  let httpServer: RawServerDefault;
   let prisma: PrismaService;
 
   beforeAll(async () => {
@@ -21,8 +20,6 @@ describe('Authenticate Organization Controller E2E Test Suite', () => {
     prisma = moduleRef.get(PrismaService);
 
     await app.init();
-
-    httpServer = app.getHttpServer();
   });
 
   afterAll(async () => {
@@ -46,7 +43,7 @@ describe('Authenticate Organization Controller E2E Test Suite', () => {
       },
     });
 
-    const response = await request(httpServer)
+    const response = await request(app.getHttpServer())
       .post('/api/sessions/organizations')
       .send({
         email,

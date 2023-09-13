@@ -1,5 +1,5 @@
 import { Entity } from '@Core/entities/entity';
-import { UniqueEntityId } from '@Core/entities/value-objects/unique-entity-id';
+import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 
 export interface AddressProps {
   firstLine: string;
@@ -12,7 +12,7 @@ export interface AddressProps {
 }
 
 export class Address extends Entity<AddressProps> {
-  public static create(props: AddressProps, id?: UniqueEntityId) {
+  public static create(props: AddressProps, id?: UniqueEntityID) {
     if (!this.isCepLengthValid(props.cep)) {
       throw new Error('Invalid CEP length');
     }
