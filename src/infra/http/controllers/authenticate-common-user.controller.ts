@@ -36,6 +36,10 @@ export class AuthenticateCommonUserController {
       throw new ForbiddenException(error.message);
     }
 
-    return result.value;
+    const { accessToken } = result.value;
+
+    return {
+      accessToken,
+    };
   }
 }

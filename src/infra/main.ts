@@ -19,8 +19,6 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
-  app.setGlobalPrefix('api');
-
   if (isDevEnv) {
     setupDevelopmentConfigs(app);
   }

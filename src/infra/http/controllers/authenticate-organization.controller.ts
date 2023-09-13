@@ -5,7 +5,9 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  UsePipes,
 } from '@nestjs/common';
+import { ZodValidationPipe } from 'nestjs-zod';
 
 import { IsPublicRoute } from '@Infra/auth/decorators/is-public-route.decorator';
 
@@ -14,6 +16,7 @@ import { AuthenticateOrganizationDto } from '../dtos/authenticate-organization.d
 
 @Controller('/sessions')
 @IsPublicRoute()
+@UsePipes(ZodValidationPipe)
 export class AuthenticateOrganizationController {
   public constructor(
     private readonly authenticateOrganization: AuthenticateOrganizationUseCase,
@@ -25,9 +28,15 @@ export class AuthenticateOrganizationController {
     const result = await this.authenticateOrganization.execute(body);
 
     if (result.isLeft()) {
-      throw new ForbiddenException(result.value.message);
+      const error = result.value;
+
+      throw new ForbiddenException(error.message);
     }
 
-    return result.value;
+    const { accessToken } = result.value;
+
+    return {
+      accessToken,
+    };
   }
 }
