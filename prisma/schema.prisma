@@ -8,54 +8,40 @@ datasource db {
 }
 
 // Models
-// model Account {
-//   id                String  @id @default(uuid())
-//   username          String  @unique
-//   email             String  @unique
-//   passwordHash      String  @map("password_hash")
-//   profilePictureUrl String? @map("profile_picture_url")
+model CommonUser {
+  id                String  @id @default(uuid())
+  username          String  @unique
+  email             String  @unique
+  password          String
+  profilePictureUrl String? @map("profile_picture_url")
+  name              String
+  cpf               String  @unique
 
-//   CommonUser          CommonUser @relation(fields: [commonUserAccountId], references: [accountId])
-//   commonUserAccountId String
-// }
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
-// model CommonUser {
-//   accountId String    @id @map("account_id")
-//   name      String
-//   cpf       String    @unique
-//   createdAt DateTime  @default(now())
-//   updatedAt DateTime? @updatedAt
+  @@map("common_users")
+}
 
-//   account Account @relation(fields: [accountId], references: [id])
-//   // following Follow[]
+model Organization {
+  id                 String  @id @default(uuid())
+  username           String  @unique
+  email              String  @unique
+  password           String
+  profilePictureUrl  String? @map("profile_picture_url")
+  title              String
+  representativeName String  @map("representative_name")
+  cnpj               String  @unique
+  bio                String?
+  pixKey             String? @map("pix_key")
+  whatsapp           String
+  telephoneNumber    String? @map("telephone_number")
 
-//   @@map("common_us ers")
-// }
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
-// model Organization {
-//   id                 String  @id @default(uuid())
-//   username           String  @unique
-//   email              String  @unique
-//   passwordHash       String  @map("password_hash")
-//   profilePictureUrl  String? @map("profile_picture_url")
-//   title              String
-//   representativeName String  @map("representative_name")
-//   bio                String?
-//   pixKey             String? @map("pix_key")
-//   whatsapp           String
-//   residentialNumber  String? @map("residential_number")
-
-//   availablePets Pet[]
-//   posts         Post[]
-//   address       Address?
-
-//   createdAt DateTime  @default(now())
-//   updatedAt DateTime? @updatedAt
-
-//   followers Follow[]
-
-//   @@map("organizations")
-// }
+  @@map("organizations")
+}
 
 // model Pet {
 //   id                      String  @id @default(uuid())

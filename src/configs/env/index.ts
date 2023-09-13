@@ -18,8 +18,7 @@ const envSchemaValidator = z.object({
 const validation = envSchemaValidator.safeParse(process.env);
 
 if (!validation.success) {
-  console.error('Incorrect env variables');
-  process.exit(1);
+  throw new Error(`Incorrect Environment Variables\n${process.env}`);
 }
 
 const env = validation.data;

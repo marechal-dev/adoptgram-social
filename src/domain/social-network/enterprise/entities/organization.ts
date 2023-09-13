@@ -10,6 +10,7 @@ export interface OrganizationProps extends UserProps {
   pixKey?: string | null;
   whatsapp: string;
   telephoneNumber?: string | null;
+  profilePictureUrl?: string | null;
   cnpj: Cnpj;
 }
 
@@ -65,5 +66,9 @@ export class Organization extends User<OrganizationProps> {
 
   public get cnpj() {
     return this.props.cnpj;
+  }
+
+  public get profilePictureUrl() {
+    return this.props.profilePictureUrl;
   }
 }

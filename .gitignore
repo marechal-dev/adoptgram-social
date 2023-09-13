@@ -6,6 +6,12 @@
 .env
 .env.test
 
+# Public/Private Keys
+private_key.pem
+public_key.pem
+private_key.txt
+public_key.txt
+
 # Compodocs output
 documentation
 

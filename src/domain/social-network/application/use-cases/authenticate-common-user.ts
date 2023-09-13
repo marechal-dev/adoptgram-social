@@ -3,7 +3,7 @@ import { CommonUsersRepository } from '../repositories/common-users-repository';
 import { HashComparer } from '../cryptography/hash-comparer';
 import { Encrypter } from '../cryptography/encrypter';
 import { Either, left, right } from '@Core/types/either';
-import { IncorrectCredentialsException } from './exceptions/incorret-credentials-exception';
+import { IncorrectCredentialsException } from './exceptions/incorrect-credentials-exception';
 import { UserPayload } from '@Infra/auth/jwt-auth.guard';
 
 interface AuthenticateCommonUserUseCaseRequest {
