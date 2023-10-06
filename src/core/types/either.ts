@@ -53,7 +53,6 @@ class Right<TLeftValue extends Error, TRightValue> {
 export type Either<L extends Error, R> = Left<L, R> | Right<L, R>;
 
 /**
- *
  * @param value a class instance that extends from `Error`
  * @returns {Left} a `Left` class instance with the encapsulated value
  */
@@ -62,7 +61,6 @@ export const left = <L extends Error, R>(value: L): Either<L, R> => {
 };
 
 /**
- *
  * @param value any value that matches the `R` type constraint
  * @returns {Right} a `Right` class instance with the encapsulated value
  */
