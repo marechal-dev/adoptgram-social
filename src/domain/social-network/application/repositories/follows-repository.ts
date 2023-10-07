@@ -1,6 +1,6 @@
 import { Follow } from '@Domain/social-network/enterprise/entities/follow';
 
-type AccountsIDsParams = {
+export type AccountsIDsParams = {
   commonUserID: string;
   organizationID: string;
 };

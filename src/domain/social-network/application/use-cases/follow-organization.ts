@@ -6,24 +6,20 @@ import { OrganizationsRepository } from '../repositories/organizations-repositor
 import { OrganizationNotFoundException } from './exceptions/organization-not-found-exception';
 import { CommonUserNotFoundException } from './exceptions/common-user-not-found-exception';
 import { FollowsRepository } from '../repositories/follows-repository';
-import { Follow } from '@Domain/social-network/enterprise/entities/follow';
-import { UniqueEntityID } from '@Core/entities/unique-entity-id';
+import { AlreadyFollowingOrganizationException } from './exceptions/already-following-organization-exception';
 
-interface ToggleFollowOnOrganizationUseCaseRequest {
+interface FollowOrganizationUseCaseRequest {
   commonUserID: string;
   organizationID: string;
 }
 
-type ToggleFollowOnOrganizationUseCaseResponse = Either<
-  ResourceNotFoundException,
-  {
-    wasFollowing: boolean;
-    isNowFollowing: boolean;
-  }
+type FollowOrganizationUseCaseResponse = Either<
+  ResourceNotFoundException | AlreadyFollowingOrganizationException,
+  null
 >;
 
 @Injectable()
-export class ToggleFollowOnOrganizationUseCase {
+export class FollowOrganizationUseCase {
   public constructor(
     private readonly commonUsersRepository: CommonUsersRepository,
     private readonly organizationsRepository: OrganizationsRepository,
@@ -33,7 +29,7 @@ export class ToggleFollowOnOrganizationUseCase {
   public async execute({
     commonUserID,
     organizationID,
-  }: ToggleFollowOnOrganizationUseCaseRequest): Promise<ToggleFollowOnOrganizationUseCaseResponse> {
+  }: FollowOrganizationUseCaseRequest): Promise<FollowOrganizationUseCaseResponse> {
     const organization =
       await this.organizationsRepository.findById(organizationID);
 
@@ -52,28 +48,10 @@ export class ToggleFollowOnOrganizationUseCase {
       organizationID,
     });
 
-    if (!follow) {
-      const follow = Follow.create({
-        commonUserID: new UniqueEntityID(commonUserID),
-        organizationID: new UniqueEntityID(organizationID),
-      });
-
-      await this.followsRepository.create(follow);
-
-      return right({
-        isNowFollowing: true,
-        wasFollowing: false,
-      });
+    if (follow) {
+      return left(new AlreadyFollowingOrganizationException());
     }
 
-    await this.followsRepository.deleteOneByAccountsIDs({
-      commonUserID,
-      organizationID,
-    });
-
-    return right({
-      isNowFollowing: false,
-      wasFollowing: true,
-    });
+    return right(null);
   }
 }
