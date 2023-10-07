@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -9,64 +10,74 @@ datasource db {
 
 // Models
 model CommonUser {
-  id                String  @id @default(uuid())
-  username          String  @unique
-  email             String  @unique
+  id                String    @id @default(uuid())
+  username          String    @unique
+  email             String    @unique
   password          String
-  profilePictureUrl String? @map("profile_picture_url")
+  profilePictureUrl String?   @map("profile_picture_url")
   name              String
-  cpf               String  @unique
+  cpf               String    @unique
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime? @updatedAt @map("updated_at")
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  following Follow[]
 
   @@map("common_users")
 }
 
 model Organization {
-  id                 String  @id @default(uuid())
-  username           String  @unique
-  email              String  @unique
+  id                 String    @id @default(uuid())
+  username           String    @unique
+  email              String    @unique
   password           String
-  profilePictureUrl  String? @map("profile_picture_url")
+  profilePictureUrl  String?   @map("profile_picture_url")
   title              String
-  representativeName String  @map("representative_name")
-  cnpj               String  @unique
+  representativeName String    @map("representative_name")
+  cnpj               String    @unique
   bio                String?
-  pixKey             String? @map("pix_key")
+  pixKey             String?   @map("pix_key")
   whatsapp           String
-  telephoneNumber    String? @map("telephone_number")
+  telephoneNumber    String?   @map("telephone_number")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime? @updatedAt @map("updated_at")
 
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
+  followers     Follow[]
+  availablePets Pet[]
 
   @@map("organizations")
 }
 
-// model Pet {
-//   id                      String  @id @default(uuid())
-//   name                    String
-//   bio                     String
-//   age                     Int
-//   isCastrated             Boolean @map("is_castrated")
-//   requireMedicalAttention Boolean @map("require_medical_attention")
-//   isVaccinated            Boolean @map("is_vaccinated")
+model Follow {
+  commonUserID   String @map("common_user_id")
+  organizationID String @map("organization_id")
 
-//   size        PetSize
-//   energyLevel PetEnergyLevel @map("energy_level")
+  organization Organization @relation(fields: [organizationID], references: [id], onDelete: Cascade)
+  commonUser   CommonUser   @relation(fields: [commonUserID], references: [id], onDelete: Cascade)
 
-//   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-//   organizationId String       @map("organization_id")
+  @@id([commonUserID, organizationID])
+  @@map("follows")
+}
 
-//   adoptionRequirements AdoptionRequirement[]
+model Pet {
+  id                      String         @id @default(uuid())
+  name                    String
+  bio                     String
+  age                     Int
+  isCastrated             Boolean        @map("is_castrated")
+  requireMedicalAttention Boolean        @map("require_medical_attention")
+  isVaccinated            Boolean        @map("is_vaccinated")
+  size                    PetSize
+  energyLevel             PetEnergyLevel @map("energy_level")
+  organizationID          String         @map("organization_id")
+  createdAt               DateTime       @default(now())
+  updatedAt               DateTime?      @updatedAt
 
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
+  organization Organization @relation(fields: [organizationID], references: [id], onDelete: Cascade)
 
-//   @@index(fields: [organizationId], map: "org_id_fk_idx", type: BTree)
-//   @@index(fields: [isCastrated], map: "is_castrated_idx", type: BTree)
-//   @@map("pets")
-// }
+  @@index(fields: [organizationID], map: "org_id_fk_idx", type: Hash)
+  @@index(fields: [isCastrated], map: "is_castrated_idx", type: BTree)
+  @@map("pets")
+}
 
 // model Post {
 //   id          String  @id @default(uuid())

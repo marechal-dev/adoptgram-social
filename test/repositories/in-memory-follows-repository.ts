@@ -5,7 +5,7 @@ import {
 import { Follow } from '@Domain/social-network/enterprise/entities/follow';
 
 export class InMemoryFollowsRepository extends FollowsRepository {
-  private readonly items: Follow[] = [];
+  public items: Follow[] = [];
 
   public async create(follow: Follow): Promise<void> {
     this.items.push(follow);
@@ -32,17 +32,11 @@ export class InMemoryFollowsRepository extends FollowsRepository {
     commonUserID,
     organizationID,
   }: AccountsIDsParams): Promise<void> {
-    const itemIndex = this.items.findIndex(
+    this.items = this.items.filter(
       (item) =>
-        item.commonUserID.toString() === commonUserID &&
-        item.organizationID.toString() === organizationID,
+        item.commonUserID.toString() !== commonUserID &&
+        item.organizationID.toString() !== organizationID,
     );
-
-    if (itemIndex < 0) {
-      return;
-    }
-
-    this.items.splice(itemIndex, 1);
   }
 
   public async findManyByOrganizationID(

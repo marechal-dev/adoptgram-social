@@ -5,6 +5,7 @@ import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 
 export interface CommonUserProps extends UserProps {
   name: string;
+  profilePictureUrl?: string | null;
   cpf: Cpf;
 }
 
@@ -20,6 +21,7 @@ export class CommonUser extends User<CommonUserProps> {
         password: props.password,
         name: props.name,
         cpf: props.cpf,
+        profilePictureUrl: props.profilePictureUrl,
         createdAt: props.createdAt ?? new Date(),
         updatedAt: props.updatedAt,
       },

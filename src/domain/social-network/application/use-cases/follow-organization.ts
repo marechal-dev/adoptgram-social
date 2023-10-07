@@ -7,6 +7,7 @@ import { OrganizationNotFoundException } from './exceptions/organization-not-fou
 import { CommonUserNotFoundException } from './exceptions/common-user-not-found-exception';
 import { FollowsRepository } from '../repositories/follows-repository';
 import { AlreadyFollowingOrganizationException } from './exceptions/already-following-organization-exception';
+import { Follow } from '@Domain/social-network/enterprise/entities/follow';
 
 interface FollowOrganizationUseCaseRequest {
   commonUserID: string;
@@ -51,6 +52,13 @@ export class FollowOrganizationUseCase {
     if (follow) {
       return left(new AlreadyFollowingOrganizationException());
     }
+
+    const newFollow = Follow.create({
+      commonUserID: commonUser.id,
+      organizationID: organization.id,
+    });
+
+    await this.followsRepository.create(newFollow);
 
     return right(null);
   }

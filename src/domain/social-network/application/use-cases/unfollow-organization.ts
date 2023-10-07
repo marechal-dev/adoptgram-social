@@ -52,6 +52,11 @@ export class UnfollowOrganizationUseCase {
       return left(new AlreadyUnfollowedOrganizationException());
     }
 
+    await this.followsRepository.deleteOneByAccountsIDs({
+      commonUserID: commonUser.id.toString(),
+      organizationID: organization.id.toString(),
+    });
+
     return right(null);
   }
 }
