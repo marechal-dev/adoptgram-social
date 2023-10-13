@@ -13,7 +13,6 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
     "build": "nest build",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -43,7 +42,8 @@
     "nestjs-zod": "3.0.0",
     "reflect-metadata": "0.1.13",
     "rxjs": "7.8.1",
-    "zod": "3.22.4"
+    "zod": "3.22.4",
+    "zod-validation-error": "1.5.0"
   },
   "devDependencies": {
     "@compodoc/compodoc": "1.1.21",
@@ -64,7 +64,7 @@
     "@vitest/ui": "0.34.6",
     "eslint": "8.51.0",
     "eslint-config-prettier": "9.0.0",
-    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-prettier": "5.0.1",
     "prettier": "3.0.3",
     "prisma": "5.4.1",
     "source-map-support": "0.5.21",
