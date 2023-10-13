@@ -10,3 +10,5 @@ updates:
       timezone: "America/Sao_Paulo"
     reviewers:
       - "marechal-dev"
+    ignore:
+      - dependency-name: "@types/node"
