@@ -1,10 +1,10 @@
-import { Reflector } from '@nestjs/core';
 import {
   CanActivate,
   ExecutionContext,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { FastifyRequest } from 'fastify';
 
@@ -27,12 +27,12 @@ export class JwtAuthGuard implements CanActivate {
   ) {}
 
   public async canActivate(context: ExecutionContext) {
-    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
-      context.getHandler(),
-      context.getClass(),
-    ]);
+    const isPublicRoute = this.reflector.getAllAndOverride<boolean>(
+      IS_PUBLIC_KEY,
+      [context.getHandler(), context.getClass()],
+    );
 
-    if (isPublic) {
+    if (isPublicRoute) {
       return true;
     }
 

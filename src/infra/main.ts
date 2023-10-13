@@ -8,6 +8,7 @@ import { env } from '@Configs/env';
 import { setupDevelopmentConfigs } from '@Configs/setup-dev';
 
 import { AppModule } from './app.module';
+import { ZodValidationExceptionFilter } from './http/exception-filters/zod-validation-exception.filter';
 
 async function bootstrap() {
   const APP_HOST = '0.0.0.0';
@@ -18,6 +19,8 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
+
+  app.useGlobalFilters(new ZodValidationExceptionFilter());
 
   if (isDevEnv) {
     setupDevelopmentConfigs(app);
