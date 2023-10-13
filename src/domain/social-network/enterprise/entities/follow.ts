@@ -1,6 +1,7 @@
 import { Entity } from '@Core/entities/entity';
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import { Optional } from '@Core/types/optional';
+import { FollowID } from './follow-id';
 
 export interface FollowProps {
   commonUserID: UniqueEntityID;
@@ -11,7 +12,7 @@ export interface FollowProps {
 export class Follow extends Entity<FollowProps> {
   public static create(
     props: Optional<FollowProps, 'createdAt'>,
-    id?: UniqueEntityID,
+    id: FollowID,
   ) {
     const follow = new Follow(
       {

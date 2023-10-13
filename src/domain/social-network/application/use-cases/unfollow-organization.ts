@@ -1,12 +1,11 @@
-import { ResourceNotFoundException } from '@Core/exceptions/resource-not-found-exception';
 import { Either, left, right } from '@Core/types/either';
 import { Injectable } from '@nestjs/common';
 import { CommonUsersRepository } from '../repositories/common-users-repository';
-import { OrganizationsRepository } from '../repositories/organizations-repository';
-import { OrganizationNotFoundException } from './exceptions/organization-not-found-exception';
-import { CommonUserNotFoundException } from './exceptions/common-user-not-found-exception';
 import { FollowsRepository } from '../repositories/follows-repository';
-import { AlreadyUnfollowedOrganizationException } from './exceptions/already-unfollowed-organization-exception';
+import { OrganizationsRepository } from '../repositories/organizations-repository';
+import { CommonUserNotFoundException } from './exceptions/common-user-not-found-exception';
+import { NotFollowingOrganizationException } from './exceptions/not-following-organization-exception';
+import { OrganizationNotFoundException } from './exceptions/organization-not-found-exception';
 
 interface UnfollowOrganizationUseCaseRequest {
   commonUserID: string;
@@ -14,7 +13,9 @@ interface UnfollowOrganizationUseCaseRequest {
 }
 
 type UnfollowOrganizationUseCaseResponse = Either<
-  ResourceNotFoundException | AlreadyUnfollowedOrganizationException,
+  | CommonUserNotFoundException
+  | OrganizationNotFoundException
+  | NotFollowingOrganizationException,
   null
 >;
 
@@ -49,7 +50,7 @@ export class UnfollowOrganizationUseCase {
     });
 
     if (!follow) {
-      return left(new AlreadyUnfollowedOrganizationException());
+      return left(new NotFollowingOrganizationException());
     }
 
     await this.followsRepository.deleteOneByAccountsIDs({

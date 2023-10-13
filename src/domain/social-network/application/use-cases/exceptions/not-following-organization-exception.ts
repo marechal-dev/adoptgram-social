@@ -1,10 +1,10 @@
 import { UseCaseException } from '@Core/exceptions/use-case-exception';
 
-export class AlreadyUnfollowedOrganizationException
+export class NotFollowingOrganizationException
   extends Error
   implements UseCaseException
 {
   public constructor() {
-    super('Already unfollowed this Organization');
+    super("You're already not following");
   }
 }
