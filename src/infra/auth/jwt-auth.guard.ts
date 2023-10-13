@@ -23,7 +23,7 @@ export type UserPayload = {
 export class JwtAuthGuard implements CanActivate {
   public constructor(
     private readonly reflector: Reflector,
-    private readonly jwtService: JwtService,
+    private readonly jwt: JwtService,
   ) {}
 
   public async canActivate(context: ExecutionContext) {
@@ -43,11 +43,12 @@ export class JwtAuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
 
-    const [_, token] = authorizationHeaderValue.split('');
+    const [_, token] = authorizationHeaderValue.split(' ');
 
     try {
-      const payload = await this.jwtService.verifyAsync<UserPayload>(token, {
-        publicKey: env.JWT_PUBLIC_KEY,
+      const payload = await this.jwt.verifyAsync<UserPayload>(token, {
+        algorithms: ['RS256'],
+        secret: Buffer.from(env.JWT_PUBLIC_KEY, 'base64'),
       });
 
       request.user = payload;

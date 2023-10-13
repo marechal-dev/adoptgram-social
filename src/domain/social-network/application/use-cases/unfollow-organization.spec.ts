@@ -1,12 +1,12 @@
 import { FakeEncrypter } from '@Testing/cryptography/fake-encrypter';
 import { FakeHasher } from '@Testing/cryptography/fake-hasher';
-import { InMemoryCommonUsersRepository } from '@Testing/repositories/in-memory-common-users-repository';
 import { CommonUserFactory } from '@Testing/factories/common-user-factory';
-import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
-import { InMemoryFollowsRepository } from '@Testing/repositories/in-memory-follows-repository';
-import { OrganizationFactory } from '@Testing/factories/organization-factory';
-import { UnfollowOrganizationUseCase } from './unfollow-organization';
 import { FollowFactory } from '@Testing/factories/follow-factory';
+import { OrganizationFactory } from '@Testing/factories/organization-factory';
+import { InMemoryCommonUsersRepository } from '@Testing/repositories/in-memory-common-users-repository';
+import { InMemoryFollowsRepository } from '@Testing/repositories/in-memory-follows-repository';
+import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
+import { UnfollowOrganizationUseCase } from './unfollow-organization';
 
 let inMemoryCommonUsersRepository: InMemoryCommonUsersRepository;
 let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;

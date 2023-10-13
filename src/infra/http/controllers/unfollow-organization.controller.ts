@@ -7,9 +7,11 @@ import { UserPayload } from '@Infra/auth/jwt-auth.guard';
 import {
   BadRequestException,
   Controller,
+  Delete,
+  HttpCode,
+  HttpStatus,
   NotFoundException,
   Param,
-  Post,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
@@ -24,7 +26,8 @@ export class UnfollowOrganizationController {
     private readonly unfollowOrganization: UnfollowOrganizationUseCase,
   ) {}
 
-  @Post('/:organizationID/unfollow')
+  @Delete('/:organizationID/unfollow')
+  @HttpCode(HttpStatus.NO_CONTENT)
   @AllowedRoles('CommonUser')
   @UseGuards(RolesGuard)
   public async handle(

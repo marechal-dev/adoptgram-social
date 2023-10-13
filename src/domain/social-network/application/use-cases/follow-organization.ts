@@ -1,5 +1,6 @@
 import { Either, left, right } from '@Core/types/either';
 import { Follow } from '@Domain/social-network/enterprise/entities/follow';
+import { FollowID } from '@Domain/social-network/enterprise/entities/follow-id';
 import { Injectable } from '@nestjs/common';
 import { CommonUsersRepository } from '../repositories/common-users-repository';
 import { FollowsRepository } from '../repositories/follows-repository';
@@ -54,10 +55,13 @@ export class FollowOrganizationUseCase {
       return left(new AlreadyFollowingOrganizationException());
     }
 
-    const newFollow = Follow.create({
-      commonUserID: commonUser.id,
-      organizationID: organization.id,
-    });
+    const newFollow = Follow.create(
+      {
+        commonUserID: commonUser.id,
+        organizationID: organization.id,
+      },
+      new FollowID(commonUser.id, organization.id),
+    );
 
     await this.followsRepository.create(newFollow);
 

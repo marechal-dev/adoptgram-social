@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 
-import { hash, compare } from 'bcrypt';
+import { compare, hash } from 'bcrypt';
 
 import { HashComparer } from '@Domain/social-network/application/cryptography/hash-comparer';
 import { HashGenerator } from '@Domain/social-network/application/cryptography/hash-generator';
 
 @Injectable()
 export class BcryptHasher implements HashGenerator, HashComparer {
-  private readonly numberOfRounds = 8;
+  private readonly numberOfRounds = 10;
 
   public async hash(plain: string): Promise<string> {
     return hash(plain, this.numberOfRounds);

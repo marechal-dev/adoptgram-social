@@ -6,6 +6,9 @@ import {
   CommonUserProps,
 } from '@Domain/social-network/enterprise/entities/common-user';
 import { Cpf } from '@Domain/social-network/enterprise/entities/value-objects/cpf';
+import { PrismaCommonUserMapper } from '@Infra/database/prisma/mappers/prisma-common-user-mapper';
+import { PrismaService } from '@Infra/database/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
 
 export class CommonUserFactory {
   public static make(
@@ -23,6 +26,21 @@ export class CommonUserFactory {
       },
       id,
     );
+
+    return commonUser;
+  }
+}
+
+@Injectable()
+export class PrismaCommonUserFactory {
+  public constructor(private readonly prisma: PrismaService) {}
+
+  public async makePrismaCommonUser(data: Partial<CommonUserProps> = {}) {
+    const commonUser = CommonUserFactory.make(data);
+
+    await this.prisma.commonUser.create({
+      data: PrismaCommonUserMapper.toPrisma(commonUser),
+    });
 
     return commonUser;
   }

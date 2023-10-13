@@ -5,6 +5,6 @@ export class NotFollowingOrganizationException
   implements UseCaseException
 {
   public constructor() {
-    super("You're already not following");
+    super("You're already not following this Organization");
   }
 }

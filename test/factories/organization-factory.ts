@@ -6,6 +6,9 @@ import {
   OrganizationProps,
 } from '@Domain/social-network/enterprise/entities/organization';
 import { Cnpj } from '@Domain/social-network/enterprise/entities/value-objects/cnpj';
+import { PrismaOrganizationMapper } from '@Infra/database/prisma/mappers/prisma-organization-mapper';
+import { PrismaService } from '@Infra/database/prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
 
 export class OrganizationFactory {
   public static make(
@@ -25,6 +28,21 @@ export class OrganizationFactory {
       },
       id,
     );
+
+    return organization;
+  }
+}
+
+@Injectable()
+export class PrismaOrganizationFactory {
+  public constructor(private readonly prisma: PrismaService) {}
+
+  public async makePrismaOrganization(data: Partial<OrganizationProps> = {}) {
+    const organization = OrganizationFactory.make(data);
+
+    await this.prisma.organization.create({
+      data: PrismaOrganizationMapper.toPrisma(organization),
+    });
 
     return organization;
   }
