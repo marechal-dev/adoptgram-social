@@ -23,11 +23,10 @@ jobs:
         with:
           node-version: 18
           cache: "npm"
-
       - run: npm ci
       - run: npm run test:e2e
         env:
           NODE_ENV: test
-          JWT_PRIVATE_KEY: ${{ secrets.JWT_PRIVATE_KEY }}
-          JWT_PUBLIC_KEY: ${{ secrets.JWT_PUBLIC_KEY }}
+          JWT_PRIVATE_KEY: ${{ secrets.JWTPRIVATEKEY }}
+          JWT_PUBLIC_KEY: ${{ secrets.JWTPUBLICKEY }}
           DATABASE_URL: "postgresql://docker:docker@localhost:5432/adoptgram_social?schema=public"
