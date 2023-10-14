@@ -29,7 +29,8 @@
     "test:e2e:watch": "vitest watch --config ./vitest.config.e2e.ts",
     "test:e2e:cov": "vitest run --config ./vitest.config.e2e.ts --coverage",
     "test:e2e:ui": "vitest run --config ./vitest.config.e2e.ts --ui",
-    "test:e2e:debug": "vitest run --config ./vitest.config.e2e.ts --inspect-brk --inspect --logHeapUsage --threads=false"
+    "test:e2e:debug": "vitest run --config ./vitest.config.e2e.ts --inspect-brk --inspect --logHeapUsage --threads=false",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@nestjs/common": "10.2.7",
@@ -47,6 +48,8 @@
     "zod-validation-error": "1.5.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "17.8.0",
+    "@commitlint/config-conventional": "17.8.0",
     "@compodoc/compodoc": "1.1.21",
     "@faker-js/faker": "8.1.0",
     "@fastify/static": "6.11.2",
@@ -66,6 +69,8 @@
     "eslint": "8.51.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-prettier": "5.0.1",
+    "husky": "^8.0.0",
+    "lint-staged": "14.0.1",
     "prettier": "3.0.3",
     "prisma": "5.4.2",
     "source-map-support": "0.5.21",
