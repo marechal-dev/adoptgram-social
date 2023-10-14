@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint",
+    "prisma.prisma",
+    "chrmarti.regex",
+    "mattpocock.ts-error-translator",
+    "redhat.vscode-yaml"
+  ]
+}

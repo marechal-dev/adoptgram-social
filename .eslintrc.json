@@ -6,7 +6,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -15,9 +15,11 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "@typescript-eslint/eslint-plugin"
+    "@typescript-eslint/eslint-plugin",
+    "prettier"
   ],
   "rules": {
+    "prettier/prettier": "error",
     "indent": [
       "off"
     ],
