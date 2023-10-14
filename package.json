@@ -48,6 +48,8 @@
     "zod-validation-error": "1.5.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "17.8.0",
+    "@commitlint/config-conventional": "17.8.0",
     "@compodoc/compodoc": "1.1.21",
     "@faker-js/faker": "8.1.0",
     "@fastify/static": "6.11.2",
@@ -67,6 +69,7 @@
     "eslint": "8.51.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-prettier": "5.0.1",
+    "husky": "^8.0.0",
     "lint-staged": "14.0.1",
     "prettier": "3.0.3",
     "prisma": "5.4.2",
@@ -76,7 +79,6 @@
     "typescript": "5.2.2",
     "unplugin-swc": "1.4.3",
     "vite-tsconfig-paths": "4.2.1",
-    "vitest": "0.34.6",
-    "husky": "^8.0.0"
+    "vitest": "0.34.6"
   }
 }
