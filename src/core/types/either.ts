@@ -3,7 +3,7 @@
  * It is primarely used for, instead of throwing,
  * returning an error from the method execution.
  */
-class Left<TLeftValue extends Error, TRightValue> {
+class Left<TLeftValue, TRightValue> {
   public readonly value: TLeftValue;
 
   public constructor(value: TLeftValue) {
@@ -24,7 +24,7 @@ class Left<TLeftValue extends Error, TRightValue> {
  * success of a method execution. It encapsulates the
  * returned value from the sucessful method execution.
  */
-class Right<TLeftValue extends Error, TRightValue> {
+class Right<TLeftValue, TRightValue> {
   public readonly value: TRightValue;
 
   public constructor(value: TRightValue) {
@@ -50,13 +50,13 @@ class Right<TLeftValue extends Error, TRightValue> {
  * to continue the execution, but when the code throws, it returns
  * to the **left** for handling the exception.
  */
-export type Either<L extends Error, R> = Left<L, R> | Right<L, R>;
+export type Either<L, R> = Left<L, R> | Right<L, R>;
 
 /**
  * @param value a class instance that extends from `Error`
  * @returns {Left} a `Left` class instance with the encapsulated value
  */
-export const left = <L extends Error, R>(value: L): Either<L, R> => {
+export const left = <L, R>(value: L): Either<L, R> => {
   return new Left(value);
 };
 
@@ -64,6 +64,6 @@ export const left = <L extends Error, R>(value: L): Either<L, R> => {
  * @param value any value that matches the `R` type constraint
  * @returns {Right} a `Right` class instance with the encapsulated value
  */
-export const right = <L extends Error, R>(value: R): Either<L, R> => {
+export const right = <L, R>(value: R): Either<L, R> => {
   return new Right(value);
 };
