@@ -20,6 +20,7 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
+  app.setGlobalPrefix('/api');
   app.useGlobalFilters(new ZodValidationExceptionFilter());
 
   if (isDevEnv) {

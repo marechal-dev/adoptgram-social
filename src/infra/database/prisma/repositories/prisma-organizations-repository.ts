@@ -1,8 +1,10 @@
+import { PagedList } from '@Core/repositories/paged-list';
+import { PaginationParams } from '@Core/repositories/pagination-params';
 import { OrganizationsRepository } from '@Domain/social-network/application/repositories/organizations-repository';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
 import { PrismaOrganizationMapper } from '../mappers/prisma-organization-mapper';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PrismaOrganizationsRepository extends OrganizationsRepository {
@@ -16,6 +18,38 @@ export class PrismaOrganizationsRepository extends OrganizationsRepository {
     await this.prisma.organization.create({
       data,
     });
+  }
+
+  public async findManyByTitle(
+    title: string,
+    { page, pageSize }: PaginationParams,
+  ): Promise<PagedList<Organization>> {
+    const organizations = await this.prisma.organization.findMany({
+      where: {
+        title: {
+          search: title,
+        },
+      },
+      orderBy: {
+        _relevance: {
+          fields: ['title'],
+          search: 'database',
+          sort: 'desc',
+        },
+      },
+    });
+
+    const currentPage = organizations.slice(
+      (page - 1) * pageSize,
+      page * pageSize,
+    );
+
+    return new PagedList(
+      currentPage.map(PrismaOrganizationMapper.toDomain),
+      page,
+      pageSize,
+      organizations.length,
+    );
   }
 
   public async findById(id: string): Promise<Organization | null> {
