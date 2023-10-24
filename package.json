@@ -45,7 +45,7 @@
     "reflect-metadata": "0.1.13",
     "rxjs": "7.8.1",
     "zod": "3.22.4",
-    "zod-validation-error": "1.5.0"
+    "zod-validation-error": "2.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "17.8.0",
