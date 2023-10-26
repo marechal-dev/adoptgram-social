@@ -1,8 +1,8 @@
 import { FakeEncrypter } from '@Testing/cryptography/fake-encrypter';
 import { FakeHasher } from '@Testing/cryptography/fake-hasher';
+import { CommonUserFactory } from '@Testing/factories/common-user-factory';
 import { InMemoryCommonUsersRepository } from '@Testing/repositories/in-memory-common-users-repository';
 import { AuthenticateCommonUserUseCase } from './authenticate-common-user';
-import { CommonUserFactory } from '@Testing/factories/common-user-factory';
 
 let inMemoryCommonUsersRepository: InMemoryCommonUsersRepository;
 let fakeHasher: FakeHasher;
@@ -38,6 +38,7 @@ describe('Authenticate Common User Use Case Test Suite', () => {
     expect(result.isRight()).toBe(true);
     expect(result.value).toEqual({
       accessToken: expect.any(String),
+      userID: expect.any(String),
     });
   });
 });

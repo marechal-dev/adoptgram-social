@@ -1,8 +1,8 @@
 import { FakeEncrypter } from '@Testing/cryptography/fake-encrypter';
 import { FakeHasher } from '@Testing/cryptography/fake-hasher';
+import { OrganizationFactory } from '@Testing/factories/organization-factory';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
 import { AuthenticateOrganizationUseCase } from './authenticate-organization';
-import { OrganizationFactory } from '@Testing/factories/organization-factory';
 
 let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;
 let fakeHasher: FakeHasher;
@@ -38,6 +38,7 @@ describe('Authenticate Organization Use Case Test Suite', () => {
     expect(result.isRight()).toBe(true);
     expect(result.value).toEqual({
       accessToken: expect.any(String),
+      userID: expect.any(String),
     });
   });
 });
