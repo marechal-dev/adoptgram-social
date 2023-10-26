@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { OrganizationsRepository } from '../repositories/organizations-repository';
 import { Either, left, right } from '@Core/types/either';
-import { IncorrectCredentialsException } from './exceptions/incorrect-credentials-exception';
-import { HashComparer } from '../cryptography/hash-comparer';
-import { Encrypter } from '../cryptography/encrypter';
 import { UserPayload } from '@Infra/auth/jwt-auth.guard';
+import { Injectable } from '@nestjs/common';
+import { Encrypter } from '../cryptography/encrypter';
+import { HashComparer } from '../cryptography/hash-comparer';
+import { OrganizationsRepository } from '../repositories/organizations-repository';
+import { IncorrectCredentialsException } from './exceptions/incorrect-credentials-exception';
 
 interface AuthenticateOrganizationUseCaseRequest {
   email: string;
@@ -13,7 +13,7 @@ interface AuthenticateOrganizationUseCaseRequest {
 
 type AuthenticateOrganizationUseCaseResponse = Either<
   IncorrectCredentialsException,
-  { accessToken: string }
+  { accessToken: string; userID: string }
 >;
 
 @Injectable()
@@ -53,6 +53,7 @@ export class AuthenticateOrganizationUseCase {
     const accessToken = await this.encrypter.encrypt(userPayload);
 
     return right({
+      userID: organization.id.toString(),
       accessToken,
     });
   }

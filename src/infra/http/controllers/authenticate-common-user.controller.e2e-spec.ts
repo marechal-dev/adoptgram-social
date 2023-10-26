@@ -1,11 +1,11 @@
-import { Test } from '@nestjs/testing';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { Test } from '@nestjs/testing';
 
-import request from 'supertest';
 import { hash } from 'bcrypt';
+import request from 'supertest';
 
 import { AppModule } from '@Infra/app.module';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
@@ -58,6 +58,7 @@ describe('Authenticate Common User Controller E2E Test Suite', () => {
     expect(response.body).toEqual(
       expect.objectContaining({
         accessToken: expect.any(String),
+        userID: expect.any(String),
       }),
     );
   });

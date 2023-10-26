@@ -33,9 +33,10 @@ export class AuthenticateOrganizationController {
       throw new ForbiddenException(error.message);
     }
 
-    const { accessToken } = result.value;
+    const { accessToken, userID } = result.value;
 
     return {
+      userID,
       accessToken,
     };
   }
