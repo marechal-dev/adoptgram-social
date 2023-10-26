@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { CommonUsersRepository } from '../repositories/common-users-repository';
-import { HashComparer } from '../cryptography/hash-comparer';
-import { Encrypter } from '../cryptography/encrypter';
 import { Either, left, right } from '@Core/types/either';
-import { IncorrectCredentialsException } from './exceptions/incorrect-credentials-exception';
 import { UserPayload } from '@Infra/auth/jwt-auth.guard';
+import { Injectable } from '@nestjs/common';
+import { Encrypter } from '../cryptography/encrypter';
+import { HashComparer } from '../cryptography/hash-comparer';
+import { CommonUsersRepository } from '../repositories/common-users-repository';
+import { IncorrectCredentialsException } from './exceptions/incorrect-credentials-exception';
 
 interface AuthenticateCommonUserUseCaseRequest {
   email: string;
@@ -14,6 +14,7 @@ interface AuthenticateCommonUserUseCaseRequest {
 type AuthenticateCommonUserUseCaseResponse = Either<
   IncorrectCredentialsException,
   {
+    userID: string;
     accessToken: string;
   }
 >;
@@ -55,6 +56,7 @@ export class AuthenticateCommonUserUseCase {
     const accessToken = await this.encrypter.encrypt(userPayload);
 
     return right({
+      userID: commonUser.id.toString(),
       accessToken,
     });
   }
