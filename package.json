@@ -53,7 +53,7 @@
     "@compodoc/compodoc": "1.1.22",
     "@faker-js/faker": "8.2.0",
     "@fastify/static": "6.11.2",
-    "@nestjs/cli": "10.2.0",
+    "@nestjs/cli": "10.2.1",
     "@nestjs/schematics": "10.0.2",
     "@nestjs/swagger": "7.1.14",
     "@nestjs/testing": "10.2.7",
