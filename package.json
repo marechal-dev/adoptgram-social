@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AdoptGram Main API",
   "engines": {
-    "node": "18.18.2"
+    "node": "20.9.0"
   },
   "author": {
     "name": "Pietro Piva Vieira",
