@@ -1,6 +1,6 @@
 import { FakeEncrypter } from '@Testing/cryptography/fake-encrypter';
 import { FakeHasher } from '@Testing/cryptography/fake-hasher';
-import { OrganizationFactory } from '@Testing/factories/organization-factory';
+import { makeOrganization } from '@Testing/factories/organization-factory';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
 import { AuthenticateOrganizationUseCase } from './authenticate-organization';
 
@@ -23,7 +23,7 @@ describe('Authenticate Organization Use Case Test Suite', () => {
   });
 
   it('should be able to authenticate an organization', async () => {
-    const organization = OrganizationFactory.make({
+    const organization = makeOrganization({
       email: 'johndoe@example.com',
       password: await fakeHasher.hash('123456'),
     });

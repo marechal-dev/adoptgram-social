@@ -12,6 +12,7 @@ import { OrganizationAlreadyExistsException } from '@Domain/social-network/appli
 import { RegisterOrganizationUseCase } from '@Domain/social-network/application/use-cases/register-organization';
 import { InvalidCnpjException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cnpj';
 import { IsPublicRoute } from '@Infra/auth/decorators/is-public-route.decorator';
+import { ApiTags } from '@nestjs/swagger';
 import { RegisterOrganizationDTO } from '../dtos/register-organization.dto';
 
 @Controller('/organizations')
@@ -23,6 +24,7 @@ export class RegisterOrganizationController {
   ) {}
 
   @Post()
+  @ApiTags('Organization')
   public async handle(@Body() body: RegisterOrganizationDTO) {
     const result = await this.registerOrganization.execute(body);
 

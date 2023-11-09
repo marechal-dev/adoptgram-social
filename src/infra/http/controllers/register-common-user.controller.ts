@@ -12,6 +12,7 @@ import { CommonUserAlreadyExistsException } from '@Domain/social-network/applica
 import { RegisterCommonUserUseCase } from '@Domain/social-network/application/use-cases/register-common-user';
 import { InvalidCpfException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cpf';
 import { IsPublicRoute } from '@Infra/auth/decorators/is-public-route.decorator';
+import { ApiTags } from '@nestjs/swagger';
 import { RegisterCommonUserDTO } from '../dtos/register-common-user.dto';
 
 @Controller('/common-users')
@@ -23,6 +24,7 @@ export class RegisterCommonUserController {
   ) {}
 
   @Post()
+  @ApiTags('Common User')
   public async handle(@Body() body: RegisterCommonUserDTO) {
     const result = await this.registerCommonUser.execute(body);
 

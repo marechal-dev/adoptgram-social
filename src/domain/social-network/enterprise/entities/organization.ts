@@ -1,7 +1,7 @@
+import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import { Optional } from '@Core/types/optional';
 import { User, UserProps } from './user';
 import { Cnpj } from './value-objects/cnpj';
-import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 
 export interface OrganizationProps extends UserProps {
   title: string;
@@ -11,6 +11,8 @@ export interface OrganizationProps extends UserProps {
   whatsapp: string;
   telephoneNumber?: string | null;
   profilePictureUrl?: string | null;
+  city: string;
+  state: string;
   cnpj: Cnpj;
 }
 
@@ -31,6 +33,9 @@ export class Organization extends User<OrganizationProps> {
         pixKey: props.pixKey,
         whatsapp: props.whatsapp,
         telephoneNumber: props.telephoneNumber,
+        profilePictureUrl: props.profilePictureUrl,
+        city: props.city,
+        state: props.state,
         createdAt: props.createdAt ?? new Date(),
         updatedAt: props.updatedAt,
       },
@@ -70,5 +75,13 @@ export class Organization extends User<OrganizationProps> {
 
   public get profilePictureUrl() {
     return this.props.profilePictureUrl;
+  }
+
+  public get city() {
+    return this.props.city;
+  }
+
+  public get state() {
+    return this.props.state;
   }
 }

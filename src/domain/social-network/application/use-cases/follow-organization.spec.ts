@@ -1,12 +1,11 @@
 import { FakeEncrypter } from '@Testing/cryptography/fake-encrypter';
 import { FakeHasher } from '@Testing/cryptography/fake-hasher';
+import { makeCommonUser } from '@Testing/factories/common-user-factory';
+import { makeOrganization } from '@Testing/factories/organization-factory';
 import { InMemoryCommonUsersRepository } from '@Testing/repositories/in-memory-common-users-repository';
-import { AuthenticateCommonUserUseCase } from './authenticate-common-user';
-import { CommonUserFactory } from '@Testing/factories/common-user-factory';
+import { InMemoryFollowsRepository } from '@Testing/repositories/in-memory-follows-repository';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
 import { FollowOrganizationUseCase } from './follow-organization';
-import { InMemoryFollowsRepository } from '@Testing/repositories/in-memory-follows-repository';
-import { OrganizationFactory } from '@Testing/factories/organization-factory';
 
 let inMemoryCommonUsersRepository: InMemoryCommonUsersRepository;
 let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;
@@ -31,8 +30,8 @@ describe('Follow Organization Use Case Test Suite', () => {
   });
 
   it('should be able to follow an organization', async () => {
-    const commonUser = CommonUserFactory.make();
-    const organization = OrganizationFactory.make();
+    const commonUser = makeCommonUser();
+    const organization = makeOrganization();
 
     await inMemoryCommonUsersRepository.create(commonUser);
     await inMemoryOrganizationsRepository.create(organization);

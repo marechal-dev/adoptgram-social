@@ -46,6 +46,8 @@ describe('Authenticate Organization Controller E2E Test Suite', () => {
         representativeName: 'John Doe',
         whatsapp: '(53) 98888-1234',
         cnpj: '99.999.999/0001-99',
+        city: 'Rio Grande',
+        state: 'Rio Grande do Sul',
       },
     });
 

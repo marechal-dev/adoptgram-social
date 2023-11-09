@@ -1,4 +1,4 @@
-import { OrganizationFactory } from '@Testing/factories/organization-factory';
+import { makeOrganization } from '@Testing/factories/organization-factory';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
 import { FindOrganizationByIdUseCase } from './find-organization-by-id';
 
@@ -14,7 +14,7 @@ describe('Find Organization By ID Test Suite', () => {
   });
 
   it("should be able to fetch an existent organization by it's ID", async () => {
-    const organization = OrganizationFactory.make({
+    const organization = makeOrganization({
       title: 'Lambeijos de Luz',
     });
 

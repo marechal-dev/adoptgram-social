@@ -12,6 +12,7 @@ import { ZodValidationPipe } from 'nestjs-zod';
 import { IsPublicRoute } from '@Infra/auth/decorators/is-public-route.decorator';
 
 import { AuthenticateOrganizationUseCase } from '@Domain/social-network/application/use-cases/authenticate-organization';
+import { ApiTags } from '@nestjs/swagger';
 import { AuthenticateOrganizationDto } from '../dtos/authenticate-organization.dto';
 
 @Controller('/sessions')
@@ -24,6 +25,7 @@ export class AuthenticateOrganizationController {
 
   @Post('/organizations')
   @HttpCode(HttpStatus.OK)
+  @ApiTags('Authentication')
   public async handle(@Body() body: AuthenticateOrganizationDto) {
     const result = await this.authenticateOrganization.execute(body);
 
