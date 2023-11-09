@@ -15,6 +15,7 @@ import {
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { AllowedRoles } from '../decorators/allowed-roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
@@ -27,6 +28,8 @@ export class UnfollowOrganizationController {
   ) {}
 
   @Delete('/:organizationID/unfollow')
+  @ApiTags('Follow')
+  @ApiBearerAuth()
   @HttpCode(HttpStatus.NO_CONTENT)
   @AllowedRoles('CommonUser')
   @UseGuards(RolesGuard)

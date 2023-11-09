@@ -10,25 +10,23 @@ import { PrismaCommonUserMapper } from '@Infra/database/prisma/mappers/prisma-co
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 
-export class CommonUserFactory {
-  public static make(
-    override: Partial<CommonUserProps> = {},
-    id?: UniqueEntityID,
-  ) {
-    const commonUser = CommonUser.create(
-      {
-        username: faker.internet.userName(),
-        email: faker.internet.email(),
-        password: faker.internet.password(),
-        name: faker.person.fullName(),
-        cpf: override.cpf ?? Cpf.create('000.000.000-00'),
-        ...override,
-      },
-      id,
-    );
+export function makeCommonUser(
+  override: Partial<CommonUserProps> = {},
+  id?: UniqueEntityID,
+) {
+  const commonUser = CommonUser.create(
+    {
+      username: faker.internet.userName(),
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+      name: faker.person.fullName(),
+      cpf: override.cpf ?? Cpf.create('000.000.000-00'),
+      ...override,
+    },
+    id,
+  );
 
-    return commonUser;
-  }
+  return commonUser;
 }
 
 @Injectable()
@@ -36,7 +34,7 @@ export class PrismaCommonUserFactory {
   public constructor(private readonly prisma: PrismaService) {}
 
   public async makePrismaCommonUser(data: Partial<CommonUserProps> = {}) {
-    const commonUser = CommonUserFactory.make(data);
+    const commonUser = makeCommonUser(data);
 
     await this.prisma.commonUser.create({
       data: PrismaCommonUserMapper.toPrisma(commonUser),

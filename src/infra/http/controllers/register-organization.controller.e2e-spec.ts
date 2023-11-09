@@ -42,6 +42,8 @@ describe('Create Organization Controller E2E Test Suite', () => {
         representativeName: 'John Doe',
         cnpj: '00.000.000/0001-00',
         whatsapp: '(53) 98888-7777',
+        city: 'Rio Grande',
+        state: 'Rio Grande do Sul',
       });
 
     expect(response.statusCode).toEqual(201);

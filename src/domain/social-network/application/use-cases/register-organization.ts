@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
 import { Either, left, right } from '@Core/types/either';
-import { HashGenerator } from '../cryptography/hash-generator';
-import { OrganizationAlreadyExistsException } from './exceptions/organization-already-exists-exception';
 import { InvalidCnpjException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cnpj';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
-import { OrganizationsRepository } from '../repositories/organizations-repository';
 import { Cnpj } from '@Domain/social-network/enterprise/entities/value-objects/cnpj';
+import { HashGenerator } from '../cryptography/hash-generator';
+import { OrganizationsRepository } from '../repositories/organizations-repository';
+import { OrganizationAlreadyExistsException } from './exceptions/organization-already-exists-exception';
 
 interface RegisterOrganizationUseCaseRequest {
   username: string;
@@ -16,6 +16,8 @@ interface RegisterOrganizationUseCaseRequest {
   representativeName: string;
   cnpj: string;
   whatsapp: string;
+  city: string;
+  state: string;
   telephoneNumber?: string | null;
   pixKey?: string | null;
 }
@@ -44,6 +46,8 @@ export class RegisterOrganizationUseCase {
     whatsapp,
     telephoneNumber,
     pixKey,
+    city,
+    state,
   }: RegisterOrganizationUseCaseRequest): Promise<RegisterOrganizationUseCaseResponse> {
     // Before taking 3 round-trips to the Database, validate the CNPJ
     const cnpjResult = Cnpj.createFromText(cnpj);
@@ -87,6 +91,8 @@ export class RegisterOrganizationUseCase {
       whatsapp,
       telephoneNumber,
       pixKey,
+      city,
+      state,
     });
 
     await this.organizationsRepository.create(organization);

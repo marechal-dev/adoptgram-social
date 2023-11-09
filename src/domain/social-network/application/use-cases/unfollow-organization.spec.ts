@@ -1,8 +1,8 @@
 import { FakeEncrypter } from '@Testing/cryptography/fake-encrypter';
 import { FakeHasher } from '@Testing/cryptography/fake-hasher';
-import { CommonUserFactory } from '@Testing/factories/common-user-factory';
-import { FollowFactory } from '@Testing/factories/follow-factory';
-import { OrganizationFactory } from '@Testing/factories/organization-factory';
+import { makeCommonUser } from '@Testing/factories/common-user-factory';
+import { makeFollow } from '@Testing/factories/follow-factory';
+import { makeOrganization } from '@Testing/factories/organization-factory';
 import { InMemoryCommonUsersRepository } from '@Testing/repositories/in-memory-common-users-repository';
 import { InMemoryFollowsRepository } from '@Testing/repositories/in-memory-follows-repository';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
@@ -31,13 +31,13 @@ describe('Unfollow Organization Use Case Test Suite', () => {
   });
 
   it('should be able to unfollow an organization', async () => {
-    const commonUser = CommonUserFactory.make();
-    const organization = OrganizationFactory.make();
+    const commonUser = makeCommonUser();
+    const organization = makeOrganization();
 
     await inMemoryCommonUsersRepository.create(commonUser);
     await inMemoryOrganizationsRepository.create(organization);
 
-    const follow = FollowFactory.make({
+    const follow = makeFollow({
       commonUserID: commonUser.id,
       organizationID: organization.id,
     });

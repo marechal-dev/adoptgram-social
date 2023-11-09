@@ -7,6 +7,7 @@ import {
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { AllowedRoles } from '../decorators/allowed-roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
@@ -20,6 +21,8 @@ export class FindOrganizationByIdController {
   ) {}
 
   @Get('/:id')
+  @ApiTags('Organization')
+  @ApiBearerAuth()
   @AllowedRoles('Admin', 'Organization', 'CommonUser')
   @UseGuards(RolesGuard)
   public async handle(@Param('id') organizationID: string) {

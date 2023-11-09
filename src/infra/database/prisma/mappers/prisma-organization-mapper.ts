@@ -1,7 +1,7 @@
-import { Prisma, Organization as PrismaOrganization } from '@prisma/client';
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
 import { Cnpj } from '@Domain/social-network/enterprise/entities/value-objects/cnpj';
+import { Prisma, Organization as PrismaOrganization } from '@prisma/client';
 
 export class PrismaOrganizationMapper {
   public static toPrisma(
@@ -20,7 +20,8 @@ export class PrismaOrganizationMapper {
       telephoneNumber: organization.telephoneNumber,
       bio: organization.bio,
       pixKey: organization.pixKey,
-
+      city: organization.city,
+      state: organization.state,
       createdAt: organization.createdAt,
       updatedAt: organization.updatedAt,
     };
@@ -40,6 +41,8 @@ export class PrismaOrganizationMapper {
         pixKey: raw.pixKey,
         profilePictureUrl: raw.profilePictureUrl,
         telephoneNumber: raw.telephoneNumber,
+        city: raw.city,
+        state: raw.state,
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
       },

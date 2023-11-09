@@ -7,7 +7,7 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common';
-import { ApiCreatedResponse } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'nestjs-zod';
 
 import { AuthenticateCommonUserUseCase } from '@Domain/social-network/application/use-cases/authenticate-common-user';
@@ -24,6 +24,7 @@ export class AuthenticateCommonUserController {
 
   @Post('/common-users')
   @HttpCode(HttpStatus.OK)
+  @ApiTags('Authentication')
   @ApiCreatedResponse({
     description: 'Common User successfully authenticated',
   })

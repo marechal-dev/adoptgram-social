@@ -39,29 +39,16 @@ model Organization {
   pixKey             String?   @map("pix_key")
   whatsapp           String
   telephoneNumber    String?   @map("telephone_number")
+  city               String
+  state              String
   createdAt          DateTime  @default(now()) @map("created_at")
   updatedAt          DateTime? @updatedAt @map("updated_at")
 
   followers     Follow[]
   availablePets Pet[]
   posts         Post[]
-  localization  Localization?
 
   @@map("organizations")
-}
-
-model Localization {
-  id             String  @id @default(uuid())
-  latitude       Decimal
-  longitude      Decimal
-  cep            String
-  addressLine    String
-  organizationId String  @unique
-
-  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-
-  @@index([cep], map: "localization_cep_idx", type: BTree)
-  @@map("localizations")
 }
 
 model Follow {
@@ -79,7 +66,7 @@ model Follow {
 model Pet {
   id                      String         @id @default(uuid())
   name                    String
-  bio                     String
+  bio                     String?
   age                     Int
   isCastrated             Boolean        @map("is_castrated")
   requireMedicalAttention Boolean        @map("require_medical_attention")
@@ -90,30 +77,17 @@ model Pet {
   createdAt               DateTime       @default(now())
   updatedAt               DateTime?      @updatedAt
 
-  ownerOrganization    Organization          @relation(fields: [ownerOrganizationID], references: [id], onDelete: Cascade)
-  adoptionRequirements AdoptionRequirement[]
+  ownerOrganization Organization @relation(fields: [ownerOrganizationID], references: [id], onDelete: Cascade)
 
   @@index(fields: [ownerOrganizationID], map: "org_id_fk_idx", type: BTree)
   @@index(fields: [isCastrated], map: "is_castrated_idx", type: BTree)
   @@map("pets")
 }
 
-model AdoptionRequirement {
-  id              String                  @id @default(uuid())
-  description     String
-  requirementType AdoptionRequirementType
-  petId           String
-
-  pet Pet @relation(fields: [petId], references: [id], onDelete: Cascade)
-
-  @@index([petId], map: "adoption_requirement_pet_id_idx", type: BTree)
-  @@map("adoption_requirements")
-}
-
 model Post {
   id             String    @id @default(uuid())
   textContent    String?
-  likes          Int
+  likes          Int       @default(0)
   organizationId String    @map("organization_id")
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime? @updatedAt

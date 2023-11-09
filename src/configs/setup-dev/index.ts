@@ -14,14 +14,17 @@ function setupSwagger(app: NestFastifyApplication) {
       'pietro.developer@gmail.com',
     )
     .setVersion('1.0')
-    .addTag('common-users')
-    .addTag('organizations')
-    .addTag('auth')
+    .addBearerAuth()
+    .addTag('Common User')
+    .addTag('Organization')
+    .addTag('Authentication')
+    .addTag('Pet')
+    .addTag('Follow')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
 
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('api/docs', app, document);
 }
 
 export function setupDevelopmentConfigs(app: NestFastifyApplication) {
