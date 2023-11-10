@@ -10,20 +10,7 @@ const registerOrganizationSchema = z.object({
   password: z
     .password()
     .min(8, 'Sua senha deve ter no mínimo 8 caracteres')
-    .max(128, 'Sua senha deve ter no máximo 128 caracteres')
-    .atLeastOne(
-      'uppercase',
-      'Sua senha deve conter no mínimo uma letra maiúscula',
-    )
-    .atLeastOne('digit', 'Sua senha deve conter no mínimo um número')
-    .atLeastOne(
-      'lowercase',
-      'Sua senha deve conter no mínimo uma letra minúscula',
-    )
-    .atLeastOne(
-      'special',
-      'Sua senha deve conter no mínimo um caractere especial (como ?, !, - e outros)',
-    ),
+    .max(128, 'Sua senha deve ter no máximo 128 caracteres'),
   title: z
     .string()
     .min(12, 'O nome da Organização deve ter no mínimo 12 caracteres')
