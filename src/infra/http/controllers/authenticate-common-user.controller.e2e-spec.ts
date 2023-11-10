@@ -34,7 +34,7 @@ describe('Authenticate Common User Controller E2E Test Suite', () => {
 
   test('[POST] /api/sessions/common-users', async () => {
     const email = 'johndoe@example.com';
-    const password = '1234567';
+    const password = '123456789';
     const passwordHash = await hash(password, 8);
 
     await prisma.commonUser.create({
