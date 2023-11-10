@@ -15,10 +15,10 @@ export class CreatePetController {
   public constructor(private readonly createPet: CreatePetUseCase) {}
 
   @Post()
-  @ApiTags('Pet')
-  @ApiBearerAuth()
   @AllowedRoles('Admin', 'Organization')
   @UseGuards(RolesGuard)
+  @ApiTags('Pet')
+  @ApiBearerAuth()
   public async handle(
     @Body() requestBody: CreatePetDTO,
     @CurrentUser() currentUser: UserPayload,

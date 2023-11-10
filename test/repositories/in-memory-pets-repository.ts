@@ -8,6 +8,20 @@ export class InMemoryPetsRepository extends PetsRepository {
     this.items.push(pet);
   }
 
+  public async findById(id: string): Promise<Pet | null> {
+    const pet = this.items.find((item) => item.id.toString() === id);
+
+    if (!pet) {
+      return null;
+    }
+
+    return pet;
+  }
+
+  public async delete(id: string): Promise<void> {
+    this.items = this.items.filter((item) => item.id.toString() !== id);
+  }
+
   public async fetchManyByOwnerOrganizationID(
     ownerOrganizationID: string,
   ): Promise<Pet[]> {

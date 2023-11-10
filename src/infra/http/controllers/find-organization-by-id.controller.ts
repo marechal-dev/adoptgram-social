@@ -4,6 +4,7 @@ import {
   Get,
   NotFoundException,
   Param,
+  ParseUUIDPipe,
   UseGuards,
   UsePipes,
 } from '@nestjs/common';
@@ -21,11 +22,11 @@ export class FindOrganizationByIdController {
   ) {}
 
   @Get('/:id')
-  @ApiTags('Organization')
-  @ApiBearerAuth()
   @AllowedRoles('Admin', 'Organization', 'CommonUser')
   @UseGuards(RolesGuard)
-  public async handle(@Param('id') organizationID: string) {
+  @ApiTags('Organization')
+  @ApiBearerAuth()
+  public async handle(@Param('id', ParseUUIDPipe) organizationID: string) {
     const result = await this.findOrganizationById.execute({
       organizationID,
     });
