@@ -18,6 +18,28 @@ export class PrismaPetsRepository extends PetsRepository {
     });
   }
 
+  public async findById(id: string): Promise<Pet | null> {
+    const pet = await this.prisma.pet.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!pet) {
+      return null;
+    }
+
+    return PrismaPetMapper.toDomain(pet);
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.prisma.pet.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
   public async fetchManyByOwnerOrganizationID(
     ownerOrganizationID: string,
   ): Promise<Pet[]> {

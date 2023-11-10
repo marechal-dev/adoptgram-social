@@ -3,8 +3,10 @@ import { Module } from '@nestjs/common';
 import { AuthenticateCommonUserUseCase } from '@Domain/social-network/application/use-cases/authenticate-common-user';
 import { AuthenticateOrganizationUseCase } from '@Domain/social-network/application/use-cases/authenticate-organization';
 import { CreatePetUseCase } from '@Domain/social-network/application/use-cases/create-pet';
+import { DeletePetUseCase } from '@Domain/social-network/application/use-cases/delete-pet';
 import { FetchManyPetsByOwnerOrganizationIdUseCase } from '@Domain/social-network/application/use-cases/fetch-many-pets-by-owner-organization-id';
 import { FindOrganizationByIdUseCase } from '@Domain/social-network/application/use-cases/find-organization-by-id';
+import { FindPetByIdUseCase } from '@Domain/social-network/application/use-cases/find-pet-by-id';
 import { FollowOrganizationUseCase } from '@Domain/social-network/application/use-cases/follow-organization';
 import { RegisterCommonUserUseCase } from '@Domain/social-network/application/use-cases/register-common-user';
 import { RegisterOrganizationUseCase } from '@Domain/social-network/application/use-cases/register-organization';
@@ -14,8 +16,10 @@ import { DatabaseModule } from '@Infra/database/database.module';
 import { AuthenticateCommonUserController } from './controllers/authenticate-common-user.controller';
 import { AuthenticateOrganizationController } from './controllers/authenticate-organization.controller';
 import { CreatePetController } from './controllers/create-pet.controller';
+import { DeletePetController } from './controllers/delete-pet.controller';
 import { FetchManyPetsByOwnerOrganizationIdController } from './controllers/fetch-many-pets-by-owner-organization-id.controller';
 import { FindOrganizationByIdController } from './controllers/find-organization-by-id.controller';
+import { FindPetByIdController } from './controllers/find-pet-by-id.controller';
 import { FollowOrganizationController } from './controllers/follow-organization.controller';
 import { RegisterCommonUserController } from './controllers/register-common-user.controller';
 import { RegisterOrganizationController } from './controllers/register-organization.controller';
@@ -33,6 +37,8 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     FindOrganizationByIdController,
     CreatePetController,
     FetchManyPetsByOwnerOrganizationIdController,
+    FindPetByIdController,
+    DeletePetController,
   ],
   providers: [
     AuthenticateCommonUserUseCase,
@@ -44,6 +50,8 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     FindOrganizationByIdUseCase,
     CreatePetUseCase,
     FetchManyPetsByOwnerOrganizationIdUseCase,
+    FindPetByIdUseCase,
+    DeletePetUseCase,
   ],
 })
 export class HttpModule {}
