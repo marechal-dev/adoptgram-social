@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { CommonUsersRepository } from '@Domain/social-network/application/repositories/common-users-repository';
 import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
 
+import { FetchManyResult } from '@Core/repositories/fetch-many-result';
+import { PaginationParams } from '@Core/repositories/pagination-params';
 import { PrismaCommonUserMapper } from '../mappers/prisma-common-user-mapper';
 import { PrismaService } from '../prisma.service';
 
@@ -18,6 +20,29 @@ export class PrismaCommonUsersRepository extends CommonUsersRepository {
     await this.prisma.commonUser.create({
       data,
     });
+  }
+
+  public async fetchMany({
+    page,
+    pageSize,
+  }: PaginationParams): Promise<FetchManyResult<CommonUser>> {
+    const [totalCount, rawItems] = await Promise.all([
+      this.prisma.commonUser.count(),
+      this.prisma.commonUser.findMany({
+        orderBy: {
+          name: 'asc',
+        },
+        take: pageSize,
+        skip: (page - 1) * pageSize,
+      }),
+    ]);
+
+    const items = rawItems.map(PrismaCommonUserMapper.toDomain);
+
+    return {
+      totalCount,
+      items,
+    };
   }
 
   public async findById(id: string): Promise<CommonUser | null> {

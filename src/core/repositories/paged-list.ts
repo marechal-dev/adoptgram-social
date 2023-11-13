@@ -8,10 +8,10 @@ export interface PagedListHttpPayload<TItem> {
 }
 
 export class PagedList<TItem> {
-  private readonly items: TItem[];
-  private readonly currentPage: number;
-  private readonly pageSize: number;
-  private readonly totalCount: number;
+  public readonly items: TItem[];
+  public readonly currentPage: number;
+  public readonly pageSize: number;
+  public readonly totalCount: number;
 
   public constructor(
     items: TItem[],
@@ -31,16 +31,5 @@ export class PagedList<TItem> {
 
   public get hasPreviousPage(): boolean {
     return this.currentPage > 1;
-  }
-
-  public toHttpPayload(): PagedListHttpPayload<TItem> {
-    return {
-      items: this.items,
-      currentPage: this.currentPage,
-      pageSize: this.pageSize,
-      totalCount: this.totalCount,
-      hasNextPage: this.hasNextPage,
-      hasPreviousPage: this.hasPreviousPage,
-    };
   }
 }

@@ -1,3 +1,5 @@
+import { FetchManyResult } from '@Core/repositories/fetch-many-result';
+import { PaginationParams } from '@Core/repositories/pagination-params';
 import { CommonUsersRepository } from '@Domain/social-network/application/repositories/common-users-repository';
 import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
 
@@ -6,6 +8,18 @@ export class InMemoryCommonUsersRepository extends CommonUsersRepository {
 
   public async create(commonUser: CommonUser): Promise<void> {
     this.items.push(commonUser);
+  }
+
+  public async fetchMany({
+    page,
+    pageSize,
+  }: PaginationParams): Promise<FetchManyResult<CommonUser>> {
+    const items = this.items.slice((page - 1) * pageSize, page * pageSize);
+
+    return {
+      totalCount: this.items.length,
+      items,
+    };
   }
 
   public async findById(id: string): Promise<CommonUser | null> {
