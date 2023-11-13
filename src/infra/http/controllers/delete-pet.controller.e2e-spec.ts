@@ -9,7 +9,7 @@ import request from 'supertest';
 import { AppModule } from '@Infra/app.module';
 import { DatabaseModule } from '@Infra/database/database.module';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
-import { PrismaCommonUserFactory } from '@Testing/factories/common-user-factory';
+import { CommonUserFactory } from '@Testing/factories/common-user-factory';
 import { PrismaOrganizationFactory } from '@Testing/factories/organization-factory';
 import { PrismaPetFactory } from '@Testing/factories/pet-factory';
 import { JwtService } from '@nestjs/jwt';
@@ -18,7 +18,7 @@ import { hash } from 'bcrypt';
 describe('Delete Pet Controller E2E Test Suite', () => {
   let app: NestFastifyApplication;
   let prisma: PrismaService;
-  let prismaCommonUserFactory: PrismaCommonUserFactory;
+  let commonUserFactory: CommonUserFactory;
   let prismaOrganizationFactory: PrismaOrganizationFactory;
   let prismaPetFactory: PrismaPetFactory;
   let jwt: JwtService;
@@ -27,7 +27,7 @@ describe('Delete Pet Controller E2E Test Suite', () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
       providers: [
-        PrismaCommonUserFactory,
+        CommonUserFactory,
         PrismaOrganizationFactory,
         PrismaPetFactory,
       ],
@@ -37,7 +37,7 @@ describe('Delete Pet Controller E2E Test Suite', () => {
       new FastifyAdapter(),
     );
     prisma = moduleRef.get(PrismaService);
-    prismaCommonUserFactory = moduleRef.get(PrismaCommonUserFactory);
+    commonUserFactory = moduleRef.get(CommonUserFactory);
     prismaOrganizationFactory = moduleRef.get(PrismaOrganizationFactory);
     prismaPetFactory = moduleRef.get(PrismaPetFactory);
     jwt = moduleRef.get(JwtService);
@@ -52,21 +52,25 @@ describe('Delete Pet Controller E2E Test Suite', () => {
 
   test('[DELETE] /api/pets/:id', async () => {
     const passwordRaw = 'Test1234!';
-    const commonUser = await prismaCommonUserFactory.makePrismaCommonUser({
+    const commonUser = await commonUserFactory.make({
       name: 'John Doe',
       username: 'johndoe',
       email: 'johndoe@example.com',
       password: await hash(passwordRaw, 10),
     });
 
-    const organization =
-      await prismaOrganizationFactory.makePrismaOrganization();
+    const organization = await prismaOrganizationFactory.makePrismaOrganization(
+      {
+        username: 'lambeijosrg',
+        email: 'lambeijos@gmail.com',
+      },
+    );
 
     const accessToken = await jwt.signAsync({
-      sub: commonUser.id.toString(),
-      username: 'johndoe',
-      email: 'johndoe@example.com',
-      kind: 'CommonUser',
+      sub: organization.id.toString(),
+      username: 'lambeijosrg',
+      email: 'lambeijos@gmail.com',
+      kind: 'Organization',
     });
 
     const pet = await prismaPetFactory.make({

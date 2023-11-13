@@ -6,4 +6,5 @@ export abstract class CommonUsersRepository {
   abstract findByUsername(username: string): Promise<CommonUser | null>;
   abstract findByEmail(email: string): Promise<CommonUser | null>;
   abstract findByCpf(cpf: string): Promise<CommonUser | null>;
+  abstract delete(id: string): Promise<void>;
 }

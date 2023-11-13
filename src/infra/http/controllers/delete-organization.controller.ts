@@ -1,4 +1,4 @@
-import { DeletePetUseCase } from '@Domain/social-network/application/use-cases/delete-pet';
+import { DeleteOrganizationUseCase } from '@Domain/social-network/application/use-cases/delete-organization';
 import {
   Controller,
   Delete,
@@ -13,19 +13,21 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AllowedRoles } from '../decorators/allowed-roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
 
-@Controller('/pets')
-export class DeletePetController {
-  public constructor(private readonly deletePet: DeletePetUseCase) {}
+@Controller('/organizations')
+export class DeleteOrganizationController {
+  public constructor(
+    private readonly deleteOrganization: DeleteOrganizationUseCase,
+  ) {}
 
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @AllowedRoles('Admin', 'Organization')
   @UseGuards(RolesGuard)
-  @ApiTags('Pet')
+  @ApiTags('Organization')
   @ApiBearerAuth()
   public async handle(@Param('id', ParseUUIDPipe) id: string) {
-    const result = await this.deletePet.execute({
-      id,
+    const result = await this.deleteOrganization.execute({
+      organizationID: id,
     });
 
     if (result.isLeft()) {

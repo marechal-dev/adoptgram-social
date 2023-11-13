@@ -9,7 +9,7 @@ import request from 'supertest';
 import { AppModule } from '@Infra/app.module';
 import { DatabaseModule } from '@Infra/database/database.module';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
-import { PrismaCommonUserFactory } from '@Testing/factories/common-user-factory';
+import { CommonUserFactory } from '@Testing/factories/common-user-factory';
 import { PrismaOrganizationFactory } from '@Testing/factories/organization-factory';
 import { JwtService } from '@nestjs/jwt';
 import { hash } from 'bcrypt';
@@ -17,21 +17,21 @@ import { hash } from 'bcrypt';
 describe('Follow Organization Controller E2E Test Suite', () => {
   let app: NestFastifyApplication;
   let prisma: PrismaService;
-  let prismaCommonUserFactory: PrismaCommonUserFactory;
+  let commonUserFactory: CommonUserFactory;
   let prismaOrganizationFactory: PrismaOrganizationFactory;
   let jwt: JwtService;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [PrismaCommonUserFactory, PrismaOrganizationFactory],
+      providers: [CommonUserFactory, PrismaOrganizationFactory],
     }).compile();
 
     app = moduleRef.createNestApplication<NestFastifyApplication>(
       new FastifyAdapter(),
     );
     prisma = moduleRef.get(PrismaService);
-    prismaCommonUserFactory = moduleRef.get(PrismaCommonUserFactory);
+    commonUserFactory = moduleRef.get(CommonUserFactory);
     prismaOrganizationFactory = moduleRef.get(PrismaOrganizationFactory);
     jwt = moduleRef.get(JwtService);
 
@@ -45,7 +45,7 @@ describe('Follow Organization Controller E2E Test Suite', () => {
 
   test('[POST] /api/follows/:organizationID/follow', async () => {
     const passwordRaw = 'Test1234!';
-    const commonUser = await prismaCommonUserFactory.makePrismaCommonUser({
+    const commonUser = await commonUserFactory.make({
       name: 'John Doe',
       username: 'johndoe',
       email: 'johndoe@example.com',

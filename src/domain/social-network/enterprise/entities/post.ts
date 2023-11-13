@@ -38,8 +38,18 @@ export class Post extends Entity<PostProps> {
     return this.props.medias;
   }
 
+  public set medias(value: MediasList) {
+    this.props.medias = value;
+    this.touch();
+  }
+
   public get textContent() {
     return this.props.textContent;
+  }
+
+  public set textContent(value: string) {
+    this.props.textContent = value;
+    this.touch();
   }
 
   public get createdAt() {
@@ -48,5 +58,9 @@ export class Post extends Entity<PostProps> {
 
   public get updatedAt() {
     return this.props.updatedAt;
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date();
   }
 }

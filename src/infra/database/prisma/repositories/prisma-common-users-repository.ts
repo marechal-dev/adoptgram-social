@@ -3,8 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { CommonUsersRepository } from '@Domain/social-network/application/repositories/common-users-repository';
 import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
 
-import { PrismaService } from '../prisma.service';
 import { PrismaCommonUserMapper } from '../mappers/prisma-common-user-mapper';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PrismaCommonUsersRepository extends CommonUsersRepository {
@@ -74,5 +74,13 @@ export class PrismaCommonUsersRepository extends CommonUsersRepository {
     }
 
     return PrismaCommonUserMapper.toDomain(commonUser);
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.prisma.commonUser.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

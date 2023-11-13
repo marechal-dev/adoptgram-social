@@ -1,7 +1,7 @@
+import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import { Optional } from '@Core/types/optional';
 import { User, UserProps } from './user';
 import { Cpf } from './value-objects/cpf';
-import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 
 export interface CommonUserProps extends UserProps {
   name: string;
@@ -35,7 +35,17 @@ export class CommonUser extends User<CommonUserProps> {
     return this.props.name;
   }
 
+  public set name(value: string) {
+    this.props.name = value;
+    this.touch();
+  }
+
   public get cpf() {
     return this.props.cpf;
+  }
+
+  public set cpf(value: Cpf) {
+    this.props.cpf = value;
+    this.touch();
   }
 }

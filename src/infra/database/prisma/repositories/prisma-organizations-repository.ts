@@ -1,4 +1,3 @@
-import { PagedList } from '@Core/repositories/paged-list';
 import { PaginationParams } from '@Core/repositories/pagination-params';
 import { OrganizationsRepository } from '@Domain/social-network/application/repositories/organizations-repository';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
@@ -23,7 +22,7 @@ export class PrismaOrganizationsRepository extends OrganizationsRepository {
   public async findManyByTitle(
     title: string,
     { page, pageSize }: PaginationParams,
-  ): Promise<PagedList<Organization>> {
+  ): Promise<Organization[]> {
     const organizations = await this.prisma.organization.findMany({
       where: {
         title: {
@@ -37,19 +36,11 @@ export class PrismaOrganizationsRepository extends OrganizationsRepository {
           sort: 'desc',
         },
       },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
     });
 
-    const currentPage = organizations.slice(
-      (page - 1) * pageSize,
-      page * pageSize,
-    );
-
-    return new PagedList(
-      currentPage.map(PrismaOrganizationMapper.toDomain),
-      page,
-      pageSize,
-      organizations.length,
-    );
+    return organizations.map(PrismaOrganizationMapper.toDomain);
   }
 
   public async findById(id: string): Promise<Organization | null> {
@@ -106,5 +97,13 @@ export class PrismaOrganizationsRepository extends OrganizationsRepository {
     }
 
     return PrismaOrganizationMapper.toDomain(organization);
+  }
+
+  public async delete(id: string): Promise<void> {
+    await this.prisma.organization.delete({
+      where: {
+        id,
+      },
+    });
   }
 }
