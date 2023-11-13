@@ -30,10 +30,10 @@ export function makeCommonUser(
 }
 
 @Injectable()
-export class PrismaCommonUserFactory {
+export class CommonUserFactory {
   public constructor(private readonly prisma: PrismaService) {}
 
-  public async makePrismaCommonUser(data: Partial<CommonUserProps> = {}) {
+  public async make(data: Partial<CommonUserProps> = {}) {
     const commonUser = makeCommonUser(data);
 
     await this.prisma.commonUser.create({

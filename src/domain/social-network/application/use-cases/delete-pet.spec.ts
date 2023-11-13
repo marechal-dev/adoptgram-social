@@ -7,7 +7,7 @@ import { PetNotFoundException } from './exceptions/pet-not-found-exception';
 let inMemoryPetsRepository: InMemoryPetsRepository;
 let systemUnderTest: DeletePetUseCase;
 
-describe('Find Pet By ID Test Suite', () => {
+describe('Delete Pet Test Suite', () => {
   beforeEach(() => {
     inMemoryPetsRepository = new InMemoryPetsRepository();
     systemUnderTest = new DeletePetUseCase(inMemoryPetsRepository);

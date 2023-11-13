@@ -1,5 +1,5 @@
-import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
 import { CommonUsersRepository } from '@Domain/social-network/application/repositories/common-users-repository';
+import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
 
 export class InMemoryCommonUsersRepository extends CommonUsersRepository {
   public items: CommonUser[] = [];
@@ -46,5 +46,9 @@ export class InMemoryCommonUsersRepository extends CommonUsersRepository {
     }
 
     return commonUser;
+  }
+
+  public async delete(id: string): Promise<void> {
+    this.items = this.items.filter((item) => item.id.toString() !== id);
   }
 }

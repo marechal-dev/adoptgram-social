@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker/locale/pt_BR';
 
+import { InvalidCnpjException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cnpj';
 import { FakeHasher } from '@Testing/cryptography/fake-hasher';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
-import { RegisterOrganizationUseCase } from './register-organization';
-import { InvalidCnpjException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cnpj';
 import { OrganizationAlreadyExistsException } from './exceptions/organization-already-exists-exception';
+import { RegisterOrganizationUseCase } from './register-organization';
 
 let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;
 let fakeHasher: FakeHasher;
@@ -30,6 +30,8 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99.999.999/9999-99',
       whatsapp: faker.phone.number(),
+      city: 'Rio Grande',
+      state: 'Rio Grande do Sul',
     };
 
     const result = await systemUnderTest.execute(data);
@@ -47,6 +49,8 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99.999.999/9999-99',
       whatsapp: faker.phone.number(),
+      city: 'Rio Grande',
+      state: 'Rio Grande do Sul',
     };
 
     await systemUnderTest.execute(data);
@@ -72,6 +76,8 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99____2132431999..2999/999229-99',
       whatsapp: faker.phone.number(),
+      city: 'Rio Grande',
+      state: 'Rio Grande do Sul',
     };
 
     const result = await systemUnderTest.execute(data);
@@ -89,6 +95,8 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99.999.999/9999-99',
       whatsapp: faker.phone.number(),
+      city: 'Rio Grande',
+      state: 'Rio Grande do Sul',
     };
 
     await systemUnderTest.execute(data);
@@ -107,6 +115,8 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99.999.999/9999-99',
       whatsapp: faker.phone.number(),
+      city: 'Rio Grande',
+      state: 'Rio Grande do Sul',
     };
 
     await systemUnderTest.execute(data);
@@ -125,6 +135,8 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99.999.999/9999-99',
       whatsapp: faker.phone.number(),
+      city: 'Rio Grande',
+      state: 'Rio Grande do Sul',
     };
 
     await systemUnderTest.execute(data);

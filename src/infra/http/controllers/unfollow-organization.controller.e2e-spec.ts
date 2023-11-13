@@ -9,7 +9,7 @@ import request from 'supertest';
 import { AppModule } from '@Infra/app.module';
 import { DatabaseModule } from '@Infra/database/database.module';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
-import { PrismaCommonUserFactory } from '@Testing/factories/common-user-factory';
+import { CommonUserFactory } from '@Testing/factories/common-user-factory';
 import { PrismaFollowFactory } from '@Testing/factories/follow-factory';
 import { PrismaOrganizationFactory } from '@Testing/factories/organization-factory';
 import { JwtService } from '@nestjs/jwt';
@@ -18,7 +18,7 @@ import { hash } from 'bcrypt';
 describe('Unfollow Organization Controller E2E Test Suite', () => {
   let app: NestFastifyApplication;
   let prisma: PrismaService;
-  let prismaCommonUserFactory: PrismaCommonUserFactory;
+  let commonUserFactory: CommonUserFactory;
   let prismaOrganizationFactory: PrismaOrganizationFactory;
   let prismaFollowFactory: PrismaFollowFactory;
   let jwt: JwtService;
@@ -27,7 +27,7 @@ describe('Unfollow Organization Controller E2E Test Suite', () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
       providers: [
-        PrismaCommonUserFactory,
+        CommonUserFactory,
         PrismaOrganizationFactory,
         PrismaFollowFactory,
       ],
@@ -37,7 +37,7 @@ describe('Unfollow Organization Controller E2E Test Suite', () => {
       new FastifyAdapter(),
     );
     prisma = moduleRef.get(PrismaService);
-    prismaCommonUserFactory = moduleRef.get(PrismaCommonUserFactory);
+    commonUserFactory = moduleRef.get(CommonUserFactory);
     prismaOrganizationFactory = moduleRef.get(PrismaOrganizationFactory);
     prismaFollowFactory = moduleRef.get(PrismaFollowFactory);
     jwt = moduleRef.get(JwtService);
@@ -52,7 +52,7 @@ describe('Unfollow Organization Controller E2E Test Suite', () => {
 
   test('[DELETE] /api/follows/:organizationID/unfollow', async () => {
     const passwordRaw = 'Test1234!';
-    const commonUser = await prismaCommonUserFactory.makePrismaCommonUser({
+    const commonUser = await commonUserFactory.make({
       name: 'John Doe',
       username: 'johndoe',
       email: 'johndoe@example.com',

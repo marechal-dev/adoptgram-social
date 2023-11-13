@@ -1,8 +1,9 @@
+import { PaginationParams } from '@Core/repositories/pagination-params';
 import { OrganizationsRepository } from '@Domain/social-network/application/repositories/organizations-repository';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
 
 export class InMemoryOrganizationsRepository extends OrganizationsRepository {
-  public readonly items: Organization[] = [];
+  public items: Organization[] = [];
 
   public async create(organization: Organization): Promise<void> {
     this.items.push(organization);
@@ -48,5 +49,20 @@ export class InMemoryOrganizationsRepository extends OrganizationsRepository {
     }
 
     return organization;
+  }
+
+  public async findManyByTitle(
+    title: string,
+    { page, pageSize }: PaginationParams,
+  ): Promise<Organization[]> {
+    const organizations = this.items
+      .filter((item) => item.title.toLowerCase().includes(title.toLowerCase()))
+      .slice((page - 1) * pageSize, page * pageSize);
+
+    return organizations;
+  }
+
+  public async delete(id: string): Promise<void> {
+    this.items = this.items.filter((item) => item.id.toString() !== id);
   }
 }

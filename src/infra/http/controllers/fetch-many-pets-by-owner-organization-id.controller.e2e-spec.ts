@@ -9,7 +9,7 @@ import request from 'supertest';
 import { AppModule } from '@Infra/app.module';
 import { DatabaseModule } from '@Infra/database/database.module';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
-import { PrismaCommonUserFactory } from '@Testing/factories/common-user-factory';
+import { CommonUserFactory } from '@Testing/factories/common-user-factory';
 import { PrismaOrganizationFactory } from '@Testing/factories/organization-factory';
 import { PrismaPetFactory } from '@Testing/factories/pet-factory';
 import { JwtService } from '@nestjs/jwt';
@@ -17,7 +17,7 @@ import { JwtService } from '@nestjs/jwt';
 describe('Fetch Many Pets by Owner Organization Controller E2E Test Suite', () => {
   let app: NestFastifyApplication;
   let prisma: PrismaService;
-  let primsaCommonUserFactory: PrismaCommonUserFactory;
+  let primsaCommonUserFactory: CommonUserFactory;
   let prismaOrganizationFactory: PrismaOrganizationFactory;
   let prismaPetFactory: PrismaPetFactory;
   let jwt: JwtService;
@@ -28,7 +28,7 @@ describe('Fetch Many Pets by Owner Organization Controller E2E Test Suite', () =
       providers: [
         PrismaOrganizationFactory,
         PrismaPetFactory,
-        PrismaCommonUserFactory,
+        CommonUserFactory,
       ],
     }).compile();
 
@@ -37,7 +37,7 @@ describe('Fetch Many Pets by Owner Organization Controller E2E Test Suite', () =
     );
     prisma = moduleRef.get(PrismaService);
     prismaOrganizationFactory = moduleRef.get(PrismaOrganizationFactory);
-    primsaCommonUserFactory = moduleRef.get(PrismaCommonUserFactory);
+    primsaCommonUserFactory = moduleRef.get(CommonUserFactory);
     prismaPetFactory = moduleRef.get(PrismaPetFactory);
     jwt = moduleRef.get(JwtService);
 
@@ -50,7 +50,7 @@ describe('Fetch Many Pets by Owner Organization Controller E2E Test Suite', () =
   });
 
   test('[GET] /api/organizations/:id/pets', async () => {
-    const commonUser = await primsaCommonUserFactory.makePrismaCommonUser({
+    const commonUser = await primsaCommonUserFactory.make({
       username: 'john-doe',
       email: 'johndoe@example.com',
     });

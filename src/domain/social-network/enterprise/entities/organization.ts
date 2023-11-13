@@ -49,39 +49,89 @@ export class Organization extends User<OrganizationProps> {
     return this.props.title;
   }
 
+  public set title(value: string) {
+    this.props.title = value;
+    this.touch();
+  }
+
   public get representativeName() {
     return this.props.representativeName;
+  }
+
+  public set representativeName(value: string) {
+    this.props.representativeName = value;
+    this.touch();
   }
 
   public get bio() {
     return this.props.bio;
   }
 
+  public set bio(value: string | null | undefined) {
+    this.props.bio = value;
+    this.touch();
+  }
+
   public get pixKey() {
     return this.props.pixKey;
+  }
+
+  public set pixKey(value: string | null | undefined) {
+    this.props.pixKey = value;
+    this.touch();
   }
 
   public get whatsapp() {
     return this.props.whatsapp;
   }
 
+  public set whatsapp(value: string) {
+    this.props.whatsapp = value;
+    this.touch();
+  }
+
   public get telephoneNumber() {
     return this.props.telephoneNumber;
+  }
+
+  public set telephoneNumber(value: string | null | undefined) {
+    this.props.telephoneNumber = value;
+    this.touch();
   }
 
   public get cnpj() {
     return this.props.cnpj;
   }
 
+  public set cnpj(value: Cnpj) {
+    this.props.cnpj = value;
+    this.touch();
+  }
+
   public get profilePictureUrl() {
     return this.props.profilePictureUrl;
+  }
+
+  public set profilePictureUrl(value: string | null | undefined) {
+    this.props.profilePictureUrl = value;
+    this.touch();
   }
 
   public get city() {
     return this.props.city;
   }
 
+  public set city(value: string) {
+    this.props.city = value;
+    this.touch();
+  }
+
   public get state() {
     return this.props.state;
+  }
+
+  public set state(value: string) {
+    this.props.state = value;
+    this.touch();
   }
 }
