@@ -1,3 +1,4 @@
+import { FetchManyResult } from '@Core/repositories/fetch-many-result';
 import { PaginationParams } from '@Core/repositories/pagination-params';
 import { OrganizationsRepository } from '@Domain/social-network/application/repositories/organizations-repository';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
@@ -7,6 +8,18 @@ export class InMemoryOrganizationsRepository extends OrganizationsRepository {
 
   public async create(organization: Organization): Promise<void> {
     this.items.push(organization);
+  }
+
+  public async fetchMany({
+    page,
+    pageSize,
+  }: PaginationParams): Promise<FetchManyResult<Organization>> {
+    const items = this.items.slice((page - 1) * pageSize, page * pageSize);
+
+    return {
+      totalCount: this.items.length,
+      items,
+    };
   }
 
   public async findById(id: string): Promise<Organization | null> {

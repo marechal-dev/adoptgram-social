@@ -1,3 +1,4 @@
+import { FetchManyResult } from '@Core/repositories/fetch-many-result';
 import { PaginationParams } from '@Core/repositories/pagination-params';
 import { OrganizationsRepository } from '@Domain/social-network/application/repositories/organizations-repository';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
@@ -17,6 +18,29 @@ export class PrismaOrganizationsRepository extends OrganizationsRepository {
     await this.prisma.organization.create({
       data,
     });
+  }
+
+  public async fetchMany({
+    page,
+    pageSize,
+  }: PaginationParams): Promise<FetchManyResult<Organization>> {
+    const [totalCount, rawItems] = await Promise.all([
+      this.prisma.organization.count(),
+      this.prisma.organization.findMany({
+        orderBy: {
+          title: 'asc',
+        },
+        take: pageSize,
+        skip: (page - 1) * pageSize,
+      }),
+    ]);
+
+    const items = rawItems.map(PrismaOrganizationMapper.toDomain);
+
+    return {
+      totalCount,
+      items,
+    };
   }
 
   public async findManyByTitle(
