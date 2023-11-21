@@ -48,7 +48,7 @@
     "zod-validation-error": "2.1.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "18.4.1",
+    "@commitlint/cli": "18.4.3",
     "@commitlint/config-conventional": "18.4.2",
     "@compodoc/compodoc": "1.1.22",
     "@faker-js/faker": "8.3.1",
