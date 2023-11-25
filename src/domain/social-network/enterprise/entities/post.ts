@@ -54,12 +54,21 @@ export class Post extends Entity<PostProps> {
     this.touch();
   }
 
+  public get likes() {
+    return this.props.likes;
+  }
+
   public get createdAt() {
     return this.props.createdAt;
   }
 
   public get updatedAt() {
     return this.props.updatedAt;
+  }
+
+  public like() {
+    this.props.likes += 1;
+    this.touch();
   }
 
   private touch() {

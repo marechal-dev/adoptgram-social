@@ -100,7 +100,7 @@ model Pet {
 
 model Post {
   id             String    @id @default(uuid())
-  textContent    String?
+  textContent    String
   likes          Int       @default(0)
   organizationId String    @map("organization_id")
   createdAt      DateTime  @default(now()) @map("created_at")

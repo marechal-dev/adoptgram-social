@@ -1,9 +1,10 @@
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
-import { Either, right } from '@Core/types/either';
+import { Either, left, right } from '@Core/types/either';
 import { Media } from '@Domain/social-network/enterprise/entities/media';
 import { MediasList } from '@Domain/social-network/enterprise/entities/medias-list';
 import { Post } from '@Domain/social-network/enterprise/entities/post';
 import { PostsRepository } from '../repositories/posts-repository';
+import { TooFewMediasException } from './exceptions/too-few-medias-exception';
 
 interface MediaMetadata {
   url: string;
@@ -17,7 +18,7 @@ interface CreatePostUseCaseRequest {
 }
 
 type CreatePostUseCaseResponse = Either<
-  null,
+  TooFewMediasException,
   {
     post: Post;
   }
@@ -31,6 +32,12 @@ export class CreatePostUseCase {
     organizationID,
     mediasMetadatas,
   }: CreatePostUseCaseRequest): Promise<CreatePostUseCaseResponse> {
+    const notEnoughMedias = mediasMetadatas.length === 0;
+
+    if (notEnoughMedias) {
+      return left(new TooFewMediasException());
+    }
+
     const post = Post.create({
       organizationID: new UniqueEntityID(organizationID),
       textContent,
