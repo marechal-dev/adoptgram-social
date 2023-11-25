@@ -3,6 +3,7 @@ import { Either, left, right } from '@Core/types/either';
 import { Media } from '@Domain/social-network/enterprise/entities/media';
 import { MediasList } from '@Domain/social-network/enterprise/entities/medias-list';
 import { Post } from '@Domain/social-network/enterprise/entities/post';
+import { Injectable } from '@nestjs/common';
 
 import { PostsRepository } from '../repositories/posts-repository';
 
@@ -26,6 +27,7 @@ type CreatePostUseCaseResponse = Either<
   }
 >;
 
+@Injectable()
 export class CreatePostUseCase {
   public constructor(private readonly postsRepository: PostsRepository) {}
 

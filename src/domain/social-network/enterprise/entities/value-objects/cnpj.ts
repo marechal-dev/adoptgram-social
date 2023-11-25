@@ -1,4 +1,5 @@
 import { Either, left, right } from '@Core/types/either';
+
 import { InvalidCnpjException } from '../exceptions/invalid-cnpj';
 
 type CreateCnpjFromTextResult = Either<InvalidCnpjException, Cnpj>;

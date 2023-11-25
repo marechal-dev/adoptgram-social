@@ -1,3 +1,4 @@
+import { MediasRepository } from '@Domain/social-network/application/repositories/medias-repository';
 import { PostsRepository } from '@Domain/social-network/application/repositories/posts-repository';
 import { Post } from '@Domain/social-network/enterprise/entities/post';
 import { Injectable } from '@nestjs/common';
@@ -5,13 +6,11 @@ import { Injectable } from '@nestjs/common';
 import { PrismaPostMapper } from '../mappers/prisma-post-mapper';
 import { PrismaService } from '../prisma.service';
 
-import { PrismaMediasRepository } from './prisma-medias-repository';
-
 @Injectable()
 export class PrismaPostsRepository extends PostsRepository {
   public constructor(
     private readonly prisma: PrismaService,
-    private readonly mediasRepository: PrismaMediasRepository,
+    private readonly mediasRepository: MediasRepository,
   ) {
     super();
   }
