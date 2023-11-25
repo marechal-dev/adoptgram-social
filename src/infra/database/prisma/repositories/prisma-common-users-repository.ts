@@ -1,10 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { CommonUsersRepository } from '@Domain/social-network/application/repositories/common-users-repository';
-import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
-
 import { FetchManyResult } from '@Core/repositories/fetch-many-result';
 import { PaginationParams } from '@Core/repositories/pagination-params';
+import { CommonUsersRepository } from '@Domain/social-network/application/repositories/common-users-repository';
+import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
+import { Injectable } from '@nestjs/common';
+
 import { PrismaCommonUserMapper } from '../mappers/prisma-common-user-mapper';
 import { PrismaService } from '../prisma.service';
 

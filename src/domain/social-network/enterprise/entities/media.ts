@@ -11,7 +11,10 @@ export interface MediaProps {
 }
 
 export class Media extends Entity<MediaProps> {
-  public create(props: Optional<MediaProps, 'createdAt'>, id?: UniqueEntityID) {
+  public static create(
+    props: Optional<MediaProps, 'createdAt'>,
+    id?: UniqueEntityID,
+  ) {
     return new Media(
       {
         url: props.url,

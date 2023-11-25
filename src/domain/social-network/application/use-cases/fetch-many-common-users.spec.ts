@@ -1,5 +1,6 @@
 import { makeCommonUser } from '@Testing/factories/common-user-factory';
 import { InMemoryCommonUsersRepository } from '@Testing/repositories/in-memory-common-users-repository';
+
 import { FetchManyCommonUsersUseCase } from './fetch-many-common-users';
 
 let inMemoryCommonUsersRepository: InMemoryCommonUsersRepository;

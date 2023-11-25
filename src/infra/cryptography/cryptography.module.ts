@@ -1,11 +1,10 @@
-import { Module } from '@nestjs/common';
-
 import { Encrypter } from '@Domain/social-network/application/cryptography/encrypter';
 import { HashComparer } from '@Domain/social-network/application/cryptography/hash-comparer';
 import { HashGenerator } from '@Domain/social-network/application/cryptography/hash-generator';
+import { Module } from '@nestjs/common';
 
-import { JwtEncrypter } from './jwt-encrypter';
 import { BcryptHasher } from './bcrypt-hasher';
+import { JwtEncrypter } from './jwt-encrypter';
 
 @Module({
   providers: [

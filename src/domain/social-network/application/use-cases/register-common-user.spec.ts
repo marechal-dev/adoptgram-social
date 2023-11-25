@@ -1,9 +1,10 @@
-import { InMemoryCommonUsersRepository } from '@Testing/repositories/in-memory-common-users-repository';
-import { RegisterCommonUserUseCase } from './register-common-user';
-import { FakeHasher } from '@Testing/cryptography/fake-hasher';
-import { faker } from '@faker-js/faker/locale/pt_BR';
 import { InvalidCpfException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cpf';
+import { faker } from '@faker-js/faker/locale/pt_BR';
+import { FakeHasher } from '@Testing/cryptography/fake-hasher';
+import { InMemoryCommonUsersRepository } from '@Testing/repositories/in-memory-common-users-repository';
+
 import { CommonUserAlreadyExistsException } from './exceptions/common-user-already-exists';
+import { RegisterCommonUserUseCase } from './register-common-user';
 
 let inMemoryCommonUsersRepository: InMemoryCommonUsersRepository;
 let fakeHasher: FakeHasher;

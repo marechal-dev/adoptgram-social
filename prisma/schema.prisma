@@ -72,6 +72,8 @@ model Follow {
   commonUser   CommonUser   @relation(fields: [commonUserID], references: [id], onDelete: Cascade)
 
   @@id([commonUserID, organizationID])
+  @@index([commonUserID], map: "follow_common_user_id_idx")
+  @@index([organizationID], map: "follow_organization_id_idx")
   @@map("follows")
 }
 
@@ -98,7 +100,7 @@ model Pet {
 
 model Post {
   id             String    @id @default(uuid())
-  textContent    String?
+  textContent    String
   likes          Int       @default(0)
   organizationId String    @map("organization_id")
   createdAt      DateTime  @default(now()) @map("created_at")

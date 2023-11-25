@@ -1,6 +1,7 @@
 import { makePet } from '@Testing/factories/pet-factory';
 import { InMemoryPetsRepository } from '@Testing/repositories/in-memory-pets-repository';
 import { expect } from 'vitest';
+
 import { DeletePetUseCase } from './delete-pet';
 import { PetNotFoundException } from './exceptions/pet-not-found-exception';
 

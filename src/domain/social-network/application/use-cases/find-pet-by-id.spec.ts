@@ -1,5 +1,6 @@
 import { makePet } from '@Testing/factories/pet-factory';
 import { InMemoryPetsRepository } from '@Testing/repositories/in-memory-pets-repository';
+
 import { PetNotFoundException } from './exceptions/pet-not-found-exception';
 import { FindPetByIdUseCase } from './find-pet-by-id';
 

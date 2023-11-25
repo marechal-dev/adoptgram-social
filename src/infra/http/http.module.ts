@@ -1,9 +1,8 @@
-import { Module } from '@nestjs/common';
-
 import { AuthenticateAdministratorUseCase } from '@Domain/social-network/application/use-cases/authenticate-administrator';
 import { AuthenticateCommonUserUseCase } from '@Domain/social-network/application/use-cases/authenticate-common-user';
 import { AuthenticateOrganizationUseCase } from '@Domain/social-network/application/use-cases/authenticate-organization';
 import { CreatePetUseCase } from '@Domain/social-network/application/use-cases/create-pet';
+import { CreatePostUseCase } from '@Domain/social-network/application/use-cases/create-post';
 import { DeleteCommonUserUseCase } from '@Domain/social-network/application/use-cases/delete-common-user';
 import { DeleteOrganizationUseCase } from '@Domain/social-network/application/use-cases/delete-organization';
 import { DeletePetUseCase } from '@Domain/social-network/application/use-cases/delete-pet';
@@ -18,10 +17,13 @@ import { RegisterOrganizationUseCase } from '@Domain/social-network/application/
 import { UnfollowOrganizationUseCase } from '@Domain/social-network/application/use-cases/unfollow-organization';
 import { CryptographyModule } from '@Infra/cryptography/cryptography.module';
 import { DatabaseModule } from '@Infra/database/database.module';
+import { Module } from '@nestjs/common';
+
 import { AuthenticateAdministratorController } from './controllers/authenticate-administrator.controller';
 import { AuthenticateCommonUserController } from './controllers/authenticate-common-user.controller';
 import { AuthenticateOrganizationController } from './controllers/authenticate-organization.controller';
 import { CreatePetController } from './controllers/create-pet.controller';
+import { CreatePostController } from './controllers/create-post.controller';
 import { DeleteCommonUserController } from './controllers/delete-common-user.controller';
 import { DeleteOrganizationController } from './controllers/delete-organization.controller';
 import { DeletePetController } from './controllers/delete-pet.controller';
@@ -54,6 +56,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     AuthenticateAdministratorController,
     FetchManyCommonUsersController,
     FetchManyOrganizationsController,
+    CreatePostController,
   ],
   providers: [
     AuthenticateCommonUserUseCase,
@@ -72,6 +75,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     AuthenticateAdministratorUseCase,
     FetchManyCommonUsersUseCase,
     FetchManyOrganizationsUseCase,
+    CreatePostUseCase,
   ],
 })
 export class HttpModule {}

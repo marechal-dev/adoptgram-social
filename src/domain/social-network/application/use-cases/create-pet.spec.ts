@@ -1,5 +1,6 @@
 import { makeOrganization } from '@Testing/factories/organization-factory';
 import { InMemoryPetsRepository } from '@Testing/repositories/in-memory-pets-repository';
+
 import { CreatePetUseCase } from './create-pet';
 
 let inMemoryPetsRepository: InMemoryPetsRepository;

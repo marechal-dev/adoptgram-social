@@ -2,6 +2,7 @@ import { PagedList } from '@Core/repositories/paged-list';
 import { Either, right } from '@Core/types/either';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
 import { Injectable } from '@nestjs/common';
+
 import { OrganizationsRepository } from '../repositories/organizations-repository';
 
 interface FetchManyOrganizationsUseCaseRequest {

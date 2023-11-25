@@ -1,6 +1,8 @@
 import { Either, left, right } from '@Core/types/either';
 import { Injectable } from '@nestjs/common';
+
 import { CommonUsersRepository } from '../repositories/common-users-repository';
+
 import { CommonUserNotFoundException } from './exceptions/common-user-not-found-exception';
 
 interface DeleteCommonUserUseCaseRequest {

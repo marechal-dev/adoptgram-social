@@ -1,13 +1,11 @@
+import { AppModule } from '@Infra/app.module';
+import { PrismaService } from '@Infra/database/prisma/prisma.service';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { Test } from '@nestjs/testing';
-
 import request from 'supertest';
-
-import { AppModule } from '@Infra/app.module';
-import { PrismaService } from '@Infra/database/prisma/prisma.service';
 
 describe('Create Commom User Controller E2E Test Suite', () => {
   let app: NestFastifyApplication;

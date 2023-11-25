@@ -1,16 +1,14 @@
+import { AppModule } from '@Infra/app.module';
+import { DatabaseModule } from '@Infra/database/database.module';
+import { PrismaService } from '@Infra/database/prisma/prisma.service';
+import { JwtService } from '@nestjs/jwt';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { Test } from '@nestjs/testing';
-
-import request from 'supertest';
-
-import { AppModule } from '@Infra/app.module';
-import { DatabaseModule } from '@Infra/database/database.module';
-import { PrismaService } from '@Infra/database/prisma/prisma.service';
 import { PrismaOrganizationFactory } from '@Testing/factories/organization-factory';
-import { JwtService } from '@nestjs/jwt';
+import request from 'supertest';
 
 describe('Create Pet Controller E2E Test Suite', () => {
   let app: NestFastifyApplication;

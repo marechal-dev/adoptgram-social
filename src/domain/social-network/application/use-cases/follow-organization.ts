@@ -1,12 +1,13 @@
+import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import { Either, left, right } from '@Core/types/either';
 import { Follow } from '@Domain/social-network/enterprise/entities/follow';
 import { FollowID } from '@Domain/social-network/enterprise/entities/follow-id';
 import { Injectable } from '@nestjs/common';
-import { CommonUsersRepository } from '../repositories/common-users-repository';
+
 import { FollowsRepository } from '../repositories/follows-repository';
 import { OrganizationsRepository } from '../repositories/organizations-repository';
+
 import { AlreadyFollowingOrganizationException } from './exceptions/already-following-organization-exception';
-import { CommonUserNotFoundException } from './exceptions/common-user-not-found-exception';
 import { OrganizationNotFoundException } from './exceptions/organization-not-found-exception';
 
 interface FollowOrganizationUseCaseRequest {
@@ -15,16 +16,13 @@ interface FollowOrganizationUseCaseRequest {
 }
 
 type FollowOrganizationUseCaseResponse = Either<
-  | OrganizationNotFoundException
-  | CommonUserNotFoundException
-  | AlreadyFollowingOrganizationException,
+  OrganizationNotFoundException | AlreadyFollowingOrganizationException,
   null
 >;
 
 @Injectable()
 export class FollowOrganizationUseCase {
   public constructor(
-    private readonly commonUsersRepository: CommonUsersRepository,
     private readonly organizationsRepository: OrganizationsRepository,
     private readonly followsRepository: FollowsRepository,
   ) {}
@@ -40,12 +38,6 @@ export class FollowOrganizationUseCase {
       return left(new OrganizationNotFoundException(organizationID));
     }
 
-    const commonUser = await this.commonUsersRepository.findById(commonUserID);
-
-    if (!commonUser) {
-      return left(new CommonUserNotFoundException(commonUserID));
-    }
-
     const follow = await this.followsRepository.findOneByAccountsIDs({
       commonUserID,
       organizationID,
@@ -55,12 +47,15 @@ export class FollowOrganizationUseCase {
       return left(new AlreadyFollowingOrganizationException());
     }
 
+    const uniqueCommonUserID = new UniqueEntityID(commonUserID);
+    const uniqueOrganizationID = new UniqueEntityID(organizationID);
+
     const newFollow = Follow.create(
       {
-        commonUserID: commonUser.id,
-        organizationID: organization.id,
+        commonUserID: uniqueCommonUserID,
+        organizationID: uniqueOrganizationID,
       },
-      new FollowID(commonUser.id, organization.id),
+      new FollowID(uniqueCommonUserID, uniqueOrganizationID),
     );
 
     await this.followsRepository.create(newFollow);

@@ -1,11 +1,10 @@
-import { faker } from '@faker-js/faker/locale/pt_BR';
-
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import {
   Organization,
   OrganizationProps,
 } from '@Domain/social-network/enterprise/entities/organization';
 import { Cnpj } from '@Domain/social-network/enterprise/entities/value-objects/cnpj';
+import { faker } from '@faker-js/faker/locale/pt_BR';
 import { PrismaOrganizationMapper } from '@Infra/database/prisma/mappers/prisma-organization-mapper';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';

@@ -1,3 +1,5 @@
+import { AuthenticateCommonUserUseCase } from '@Domain/social-network/application/use-cases/authenticate-common-user';
+import { IsPublicRoute } from '@Infra/auth/decorators/is-public-route.decorator';
 import {
   Body,
   Controller,
@@ -10,8 +12,6 @@ import {
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'nestjs-zod';
 
-import { AuthenticateCommonUserUseCase } from '@Domain/social-network/application/use-cases/authenticate-common-user';
-import { IsPublicRoute } from '@Infra/auth/decorators/is-public-route.decorator';
 import { AuthenticateDTO } from '../dtos/authenticate.dto';
 
 @Controller('/sessions')

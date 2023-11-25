@@ -1,3 +1,7 @@
+import { OrganizationAlreadyExistsException } from '@Domain/social-network/application/use-cases/exceptions/organization-already-exists-exception';
+import { RegisterOrganizationUseCase } from '@Domain/social-network/application/use-cases/register-organization';
+import { InvalidCnpjException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cnpj';
+import { IsPublicRoute } from '@Infra/auth/decorators/is-public-route.decorator';
 import {
   BadRequestException,
   Body,
@@ -6,13 +10,9 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'nestjs-zod';
 
-import { OrganizationAlreadyExistsException } from '@Domain/social-network/application/use-cases/exceptions/organization-already-exists-exception';
-import { RegisterOrganizationUseCase } from '@Domain/social-network/application/use-cases/register-organization';
-import { InvalidCnpjException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cnpj';
-import { IsPublicRoute } from '@Infra/auth/decorators/is-public-route.decorator';
-import { ApiTags } from '@nestjs/swagger';
 import { RegisterOrganizationDTO } from '../dtos/register-organization.dto';
 
 @Controller('/organizations')

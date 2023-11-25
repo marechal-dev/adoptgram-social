@@ -1,3 +1,4 @@
+import { env } from '@Configs/env';
 import {
   CanActivate,
   ExecutionContext,
@@ -7,8 +8,6 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { FastifyRequest } from 'fastify';
-
-import { env } from '@Configs/env';
 
 import { IS_PUBLIC_KEY } from './decorators/is-public-route.decorator';
 

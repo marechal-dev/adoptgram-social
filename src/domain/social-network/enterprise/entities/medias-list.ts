@@ -3,6 +3,6 @@ import { Media } from './media';
 
 export class MediasList extends WatchedList<Media> {
   public compareItems(a: Media, b: Media): boolean {
-    throw a.equals(b);
+    return a.equals(b);
   }
 }
