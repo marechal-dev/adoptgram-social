@@ -1,8 +1,8 @@
-import { faker } from '@faker-js/faker/locale/pt_BR';
-
 import { InvalidCnpjException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cnpj';
+import { faker } from '@faker-js/faker/locale/pt_BR';
 import { FakeHasher } from '@Testing/cryptography/fake-hasher';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
+
 import { OrganizationAlreadyExistsException } from './exceptions/organization-already-exists-exception';
 import { RegisterOrganizationUseCase } from './register-organization';
 

@@ -3,7 +3,9 @@ import { Either, left, right } from '@Core/types/either';
 import { Media } from '@Domain/social-network/enterprise/entities/media';
 import { MediasList } from '@Domain/social-network/enterprise/entities/medias-list';
 import { Post } from '@Domain/social-network/enterprise/entities/post';
+
 import { PostsRepository } from '../repositories/posts-repository';
+
 import { TooFewMediasException } from './exceptions/too-few-medias-exception';
 
 interface MediaMetadata {

@@ -1,9 +1,11 @@
 import { Either, left, right } from '@Core/types/either';
 import { UserPayload } from '@Infra/auth/jwt-auth.guard';
 import { Injectable } from '@nestjs/common';
+
 import { Encrypter } from '../cryptography/encrypter';
 import { HashComparer } from '../cryptography/hash-comparer';
 import { AdministratorsRepository } from '../repositories/administrators-repository';
+
 import { IncorrectCredentialsException } from './exceptions/incorrect-credentials-exception';
 
 interface AuthenticateAdministratorUseCaseRequest {

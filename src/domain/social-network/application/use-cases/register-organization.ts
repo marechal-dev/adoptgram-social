@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
-
 import { Either, left, right } from '@Core/types/either';
 import { InvalidCnpjException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cnpj';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
 import { Cnpj } from '@Domain/social-network/enterprise/entities/value-objects/cnpj';
+import { Injectable } from '@nestjs/common';
+
 import { HashGenerator } from '../cryptography/hash-generator';
 import { OrganizationsRepository } from '../repositories/organizations-repository';
+
 import { OrganizationAlreadyExistsException } from './exceptions/organization-already-exists-exception';
 
 interface RegisterOrganizationUseCaseRequest {

@@ -1,6 +1,8 @@
 import { Either, left, right } from '@Core/types/either';
 import { Injectable } from '@nestjs/common';
+
 import { PetsRepository } from '../repositories/pets-repository';
+
 import { PetNotFoundException } from './exceptions/pet-not-found-exception';
 
 interface DeletePetUseCaseRequest {

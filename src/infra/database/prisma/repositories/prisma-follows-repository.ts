@@ -4,6 +4,7 @@ import {
 } from '@Domain/social-network/application/repositories/follows-repository';
 import { Follow } from '@Domain/social-network/enterprise/entities/follow';
 import { Injectable } from '@nestjs/common';
+
 import { PrismaFollowMapper } from '../mappers/prisma-follow-mapper';
 import { PrismaService } from '../prisma.service';
 

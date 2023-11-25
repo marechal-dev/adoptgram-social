@@ -1,8 +1,10 @@
+import { faker } from '@faker-js/faker';
 import { makeOrganization } from '@Testing/factories/organization-factory';
 import { InMemoryMediasRepository } from '@Testing/repositories/in-memory-medias-repository';
 import { InMemoryPostsRepository } from '@Testing/repositories/in-memory-posts-repository';
-import { faker } from '@faker-js/faker';
+
 import { CreatePostUseCase } from './create-post';
+import { TooFewMediasException } from './exceptions/too-few-medias-exception';
 
 let inMemoryMediasRepository: InMemoryMediasRepository;
 let inMemoryPostsRepository: InMemoryPostsRepository;
@@ -57,6 +59,24 @@ describe('Create Post Test Suite', () => {
       expect(post.organizationID.toString()).toEqual(
         organization.id.toString(),
       );
+    }
+  });
+
+  it('should not be able to create a Post with no Medias', async () => {
+    const organization = makeOrganization({
+      title: 'Lambeijos de Luz',
+    });
+
+    const result = await systemUnderTest.execute({
+      organizationID: organization.id.toString(),
+      mediasMetadatas: [],
+      textContent: faker.lorem.paragraph(),
+    });
+
+    expect(result.isLeft()).toBe(true);
+
+    if (result.isLeft()) {
+      expect(result.value).toBeInstanceOf(TooFewMediasException);
     }
   });
 });

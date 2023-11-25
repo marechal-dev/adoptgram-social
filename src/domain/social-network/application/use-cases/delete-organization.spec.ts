@@ -1,6 +1,6 @@
 import { makeOrganization } from '@Testing/factories/organization-factory';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
-import { expect } from 'vitest';
+
 import { DeleteOrganizationUseCase } from './delete-organization';
 import { OrganizationNotFoundException } from './exceptions/organization-not-found-exception';
 

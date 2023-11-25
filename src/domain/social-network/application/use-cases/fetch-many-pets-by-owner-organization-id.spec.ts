@@ -2,6 +2,7 @@ import { makeOrganization } from '@Testing/factories/organization-factory';
 import { makePet } from '@Testing/factories/pet-factory';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
 import { InMemoryPetsRepository } from '@Testing/repositories/in-memory-pets-repository';
+
 import { FetchManyPetsByOwnerOrganizationIdUseCase } from './fetch-many-pets-by-owner-organization-id';
 
 let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;

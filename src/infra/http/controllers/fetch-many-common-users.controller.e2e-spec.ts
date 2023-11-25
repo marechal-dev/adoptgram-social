@@ -2,14 +2,14 @@ import { Cpf } from '@Domain/social-network/enterprise/entities/value-objects/cp
 import { AppModule } from '@Infra/app.module';
 import { DatabaseModule } from '@Infra/database/database.module';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
-import { AdministratorFactory } from '@Testing/factories/administrator-factory';
-import { CommonUserFactory } from '@Testing/factories/common-user-factory';
 import { JwtService } from '@nestjs/jwt';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { Test } from '@nestjs/testing';
+import { AdministratorFactory } from '@Testing/factories/administrator-factory';
+import { CommonUserFactory } from '@Testing/factories/common-user-factory';
 import request from 'supertest';
 
 describe('Fetch Many Common Users Controller E2E Test Suit', () => {

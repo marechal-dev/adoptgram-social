@@ -1,7 +1,9 @@
 import { Either, left, right } from '@Core/types/either';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
 import { Injectable } from '@nestjs/common';
+
 import { OrganizationsRepository } from '../repositories/organizations-repository';
+
 import { OrganizationNotFoundException } from './exceptions/organization-not-found-exception';
 
 interface FindOrganizationByIdUseCaseRequest {

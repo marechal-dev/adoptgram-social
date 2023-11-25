@@ -1,3 +1,5 @@
+import { AuthenticateOrganizationUseCase } from '@Domain/social-network/application/use-cases/authenticate-organization';
+import { IsPublicRoute } from '@Infra/auth/decorators/is-public-route.decorator';
 import {
   Body,
   Controller,
@@ -7,12 +9,9 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ZodValidationPipe } from 'nestjs-zod';
 
-import { IsPublicRoute } from '@Infra/auth/decorators/is-public-route.decorator';
-
-import { AuthenticateOrganizationUseCase } from '@Domain/social-network/application/use-cases/authenticate-organization';
-import { ApiTags } from '@nestjs/swagger';
 import { AuthenticateDTO } from '../dtos/authenticate.dto';
 
 @Controller('/sessions')

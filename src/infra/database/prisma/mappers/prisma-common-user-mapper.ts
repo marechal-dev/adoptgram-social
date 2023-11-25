@@ -1,7 +1,7 @@
-import { Prisma, CommonUser as PrismaCommonUser } from '@prisma/client';
-import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
+import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
 import { Cpf } from '@Domain/social-network/enterprise/entities/value-objects/cpf';
+import { Prisma, CommonUser as PrismaCommonUser } from '@prisma/client';
 
 export class PrismaCommonUserMapper {
   public static toPrisma(

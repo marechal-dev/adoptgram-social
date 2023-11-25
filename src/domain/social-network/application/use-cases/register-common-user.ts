@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
-
 import { Either, left, right } from '@Core/types/either';
 import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
+import { InvalidCpfException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cpf';
+import { Cpf } from '@Domain/social-network/enterprise/entities/value-objects/cpf';
+import { Injectable } from '@nestjs/common';
+
 import { HashGenerator } from '../cryptography/hash-generator';
 import { CommonUsersRepository } from '../repositories/common-users-repository';
+
 import { CommonUserAlreadyExistsException } from './exceptions/common-user-already-exists';
-import { Cpf } from '@Domain/social-network/enterprise/entities/value-objects/cpf';
-import { InvalidCpfException } from '@Domain/social-network/enterprise/entities/exceptions/invalid-cpf';
 
 interface RegisterCommonUserUseCaseRequest {
   username: string;

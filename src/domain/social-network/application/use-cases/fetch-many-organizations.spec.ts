@@ -1,5 +1,6 @@
 import { makeOrganization } from '@Testing/factories/organization-factory';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
+
 import { FetchManyOrganizationsUseCase } from './fetch-many-organizations';
 
 let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;

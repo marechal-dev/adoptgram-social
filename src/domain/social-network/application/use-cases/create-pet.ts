@@ -4,6 +4,7 @@ import { PetEnergyLevel } from '@Domain/social-network/enterprise/entities/enums
 import { PetSize } from '@Domain/social-network/enterprise/entities/enums/pet-size';
 import { Pet } from '@Domain/social-network/enterprise/entities/pet';
 import { Injectable } from '@nestjs/common';
+
 import { PetsRepository } from '../repositories/pets-repository';
 
 interface CreatePetUseCaseRequest {

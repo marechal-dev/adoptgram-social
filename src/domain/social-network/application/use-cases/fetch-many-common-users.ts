@@ -2,6 +2,7 @@ import { PagedList } from '@Core/repositories/paged-list';
 import { Either, right } from '@Core/types/either';
 import { CommonUser } from '@Domain/social-network/enterprise/entities/common-user';
 import { Injectable } from '@nestjs/common';
+
 import { CommonUsersRepository } from '../repositories/common-users-repository';
 
 interface FetchManyCommonUsersUseCaseRequest {

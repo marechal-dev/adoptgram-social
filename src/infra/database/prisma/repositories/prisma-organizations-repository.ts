@@ -3,6 +3,7 @@ import { PaginationParams } from '@Core/repositories/pagination-params';
 import { OrganizationsRepository } from '@Domain/social-network/application/repositories/organizations-repository';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
 import { Injectable } from '@nestjs/common';
+
 import { PrismaOrganizationMapper } from '../mappers/prisma-organization-mapper';
 import { PrismaService } from '../prisma.service';
 
