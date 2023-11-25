@@ -6,6 +6,7 @@ import { CreatePostUseCase } from '@Domain/social-network/application/use-cases/
 import { DeleteCommonUserUseCase } from '@Domain/social-network/application/use-cases/delete-common-user';
 import { DeleteOrganizationUseCase } from '@Domain/social-network/application/use-cases/delete-organization';
 import { DeletePetUseCase } from '@Domain/social-network/application/use-cases/delete-pet';
+import { DeletePostUseCase } from '@Domain/social-network/application/use-cases/delete-post';
 import { FetchManyCommonUsersUseCase } from '@Domain/social-network/application/use-cases/fetch-many-common-users';
 import { FetchManyOrganizationsUseCase } from '@Domain/social-network/application/use-cases/fetch-many-organizations';
 import { FetchManyPetsByOwnerOrganizationIdUseCase } from '@Domain/social-network/application/use-cases/fetch-many-pets-by-owner-organization-id';
@@ -27,6 +28,7 @@ import { CreatePostController } from './controllers/create-post.controller';
 import { DeleteCommonUserController } from './controllers/delete-common-user.controller';
 import { DeleteOrganizationController } from './controllers/delete-organization.controller';
 import { DeletePetController } from './controllers/delete-pet.controller';
+import { DeletePostController } from './controllers/delete-post.controller';
 import { FetchManyCommonUsersController } from './controllers/fetch-many-common-users.controller';
 import { FetchManyOrganizationsController } from './controllers/fetch-many-organizations.controller';
 import { FetchManyPetsByOwnerOrganizationIdController } from './controllers/fetch-many-pets-by-owner-organization-id.controller';
@@ -57,6 +59,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     FetchManyCommonUsersController,
     FetchManyOrganizationsController,
     CreatePostController,
+    DeletePostController,
   ],
   providers: [
     AuthenticateCommonUserUseCase,
@@ -76,6 +79,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     FetchManyCommonUsersUseCase,
     FetchManyOrganizationsUseCase,
     CreatePostUseCase,
+    DeletePostUseCase,
   ],
 })
 export class HttpModule {}

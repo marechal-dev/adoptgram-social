@@ -3,9 +3,9 @@ import {
   Post,
   PostProps,
 } from '@Domain/social-network/enterprise/entities/post';
+import { faker } from '@faker-js/faker/locale/pt_BR';
 import { PrismaPostMapper } from '@Infra/database/prisma/mappers/prisma-post-mapper';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
-import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Injectable } from '@nestjs/common';
 
 export function makePost(
@@ -34,5 +34,7 @@ export class PostFactory {
     await this.prisma.post.create({
       data: PrismaPostMapper.toPrisma(post),
     });
+
+    return post;
   }
 }
