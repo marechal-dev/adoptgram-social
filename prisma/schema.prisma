@@ -72,6 +72,8 @@ model Follow {
   commonUser   CommonUser   @relation(fields: [commonUserID], references: [id], onDelete: Cascade)
 
   @@id([commonUserID, organizationID])
+  @@index([commonUserID], map: "follow_common_user_id_idx")
+  @@index([organizationID], map: "follow_organization_id_idx")
   @@map("follows")
 }
 

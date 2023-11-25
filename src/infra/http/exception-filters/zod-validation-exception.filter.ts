@@ -1,11 +1,13 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
-import { FastifyReply } from 'fastify';
+import { FastifyReply, FastifyRequest } from 'fastify';
 import { ZodValidationException } from 'nestjs-zod';
 import { fromZodError } from 'zod-validation-error';
 
 @Catch(ZodValidationException)
 export class ZodValidationExceptionFilter implements ExceptionFilter {
   public catch(exception: ZodValidationException, host: ArgumentsHost) {
+    const request = host.switchToHttp().getResponse<FastifyRequest>();
+    console.log(request);
     const reply = host.switchToHttp().getResponse<FastifyReply>();
     const zodError = exception.getZodError();
 

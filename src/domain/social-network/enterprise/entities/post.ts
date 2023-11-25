@@ -6,6 +6,7 @@ import { MediasList } from './medias-list';
 export interface PostProps {
   organizationID: UniqueEntityID;
   textContent: string;
+  likes: number;
   medias: MediasList;
   createdAt: Date;
   updatedAt?: Date | null;
@@ -13,12 +14,13 @@ export interface PostProps {
 
 export class Post extends Entity<PostProps> {
   public static create(
-    props: Optional<PostProps, 'medias' | 'createdAt'>,
+    props: Optional<PostProps, 'medias' | 'likes' | 'createdAt'>,
     id?: UniqueEntityID,
   ) {
     const post = new Post(
       {
         organizationID: props.organizationID,
+        likes: props.likes ?? 0,
         medias: props.medias ?? new MediasList(),
         textContent: props.textContent,
         createdAt: props.createdAt ?? new Date(),

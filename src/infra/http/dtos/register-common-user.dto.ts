@@ -18,7 +18,7 @@ const registerCommonUserSchema = z.object({
   cpf: z
     .string()
     .regex(
-      /(?<SubscriptionNumber>[0-9]{3}.{1}[0-9]{3}.{1}[0-9]{3})-{1}(?<VerifierDigits>[0-9]{2})/,
+      /([0-9]{3}.{1}[0-9]{3}.{1}[0-9]{3})-{1}([0-9]{2})/,
       'CPF com formato inválido',
     ),
 });
