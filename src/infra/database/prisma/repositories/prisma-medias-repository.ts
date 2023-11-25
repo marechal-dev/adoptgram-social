@@ -12,12 +12,20 @@ export class PrismaMediasRepository extends MediasRepository {
   }
 
   public async createMany(medias: Media[]): Promise<void> {
+    if (medias.length === 0) {
+      return;
+    }
+
     await this.prisma.media.createMany({
       data: medias.map(PrismaMediaMapper.toPrisma),
     });
   }
 
   public async deleteMany(medias: Media[]): Promise<void> {
+    if (medias.length === 0) {
+      return;
+    }
+
     const mediasIDs = medias.map((media) => media.id.toString());
 
     await this.prisma.media.deleteMany({

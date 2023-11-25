@@ -32,4 +32,18 @@ export class PrismaPostsRepository extends PostsRepository {
       },
     });
   }
+
+  public async findByID(id: string): Promise<Post | null> {
+    const rawPost = await this.prisma.post.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!rawPost) {
+      return null;
+    }
+
+    return PrismaPostMapper.toDomain(rawPost);
+  }
 }
