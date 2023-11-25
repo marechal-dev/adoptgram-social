@@ -1,5 +1,6 @@
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import { Optional } from '@Core/types/optional';
+
 import { User, UserProps } from './user';
 import { Cnpj } from './value-objects/cnpj';
 

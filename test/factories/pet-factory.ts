@@ -1,8 +1,8 @@
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import { Pet, PetProps } from '@Domain/social-network/enterprise/entities/pet';
+import { faker } from '@faker-js/faker/locale/pt_BR';
 import { PrismaPetMapper } from '@Infra/database/prisma/mappers/prisma-pet-mapper';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
-import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Injectable } from '@nestjs/common';
 
 export function makePet(override: Partial<PetProps> = {}, id?: UniqueEntityID) {

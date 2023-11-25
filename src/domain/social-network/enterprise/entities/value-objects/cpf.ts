@@ -1,4 +1,5 @@
 import { Either, left, right } from '@Core/types/either';
+
 import { InvalidCpfException } from '../exceptions/invalid-cpf';
 
 type CreateCpfFromTextResult = Either<InvalidCpfException, Cpf>;

@@ -1,5 +1,6 @@
 import { Entity } from '@Core/entities/entity';
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
+
 import { TagID } from './tag-id';
 
 export interface TagProps {

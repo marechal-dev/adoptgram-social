@@ -1,11 +1,10 @@
+import { env } from '@Configs/env';
+import { setupDevelopmentConfigs } from '@Configs/setup-dev';
 import { NestFactory } from '@nestjs/core';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-
-import { env } from '@Configs/env';
-import { setupDevelopmentConfigs } from '@Configs/setup-dev';
 
 import { AppModule } from './app.module';
 import { ZodValidationExceptionFilter } from './http/exception-filters/zod-validation-exception.filter';

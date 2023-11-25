@@ -1,4 +1,5 @@
 import { InvalidCpfException } from '../exceptions/invalid-cpf';
+
 import { Cpf } from './cpf';
 
 describe('CPF Value-Object Test Suite', () => {

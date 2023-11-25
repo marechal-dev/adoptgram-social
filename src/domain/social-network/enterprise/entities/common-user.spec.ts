@@ -1,4 +1,5 @@
 import { makeCommonUser } from '@Testing/factories/common-user-factory';
+
 import { User } from './user';
 
 describe('Common User Entity Test Suite', () => {

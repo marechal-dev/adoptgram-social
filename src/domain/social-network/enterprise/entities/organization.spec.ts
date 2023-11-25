@@ -1,4 +1,5 @@
 import { makeOrganization } from '@Testing/factories/organization-factory';
+
 import { User } from './user';
 
 describe('Organization Entity Test Suite', () => {

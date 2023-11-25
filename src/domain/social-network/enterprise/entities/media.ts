@@ -1,6 +1,7 @@
 import { Entity } from '@Core/entities/entity';
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import { Optional } from '@Core/types/optional';
+
 import { MediaType } from './enums/media-type';
 
 export interface MediaProps {

@@ -1,10 +1,9 @@
-import { faker } from '@faker-js/faker/locale/pt_BR';
-
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import {
   Administrator,
   AdministratorProps,
 } from '@Domain/social-network/enterprise/entities/administrator';
+import { faker } from '@faker-js/faker/locale/pt_BR';
 import { PrismaAdministratorMapper } from '@Infra/database/prisma/mappers/prisma-administrator-mapper';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';

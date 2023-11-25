@@ -1,11 +1,10 @@
-import { faker } from '@faker-js/faker/locale/pt_BR';
-
 import { UniqueEntityID } from '@Core/entities/unique-entity-id';
 import {
   CommonUser,
   CommonUserProps,
 } from '@Domain/social-network/enterprise/entities/common-user';
 import { Cpf } from '@Domain/social-network/enterprise/entities/value-objects/cpf';
+import { faker } from '@faker-js/faker/locale/pt_BR';
 import { PrismaCommonUserMapper } from '@Infra/database/prisma/mappers/prisma-common-user-mapper';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';

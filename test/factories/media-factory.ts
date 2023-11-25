@@ -3,9 +3,9 @@ import {
   Media,
   MediaProps,
 } from '@Domain/social-network/enterprise/entities/media';
+import { faker } from '@faker-js/faker/locale/pt_BR';
 import { PrismaMediaMapper } from '@Infra/database/prisma/mappers/prisma-media-mapper';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
-import { faker } from '@faker-js/faker/locale/pt_BR';
 import { Injectable } from '@nestjs/common';
 
 export function makeMedia(

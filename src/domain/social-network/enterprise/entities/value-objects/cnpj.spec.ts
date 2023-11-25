@@ -1,4 +1,5 @@
 import { InvalidCnpjException } from '../exceptions/invalid-cnpj';
+
 import { Cnpj } from './cnpj';
 
 describe('CNPJ Value-Object Test Suite', () => {
