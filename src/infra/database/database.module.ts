@@ -5,6 +5,7 @@ import { MediasRepository } from '@Domain/social-network/application/repositorie
 import { OrganizationsRepository } from '@Domain/social-network/application/repositories/organizations-repository';
 import { PetsRepository } from '@Domain/social-network/application/repositories/pets-repository';
 import { PostsRepository } from '@Domain/social-network/application/repositories/posts-repository';
+import { CacheModule } from '@Infra/cache/cache.module';
 import { Module } from '@nestjs/common';
 
 import { PrismaService } from './prisma/prisma.service';
@@ -17,6 +18,7 @@ import { PrismaPetsRepository } from './prisma/repositories/prisma-pets-reposito
 import { PrismaPostsRepository } from './prisma/repositories/prisma-posts-repository';
 
 @Module({
+  imports: [CacheModule],
   providers: [
     PrismaService,
     {

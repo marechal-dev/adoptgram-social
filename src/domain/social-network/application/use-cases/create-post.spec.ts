@@ -1,20 +1,24 @@
 import { faker } from '@faker-js/faker';
 import { makeOrganization } from '@Testing/factories/organization-factory';
 import { InMemoryMediasRepository } from '@Testing/repositories/in-memory-medias-repository';
+import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
 import { InMemoryPostsRepository } from '@Testing/repositories/in-memory-posts-repository';
 
 import { CreatePostUseCase } from './create-post';
 import { TooFewMediasException } from './exceptions/too-few-medias-exception';
 
 let inMemoryMediasRepository: InMemoryMediasRepository;
+let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;
 let inMemoryPostsRepository: InMemoryPostsRepository;
 let systemUnderTest: CreatePostUseCase;
 
 describe('Create Post Test Suite', () => {
   beforeEach(() => {
     inMemoryMediasRepository = new InMemoryMediasRepository();
+    inMemoryOrganizationsRepository = new InMemoryOrganizationsRepository();
     inMemoryPostsRepository = new InMemoryPostsRepository(
       inMemoryMediasRepository,
+      inMemoryOrganizationsRepository,
     );
     systemUnderTest = new CreatePostUseCase(inMemoryPostsRepository);
   });
