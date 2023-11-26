@@ -81,7 +81,16 @@ export class PrismaPostsRepository extends PostsRepository {
       },
     });
 
-    return rawTimelinePosts.map(PrismaTimelinePostMapper.toDomain);
+    const timelinePosts = rawTimelinePosts.map(
+      PrismaTimelinePostMapper.toDomain,
+    );
+
+    await this.cache.set(
+      this.TIMELINE_CACHE_KEY,
+      JSON.stringify(timelinePosts),
+    );
+
+    return timelinePosts;
   }
 
   public async findByID(id: string): Promise<Post | null> {
