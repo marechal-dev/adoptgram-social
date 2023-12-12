@@ -1,6 +1,8 @@
 version: '3.8'
 
 volumes:
+  cache_data:
+    driver: local
   db-data:
     driver: local
 
@@ -21,41 +23,41 @@ services:
     volumes:
       - 'db-data:/bitnami/postgresql'
 
-  queue:
-    image: bitnami/redis:7.0
-    container_name: 'adoptgram-social-redis-queue'
+  cache:
+    image: redis
+    container_name: 'adoptgram-social-redis-cache'
     profiles:
       - 'dev'
       - 'prod'
     ports:
       - 6379:6379
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-
-  dev:
-    container_name: 'adoptgram-social-dev'
-    build:
-      context: .
-      dockerfile: dev.Dockerfile
-    profiles:
-      - 'dev'
-    ports:
-      - 3000:3000
-    depends_on:
-      - database
-      - queue
     volumes:
-      - .:/usr/app
+      - 'cache_data:/data'
 
-  prod:
-    container_name: 'adoptgram-social-prod'
-    build:
-      context: .
-      dockerfile: prod.Dockerfile
-    profiles:
-      - 'prod'
-    ports:
-      - 3000:3000
-    depends_on:
-      - database
-      - queue
+  # dev:
+  #   container_name: 'adoptgram-social-dev'
+  #   build:
+  #     context: .
+  #     dockerfile: dev.Dockerfile
+  #   profiles:
+  #     - 'dev'
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - database
+  #     - queue
+  #   volumes:
+  #     - .:/usr/app
+
+  # prod:
+  #   container_name: 'adoptgram-social-prod'
+  #   build:
+  #     context: .
+  #     dockerfile: prod.Dockerfile
+  #   profiles:
+  #     - 'prod'
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - database
+  #     - queue

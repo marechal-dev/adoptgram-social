@@ -17,11 +17,16 @@ jobs:
           POSTGRESQL_PASSWORD: docker
           POSTGRESQL_DATABASE: adoptgram_social
 
+      cache:
+        image: redis
+        ports:
+          - 6379:6379
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           cache: "npm"
       - run: npm ci
       - run: npm run test:e2e

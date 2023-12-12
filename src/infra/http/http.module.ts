@@ -10,6 +10,7 @@ import { DeletePostUseCase } from '@Domain/social-network/application/use-cases/
 import { FetchManyCommonUsersUseCase } from '@Domain/social-network/application/use-cases/fetch-many-common-users';
 import { FetchManyOrganizationsUseCase } from '@Domain/social-network/application/use-cases/fetch-many-organizations';
 import { FetchManyPetsByOwnerOrganizationIdUseCase } from '@Domain/social-network/application/use-cases/fetch-many-pets-by-owner-organization-id';
+import { FetchTimelinePostsUseCase } from '@Domain/social-network/application/use-cases/fetch-timeline-posts';
 import { FindOrganizationByIdUseCase } from '@Domain/social-network/application/use-cases/find-organization-by-id';
 import { FindPetByIdUseCase } from '@Domain/social-network/application/use-cases/find-pet-by-id';
 import { FollowOrganizationUseCase } from '@Domain/social-network/application/use-cases/follow-organization';
@@ -32,6 +33,7 @@ import { DeletePostController } from './controllers/delete-post.controller';
 import { FetchManyCommonUsersController } from './controllers/fetch-many-common-users.controller';
 import { FetchManyOrganizationsController } from './controllers/fetch-many-organizations.controller';
 import { FetchManyPetsByOwnerOrganizationIdController } from './controllers/fetch-many-pets-by-owner-organization-id.controller';
+import { FetchTimelinePostsController } from './controllers/fetch-timeline-posts.controller';
 import { FindOrganizationByIdController } from './controllers/find-organization-by-id.controller';
 import { FindPetByIdController } from './controllers/find-pet-by-id.controller';
 import { FollowOrganizationController } from './controllers/follow-organization.controller';
@@ -60,6 +62,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     FetchManyOrganizationsController,
     CreatePostController,
     DeletePostController,
+    FetchTimelinePostsController,
   ],
   providers: [
     AuthenticateCommonUserUseCase,
@@ -80,6 +83,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     FetchManyOrganizationsUseCase,
     CreatePostUseCase,
     DeletePostUseCase,
+    FetchTimelinePostsUseCase,
   ],
 })
 export class HttpModule {}
