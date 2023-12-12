@@ -37,6 +37,7 @@ import { FetchTimelinePostsController } from './controllers/fetch-timeline-posts
 import { FindOrganizationByIdController } from './controllers/find-organization-by-id.controller';
 import { FindPetByIdController } from './controllers/find-pet-by-id.controller';
 import { FollowOrganizationController } from './controllers/follow-organization.controller';
+import { HealthCheckController } from './controllers/health-check.controller';
 import { RegisterCommonUserController } from './controllers/register-common-user.controller';
 import { RegisterOrganizationController } from './controllers/register-organization.controller';
 import { UnfollowOrganizationController } from './controllers/unfollow-organization.controller';
@@ -63,6 +64,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     CreatePostController,
     DeletePostController,
     FetchTimelinePostsController,
+    HealthCheckController,
   ],
   providers: [
     AuthenticateCommonUserUseCase,
