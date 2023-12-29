@@ -7,6 +7,7 @@ export class PetPresenter {
       name: pet.name,
       age: pet.age,
       bio: pet.bio,
+      profilePictureURL: pet.profilePictureURL,
       isCastrated: pet.isCastrated,
       isVaccinated: pet.isVaccinated,
       requireMedicalAttention: pet.requireMedicalAttention,

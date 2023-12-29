@@ -28,6 +28,7 @@ export class CreatePetController {
       name: requestBody.name,
       age: requestBody.age,
       bio: requestBody.bio,
+      profilePictureURL: requestBody.profilePictureURL,
       energyLevel: requestBody.energyLevel,
       isCastrated: requestBody.isCastrated,
       isVaccinated: requestBody.isVaccinated,

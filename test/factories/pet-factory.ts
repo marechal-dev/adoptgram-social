@@ -14,6 +14,7 @@ export function makePet(override: Partial<PetProps> = {}, id?: UniqueEntityID) {
         max: 20,
       }),
       bio: faker.lorem.paragraph(),
+      profilePictureURL: faker.internet.url(),
       energyLevel: 'Low',
       isCastrated: true,
       isVaccinated: true,

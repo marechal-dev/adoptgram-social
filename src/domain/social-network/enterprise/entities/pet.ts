@@ -9,6 +9,7 @@ export interface PetProps {
   name: string;
   bio?: string | null;
   age: number;
+  profilePictureURL: string;
   isCastrated: boolean;
   requireMedicalAttention: boolean;
   isVaccinated: boolean;
@@ -29,6 +30,7 @@ export class Pet extends Entity<PetProps> {
         name: props.name,
         bio: props.bio,
         age: props.age,
+        profilePictureURL: props.profilePictureURL,
         isCastrated: props.isCastrated,
         requireMedicalAttention: props.requireMedicalAttention,
         isVaccinated: props.isVaccinated,
@@ -68,6 +70,15 @@ export class Pet extends Entity<PetProps> {
 
   public set age(value: number) {
     this.props.age = value;
+    this.touch();
+  }
+
+  public get profilePictureURL() {
+    return this.props.profilePictureURL;
+  }
+
+  public set profilePictureURL(value: string) {
+    this.props.profilePictureURL = value;
     this.touch();
   }
 

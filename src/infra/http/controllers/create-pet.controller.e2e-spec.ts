@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { AppModule } from '@Infra/app.module';
 import { DatabaseModule } from '@Infra/database/database.module';
 import { PrismaService } from '@Infra/database/prisma/prisma.service';
@@ -59,6 +60,7 @@ describe('Create Pet Controller E2E Test Suite', () => {
         name: 'Bolt',
         age: 8,
         bio: 'Sou um amigão muito querido :D',
+        profilePictureURL: faker.internet.url(),
         energyLevel: 'Medium',
         isCastrated: false,
         isVaccinated: true,

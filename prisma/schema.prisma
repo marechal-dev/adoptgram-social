@@ -82,6 +82,7 @@ model Pet {
   name                    String
   bio                     String?
   age                     Int
+  profilePictureURL       String         @map("profile_picture_url")
   isCastrated             Boolean        @map("is_castrated")
   requireMedicalAttention Boolean        @map("require_medical_attention")
   isVaccinated            Boolean        @map("is_vaccinated")

@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { makeOrganization } from '@Testing/factories/organization-factory';
 import { InMemoryPetsRepository } from '@Testing/repositories/in-memory-pets-repository';
 
@@ -21,6 +22,7 @@ describe('Create Pet Test Suite', () => {
       name: 'Bolt',
       age: 7,
       bio: 'Sou fofinho, branquinho e peludo, seu melhor amigo :)',
+      profilePictureURL: faker.internet.url(),
       energyLevel: 'Medium',
       isCastrated: false,
       isVaccinated: true,

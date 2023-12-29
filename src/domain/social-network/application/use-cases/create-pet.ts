@@ -11,6 +11,7 @@ interface CreatePetUseCaseRequest {
   name: string;
   bio?: string;
   age: number;
+  profilePictureURL: string;
   isCastrated: boolean;
   requireMedicalAttention: boolean;
   isVaccinated: boolean;
@@ -37,6 +38,7 @@ export class CreatePetUseCase {
       name: request.name,
       bio: request.bio,
       age: request.age,
+      profilePictureURL: request.profilePictureURL,
       isCastrated: request.isCastrated,
       requireMedicalAttention: request.requireMedicalAttention,
       isVaccinated: request.isVaccinated,
