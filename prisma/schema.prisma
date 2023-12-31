@@ -38,6 +38,19 @@ model CommonUser {
   @@map("common_users")
 }
 
+enum City {
+  RG
+  PEL
+
+  @@map("CITY")
+}
+
+enum State {
+  RS
+
+  @@map("STATE")
+}
+
 model Organization {
   id                 String    @id @default(uuid())
   username           String    @unique
@@ -51,8 +64,10 @@ model Organization {
   pixKey             String?   @map("pix_key")
   whatsapp           String
   telephoneNumber    String?   @map("telephone_number")
-  city               String
-  state              String
+  address            String
+  cep                String
+  city               City
+  state              State
   createdAt          DateTime  @default(now()) @map("created_at")
   updatedAt          DateTime? @updatedAt @map("updated_at")
 

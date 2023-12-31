@@ -12,6 +12,10 @@ export class OrganizationPresenter {
       telephone: organization.telephoneNumber,
       pixKey: organization.pixKey,
       profilePictureUrl: organization.profilePictureUrl,
+      address: organization.address,
+      cep: organization.cep,
+      city: organization.city,
+      state: organization.state,
     };
   }
 }

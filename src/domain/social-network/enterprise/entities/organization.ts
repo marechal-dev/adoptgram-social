@@ -12,8 +12,10 @@ export interface OrganizationProps extends UserProps {
   whatsapp: string;
   telephoneNumber?: string | null;
   profilePictureUrl?: string | null;
-  city: string;
-  state: string;
+  address: string;
+  cep: string;
+  city: 'RG' | 'PEL';
+  state: 'RS';
   cnpj: Cnpj;
 }
 
@@ -35,6 +37,8 @@ export class Organization extends User<OrganizationProps> {
         whatsapp: props.whatsapp,
         telephoneNumber: props.telephoneNumber,
         profilePictureUrl: props.profilePictureUrl,
+        address: props.address,
+        cep: props.cep,
         city: props.city,
         state: props.state,
         createdAt: props.createdAt ?? new Date(),
@@ -118,11 +122,29 @@ export class Organization extends User<OrganizationProps> {
     this.touch();
   }
 
+  public get address() {
+    return this.props.address;
+  }
+
+  public set address(value: string) {
+    this.props.address = value;
+    this.touch();
+  }
+
+  public get cep() {
+    return this.props.cep;
+  }
+
+  public set cep(value: string) {
+    this.props.cep = value;
+    this.touch();
+  }
+
   public get city() {
     return this.props.city;
   }
 
-  public set city(value: string) {
+  public set city(value: 'RG' | 'PEL') {
     this.props.city = value;
     this.touch();
   }
@@ -131,7 +153,7 @@ export class Organization extends User<OrganizationProps> {
     return this.props.state;
   }
 
-  public set state(value: string) {
+  public set state(value: 'RS') {
     this.props.state = value;
     this.touch();
   }

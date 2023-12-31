@@ -4,7 +4,10 @@ import { FakeHasher } from '@Testing/cryptography/fake-hasher';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
 
 import { OrganizationAlreadyExistsException } from './exceptions/organization-already-exists-exception';
-import { RegisterOrganizationUseCase } from './register-organization';
+import {
+  RegisterOrganizationUseCase,
+  RegisterOrganizationUseCaseRequest,
+} from './register-organization';
 
 let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;
 let fakeHasher: FakeHasher;
@@ -22,7 +25,7 @@ describe('Register Organization Use Case Test Suite', () => {
   });
 
   it('should sucessfuly create a new Organization', async () => {
-    const data = {
+    const data: RegisterOrganizationUseCaseRequest = {
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -30,8 +33,10 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99.999.999/9999-99',
       whatsapp: faker.phone.number(),
-      city: 'Rio Grande',
-      state: 'Rio Grande do Sul',
+      address: faker.location.street(),
+      cep: faker.location.zipCode('#####-###'),
+      city: 'RG',
+      state: 'RS',
     };
 
     const result = await systemUnderTest.execute(data);
@@ -41,7 +46,7 @@ describe('Register Organization Use Case Test Suite', () => {
   });
 
   it('should sucessfuly create a new Organization with a hashed password', async () => {
-    const data = {
+    const data: RegisterOrganizationUseCaseRequest = {
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -49,8 +54,10 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99.999.999/9999-99',
       whatsapp: faker.phone.number(),
-      city: 'Rio Grande',
-      state: 'Rio Grande do Sul',
+      address: faker.location.street(),
+      cep: faker.location.zipCode('#####-###'),
+      city: 'RG',
+      state: 'RS',
     };
 
     await systemUnderTest.execute(data);
@@ -68,7 +75,7 @@ describe('Register Organization Use Case Test Suite', () => {
   });
 
   it('should not create an Organization with invalid CNPJ', async () => {
-    const data = {
+    const data: RegisterOrganizationUseCaseRequest = {
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -76,8 +83,10 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99____2132431999..2999/999229-99',
       whatsapp: faker.phone.number(),
-      city: 'Rio Grande',
-      state: 'Rio Grande do Sul',
+      address: faker.location.street(),
+      cep: faker.location.zipCode('#####-###'),
+      city: 'RG',
+      state: 'RS',
     };
 
     const result = await systemUnderTest.execute(data);
@@ -87,7 +96,7 @@ describe('Register Organization Use Case Test Suite', () => {
   });
 
   it('should not create an Organization with duplicated CNPJ', async () => {
-    const data = {
+    const data: RegisterOrganizationUseCaseRequest = {
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -95,8 +104,10 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99.999.999/9999-99',
       whatsapp: faker.phone.number(),
-      city: 'Rio Grande',
-      state: 'Rio Grande do Sul',
+      address: faker.location.street(),
+      cep: faker.location.zipCode('#####-###'),
+      city: 'RG',
+      state: 'RS',
     };
 
     await systemUnderTest.execute(data);
@@ -107,7 +118,7 @@ describe('Register Organization Use Case Test Suite', () => {
   });
 
   it('should not create an Organization with duplicated email', async () => {
-    const data = {
+    const data: RegisterOrganizationUseCaseRequest = {
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -115,8 +126,10 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99.999.999/9999-99',
       whatsapp: faker.phone.number(),
-      city: 'Rio Grande',
-      state: 'Rio Grande do Sul',
+      address: faker.location.street(),
+      cep: faker.location.zipCode('#####-###'),
+      city: 'RG',
+      state: 'RS',
     };
 
     await systemUnderTest.execute(data);
@@ -127,7 +140,7 @@ describe('Register Organization Use Case Test Suite', () => {
   });
 
   it('should not create an Organization with duplicated username', async () => {
-    const data = {
+    const data: RegisterOrganizationUseCaseRequest = {
       username: faker.internet.userName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
@@ -135,8 +148,10 @@ describe('Register Organization Use Case Test Suite', () => {
       representativeName: faker.person.fullName(),
       cnpj: '99.999.999/9999-99',
       whatsapp: faker.phone.number(),
-      city: 'Rio Grande',
-      state: 'Rio Grande do Sul',
+      address: faker.location.street(),
+      cep: faker.location.zipCode('#####-###'),
+      city: 'RG',
+      state: 'RS',
     };
 
     await systemUnderTest.execute(data);

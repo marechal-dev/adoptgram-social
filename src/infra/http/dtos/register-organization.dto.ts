@@ -52,8 +52,10 @@ const registerOrganizationSchema = z.object({
     .min(14, 'A Chave Pix deve ter no mínimo 14 caracteres')
     .optional()
     .describe('A Chave Pix é opcional por motivos de LGPD.'),
-  city: z.string(),
-  state: z.string(),
+  address: z.string().min(2, 'Endereço inválido'),
+  cep: z.string().regex(/[0-9]{5}-{1}[0-9]{3}/),
+  city: z.enum(['RG', 'PEL'] as const),
+  state: z.enum(['RS'] as const),
 });
 
 export class RegisterOrganizationDTO extends createZodDto(

@@ -9,7 +9,7 @@ import { OrganizationsRepository } from '../repositories/organizations-repositor
 
 import { OrganizationAlreadyExistsException } from './exceptions/organization-already-exists-exception';
 
-interface RegisterOrganizationUseCaseRequest {
+export interface RegisterOrganizationUseCaseRequest {
   username: string;
   email: string;
   password: string;
@@ -17,8 +17,10 @@ interface RegisterOrganizationUseCaseRequest {
   representativeName: string;
   cnpj: string;
   whatsapp: string;
-  city: string;
-  state: string;
+  address: string;
+  cep: string;
+  city: 'RG' | 'PEL';
+  state: 'RS';
   telephoneNumber?: string | null;
   pixKey?: string | null;
 }
@@ -47,6 +49,8 @@ export class RegisterOrganizationUseCase {
     whatsapp,
     telephoneNumber,
     pixKey,
+    address,
+    cep,
     city,
     state,
   }: RegisterOrganizationUseCaseRequest): Promise<RegisterOrganizationUseCaseResponse> {
@@ -92,6 +96,8 @@ export class RegisterOrganizationUseCase {
       whatsapp,
       telephoneNumber,
       pixKey,
+      address,
+      cep,
       city,
       state,
     });
