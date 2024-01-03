@@ -4,6 +4,7 @@ export class OrganizationPresenter {
   public static toHTTP(organization: Organization) {
     return {
       id: organization.id.toString(),
+      username: organization.username,
       title: organization.title,
       bio: organization.bio,
       cnpj: organization.cnpj.toString(),

@@ -63,13 +63,6 @@ describe('Prisma Posts Repository E2E Test Suite', () => {
       },
     );
 
-    const accessToken = await jwt.signAsync({
-      sub: organization.id.toString(),
-      username: 'lambeijos-de-luz',
-      email: 'lambeijos@gmail.com',
-      kind: 'Organization',
-    });
-
     const post1 = await prismaPostFactory.make({
       organizationID: organization.id,
       createdAt: new Date(2023, 10, 25, 15, 35),

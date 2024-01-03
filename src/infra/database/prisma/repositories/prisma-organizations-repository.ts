@@ -44,6 +44,18 @@ export class PrismaOrganizationsRepository extends OrganizationsRepository {
     };
   }
 
+  public async searchMany(query: string): Promise<Organization[]> {
+    const result = await this.prisma.organization.findMany();
+
+    return result
+      .filter(
+        (item) =>
+          item.title.toLowerCase().includes(query) ||
+          item.username.toLowerCase().includes(query),
+      )
+      .map(PrismaOrganizationMapper.toDomain);
+  }
+
   public async findManyByTitle(
     title: string,
     { page, pageSize }: PaginationParams,

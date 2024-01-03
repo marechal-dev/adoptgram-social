@@ -22,6 +22,12 @@ export class InMemoryOrganizationsRepository extends OrganizationsRepository {
     };
   }
 
+  public async searchMany(query: string): Promise<Organization[]> {
+    return this.items.filter(
+      (item) => item.title.includes(query) || item.username.includes(query),
+    );
+  }
+
   public async findById(id: string): Promise<Organization | null> {
     const organization = this.items.find((item) => item.id.toString() === id);
 

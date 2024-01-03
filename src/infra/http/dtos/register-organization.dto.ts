@@ -49,7 +49,7 @@ const registerOrganizationSchema = z.object({
     ),
   pixKey: z
     .string()
-    .min(14, 'A Chave Pix deve ter no mínimo 14 caracteres')
+    .min(11, 'A Chave Pix deve ter no mínimo 11 caracteres')
     .optional()
     .describe('A Chave Pix é opcional por motivos de LGPD.'),
   address: z.string().min(2, 'Endereço inválido'),

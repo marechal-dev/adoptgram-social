@@ -7,6 +7,7 @@ export abstract class OrganizationsRepository {
   abstract fetchMany(
     paginationParams: PaginationParams,
   ): Promise<FetchManyResult<Organization>>;
+  abstract searchMany(query: string): Promise<Organization[]>;
   abstract findById(id: string): Promise<Organization | null>;
   abstract findByUsername(username: string): Promise<Organization | null>;
   abstract findByEmail(email: string): Promise<Organization | null>;

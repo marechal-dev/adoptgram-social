@@ -16,6 +16,7 @@ import { FindPetByIdUseCase } from '@Domain/social-network/application/use-cases
 import { FollowOrganizationUseCase } from '@Domain/social-network/application/use-cases/follow-organization';
 import { RegisterCommonUserUseCase } from '@Domain/social-network/application/use-cases/register-common-user';
 import { RegisterOrganizationUseCase } from '@Domain/social-network/application/use-cases/register-organization';
+import { SearchManyOrganizationsUseCase } from '@Domain/social-network/application/use-cases/search-many-organizations';
 import { UnfollowOrganizationUseCase } from '@Domain/social-network/application/use-cases/unfollow-organization';
 import { CryptographyModule } from '@Infra/cryptography/cryptography.module';
 import { DatabaseModule } from '@Infra/database/database.module';
@@ -40,6 +41,7 @@ import { FollowOrganizationController } from './controllers/follow-organization.
 import { HealthCheckController } from './controllers/health-check.controller';
 import { RegisterCommonUserController } from './controllers/register-common-user.controller';
 import { RegisterOrganizationController } from './controllers/register-organization.controller';
+import { SearchManyOrganizationsController } from './controllers/search-many-organizations.controller';
 import { UnfollowOrganizationController } from './controllers/unfollow-organization.controller';
 
 @Module({
@@ -64,6 +66,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     CreatePostController,
     DeletePostController,
     FetchTimelinePostsController,
+    SearchManyOrganizationsController,
     HealthCheckController,
   ],
   providers: [
@@ -85,6 +88,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     FetchManyOrganizationsUseCase,
     CreatePostUseCase,
     DeletePostUseCase,
+    SearchManyOrganizationsUseCase,
     FetchTimelinePostsUseCase,
   ],
 })
