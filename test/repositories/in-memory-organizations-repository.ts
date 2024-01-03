@@ -2,9 +2,22 @@ import { FetchManyResult } from '@Core/repositories/fetch-many-result';
 import { PaginationParams } from '@Core/repositories/pagination-params';
 import { OrganizationsRepository } from '@Domain/social-network/application/repositories/organizations-repository';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
+import { OrganizationDetails } from '@Domain/social-network/enterprise/entities/value-objects/organization-details';
+
+import { InMemoryFollowsRepository } from './in-memory-follows-repository';
+import { InMemoryPetsRepository } from './in-memory-pets-repository';
+import { InMemoryPostsRepository } from './in-memory-posts-repository';
 
 export class InMemoryOrganizationsRepository extends OrganizationsRepository {
   public items: Organization[] = [];
+
+  public constructor(
+    private readonly followsRepository: InMemoryFollowsRepository,
+    private readonly postsRepository: InMemoryPostsRepository,
+    private readonly petsRepository: InMemoryPetsRepository,
+  ) {
+    super();
+  }
 
   public async create(organization: Organization): Promise<void> {
     this.items.push(organization);
@@ -36,6 +49,31 @@ export class InMemoryOrganizationsRepository extends OrganizationsRepository {
     }
 
     return organization;
+  }
+
+  public async findDetailsByUsername(
+    username: string,
+  ): Promise<OrganizationDetails | null> {
+    const organization = this.items.find((item) => item.username === username);
+
+    if (!organization) {
+      return null;
+    }
+
+    const follows =
+      await this.followsRepository.findManyByOrganizationID(username);
+    const posts =
+      await this.postsRepository.fetchManyByOrganizationID(username);
+    const pets =
+      await this.petsRepository.fetchManyByOwnerOrganizationID(username);
+
+    return OrganizationDetails.create({
+      id: organization.id,
+      organization,
+      followersCount: follows.length,
+      posts,
+      pets,
+    });
   }
 
   public async findByCnpj(cnpj: string): Promise<Organization | null> {

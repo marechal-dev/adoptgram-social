@@ -1,12 +1,14 @@
 import { MediasRepository } from '@Domain/social-network/application/repositories/medias-repository';
 import { PostsRepository } from '@Domain/social-network/application/repositories/posts-repository';
 import { Post } from '@Domain/social-network/enterprise/entities/post';
+import { PostWithMedias } from '@Domain/social-network/enterprise/entities/value-objects/post-with-medias';
 import { TimelinePost } from '@Domain/social-network/enterprise/entities/value-objects/timeline-post';
 import { CacheRepository } from '@Infra/cache/cache-repository';
 import { Injectable } from '@nestjs/common';
 import { sub } from 'date-fns';
 
 import { PrismaPostMapper } from '../mappers/prisma-post-mapper';
+import { PrismaPostWithMediasMapper } from '../mappers/prisma-post-with-medias-mapper';
 import { PrismaTimelinePostMapper } from '../mappers/prisma-timeline-post-mapper';
 import { PrismaService } from '../prisma.service';
 
@@ -91,6 +93,21 @@ export class PrismaPostsRepository extends PostsRepository {
     );
 
     return timelinePosts;
+  }
+
+  public async fetchManyByOrganizationID(
+    id: string,
+  ): Promise<PostWithMedias[]> {
+    const result = await this.prisma.post.findMany({
+      where: {
+        organizationId: id,
+      },
+      include: {
+        medias: true,
+      },
+    });
+
+    return result.map(PrismaPostWithMediasMapper.toDomain);
   }
 
   public async findByID(id: string): Promise<Post | null> {

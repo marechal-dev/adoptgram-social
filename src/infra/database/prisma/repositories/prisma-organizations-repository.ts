@@ -2,8 +2,10 @@ import { FetchManyResult } from '@Core/repositories/fetch-many-result';
 import { PaginationParams } from '@Core/repositories/pagination-params';
 import { OrganizationsRepository } from '@Domain/social-network/application/repositories/organizations-repository';
 import { Organization } from '@Domain/social-network/enterprise/entities/organization';
+import { OrganizationDetails } from '@Domain/social-network/enterprise/entities/value-objects/organization-details';
 import { Injectable } from '@nestjs/common';
 
+import { PrismaOrganizationDetailsMapper } from '../mappers/prisma-organization-details-mapper';
 import { PrismaOrganizationMapper } from '../mappers/prisma-organization-mapper';
 import { PrismaService } from '../prisma.service';
 
@@ -92,6 +94,31 @@ export class PrismaOrganizationsRepository extends OrganizationsRepository {
     }
 
     return PrismaOrganizationMapper.toDomain(organization);
+  }
+
+  public async findDetailsByUsername(
+    username: string,
+  ): Promise<OrganizationDetails | null> {
+    const result = await this.prisma.organization.findUnique({
+      where: {
+        username,
+      },
+      include: {
+        followers: true,
+        posts: {
+          include: {
+            medias: true,
+          },
+        },
+        availablePets: true,
+      },
+    });
+
+    if (!result) {
+      return null;
+    }
+
+    return PrismaOrganizationDetailsMapper.toDomain(result);
   }
 
   public async findByUsername(username: string): Promise<Organization | null> {

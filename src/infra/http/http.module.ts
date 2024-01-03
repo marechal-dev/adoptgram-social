@@ -12,6 +12,7 @@ import { FetchManyOrganizationsUseCase } from '@Domain/social-network/applicatio
 import { FetchManyPetsByOwnerOrganizationIdUseCase } from '@Domain/social-network/application/use-cases/fetch-many-pets-by-owner-organization-id';
 import { FetchTimelinePostsUseCase } from '@Domain/social-network/application/use-cases/fetch-timeline-posts';
 import { FindOrganizationByIdUseCase } from '@Domain/social-network/application/use-cases/find-organization-by-id';
+import { FindOrganizationDetailsByUsernameUseCase } from '@Domain/social-network/application/use-cases/find-organization-details-by-username';
 import { FindPetByIdUseCase } from '@Domain/social-network/application/use-cases/find-pet-by-id';
 import { FollowOrganizationUseCase } from '@Domain/social-network/application/use-cases/follow-organization';
 import { RegisterCommonUserUseCase } from '@Domain/social-network/application/use-cases/register-common-user';
@@ -36,6 +37,7 @@ import { FetchManyOrganizationsController } from './controllers/fetch-many-organ
 import { FetchManyPetsByOwnerOrganizationIdController } from './controllers/fetch-many-pets-by-owner-organization-id.controller';
 import { FetchTimelinePostsController } from './controllers/fetch-timeline-posts.controller';
 import { FindOrganizationByIdController } from './controllers/find-organization-by-id.controller';
+import { FindOrganizationDetailsByUsernameController } from './controllers/find-organization-details-by-username.controller';
 import { FindPetByIdController } from './controllers/find-pet-by-id.controller';
 import { FollowOrganizationController } from './controllers/follow-organization.controller';
 import { HealthCheckController } from './controllers/health-check.controller';
@@ -68,6 +70,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     FetchTimelinePostsController,
     SearchManyOrganizationsController,
     HealthCheckController,
+    FindOrganizationDetailsByUsernameController,
   ],
   providers: [
     AuthenticateCommonUserUseCase,
@@ -86,6 +89,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     AuthenticateAdministratorUseCase,
     FetchManyCommonUsersUseCase,
     FetchManyOrganizationsUseCase,
+    FindOrganizationDetailsByUsernameUseCase,
     CreatePostUseCase,
     DeletePostUseCase,
     SearchManyOrganizationsUseCase,

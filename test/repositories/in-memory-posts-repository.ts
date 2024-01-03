@@ -1,5 +1,6 @@
 import { PostsRepository } from '@Domain/social-network/application/repositories/posts-repository';
 import { Post } from '@Domain/social-network/enterprise/entities/post';
+import { PostWithMedias } from '@Domain/social-network/enterprise/entities/value-objects/post-with-medias';
 import { TimelinePost } from '@Domain/social-network/enterprise/entities/value-objects/timeline-post';
 import { sub } from 'date-fns';
 
@@ -13,7 +14,7 @@ export class InMemoryPostsRepository extends PostsRepository {
 
   public constructor(
     private readonly mediasRepository: InMemoryMediasRepository,
-    private readonly organizationsRepository: InMemoryOrganizationsRepository,
+    private organizationsRepository: InMemoryOrganizationsRepository,
   ) {
     super();
   }
@@ -68,6 +69,30 @@ export class InMemoryPostsRepository extends PostsRepository {
     return timelinePosts;
   }
 
+  public async fetchManyByOrganizationID(
+    id: string,
+  ): Promise<PostWithMedias[]> {
+    const posts = this.items.filter(
+      (item) => item.organizationID.toString() === id,
+    );
+
+    const postsWithMedias = posts.map((post) => {
+      const medias = this.mediasRepository.items.filter((item) =>
+        item.postID.equals(post.id),
+      );
+
+      return PostWithMedias.create({
+        postID: post.id,
+        medias,
+        textContent: post.textContent,
+        likes: post.likes,
+        createdAt: post.createdAt,
+      });
+    });
+
+    return postsWithMedias;
+  }
+
   public async findByID(id: string): Promise<Post | null> {
     const post = this.items.find((item) => item.id.toString() === id);
 
@@ -76,5 +101,11 @@ export class InMemoryPostsRepository extends PostsRepository {
     }
 
     return post;
+  }
+
+  public set inMemoryOrganizationsRepository(
+    value: InMemoryOrganizationsRepository,
+  ) {
+    this.organizationsRepository = value;
   }
 }
