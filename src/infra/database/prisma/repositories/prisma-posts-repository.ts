@@ -1,12 +1,15 @@
+import { env } from '@Configs/env';
 import { MediasRepository } from '@Domain/social-network/application/repositories/medias-repository';
 import { PostsRepository } from '@Domain/social-network/application/repositories/posts-repository';
 import { Post } from '@Domain/social-network/enterprise/entities/post';
+import { PostDetails } from '@Domain/social-network/enterprise/entities/value-objects/post-details';
 import { PostWithMedias } from '@Domain/social-network/enterprise/entities/value-objects/post-with-medias';
 import { TimelinePost } from '@Domain/social-network/enterprise/entities/value-objects/timeline-post';
 import { CacheRepository } from '@Infra/cache/cache-repository';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { sub } from 'date-fns';
 
+import { PrismaPostDetailsMapper } from '../mappers/prisma-post-details-mapper';
 import { PrismaPostMapper } from '../mappers/prisma-post-mapper';
 import { PrismaPostWithMediasMapper } from '../mappers/prisma-post-with-medias-mapper';
 import { PrismaTimelinePostMapper } from '../mappers/prisma-timeline-post-mapper';
@@ -14,8 +17,9 @@ import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class PrismaPostsRepository extends PostsRepository {
+  private readonly logger: Logger = new Logger(PrismaPostsRepository.name);
   private readonly TIMELINE_CACHE_KEY = 'timeline';
-  private readonly RECENT_TIMESPAN_IN_MINUTES = 20;
+  private readonly RECENT_TIMESPAN_IN_MINUTES = 120;
 
   public constructor(
     private readonly prisma: PrismaService,
@@ -59,6 +63,10 @@ export class PrismaPostsRepository extends PostsRepository {
     if (cacheHit) {
       const cachedData = JSON.parse(cacheHit);
 
+      if (env.NODE_ENV === 'development') {
+        this.logger.debug(`Cache Hit: ${cachedData}`);
+      }
+
       return cachedData;
     }
 
@@ -87,10 +95,16 @@ export class PrismaPostsRepository extends PostsRepository {
       PrismaTimelinePostMapper.toDomain,
     );
 
-    await this.cache.set(
-      this.TIMELINE_CACHE_KEY,
-      JSON.stringify(timelinePosts),
-    );
+    if (env.NODE_ENV === 'development') {
+      this.logger.debug(`Cache Miss: ${timelinePosts}`);
+    }
+
+    if (timelinePosts.length > 0) {
+      await this.cache.set(
+        this.TIMELINE_CACHE_KEY,
+        JSON.stringify(timelinePosts),
+      );
+    }
 
     return timelinePosts;
   }
@@ -108,6 +122,29 @@ export class PrismaPostsRepository extends PostsRepository {
     });
 
     return result.map(PrismaPostWithMediasMapper.toDomain);
+  }
+
+  public async findDetailsByID(id: string): Promise<PostDetails | null> {
+    const raw = await this.prisma.post.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        organization: true,
+        medias: true,
+        comments: {
+          include: {
+            creator: true,
+          },
+        },
+      },
+    });
+
+    if (!raw) {
+      return null;
+    }
+
+    return PrismaPostDetailsMapper.toDomain(raw);
   }
 
   public async findByID(id: string): Promise<Post | null> {

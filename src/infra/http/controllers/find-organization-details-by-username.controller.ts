@@ -28,8 +28,6 @@ export class FindOrganizationDetailsByUsernameController {
       username,
     });
 
-    console.log(result);
-
     if (result.isLeft()) {
       throw new NotFoundException(result.value.message);
     }

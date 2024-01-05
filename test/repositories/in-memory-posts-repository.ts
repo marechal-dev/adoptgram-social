@@ -1,9 +1,11 @@
 import { PostsRepository } from '@Domain/social-network/application/repositories/posts-repository';
 import { Post } from '@Domain/social-network/enterprise/entities/post';
+import { PostDetails } from '@Domain/social-network/enterprise/entities/value-objects/post-details';
 import { PostWithMedias } from '@Domain/social-network/enterprise/entities/value-objects/post-with-medias';
 import { TimelinePost } from '@Domain/social-network/enterprise/entities/value-objects/timeline-post';
 import { sub } from 'date-fns';
 
+import { InMemoryCommentsRepository } from './in-memory-comments-repository';
 import { InMemoryMediasRepository } from './in-memory-medias-repository';
 import { InMemoryOrganizationsRepository } from './in-memory-organizations-repository';
 
@@ -15,6 +17,7 @@ export class InMemoryPostsRepository extends PostsRepository {
   public constructor(
     private readonly mediasRepository: InMemoryMediasRepository,
     private organizationsRepository: InMemoryOrganizationsRepository,
+    private readonly commentsRepository: InMemoryCommentsRepository,
   ) {
     super();
   }
@@ -101,6 +104,42 @@ export class InMemoryPostsRepository extends PostsRepository {
     }
 
     return post;
+  }
+
+  public async findDetailsByID(id: string): Promise<PostDetails | null> {
+    const post = this.items.find((item) => item.id.toString() === id);
+
+    if (!post) {
+      return null;
+    }
+
+    const organization = await this.organizationsRepository.findById(
+      post.organizationID.toString(),
+    );
+
+    if (!organization) {
+      throw new Error(
+        `Organization ${post.organizationID.toString()} not found`,
+      );
+    }
+
+    const medias = await this.mediasRepository.findManyByPostID(
+      post.id.toString(),
+    );
+
+    const comments = await this.commentsRepository.findManyWithCreatorByPostID(
+      post.id.toString(),
+    );
+
+    return PostDetails.create({
+      postID: post.id,
+      textContent: post.textContent,
+      createdAt: post.createdAt,
+      likes: post.likes,
+      organization,
+      medias,
+      comments,
+    });
   }
 
   public set inMemoryOrganizationsRepository(

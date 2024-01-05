@@ -21,10 +21,12 @@ export class FetchTimelinePostsController {
     const result = await this.fetchTimelinePosts.execute();
 
     if (result.isRight()) {
-      const timelinePosts = result.value.timelinePosts;
+      const resultValue = result.value.timelinePosts;
+
+      console.log(resultValue);
 
       return {
-        timelinePosts: timelinePosts.map(TimelinePostPresenter.toHTTP),
+        timelinePosts: resultValue.map(TimelinePostPresenter.toHTTP),
       };
     }
   }

@@ -1,6 +1,7 @@
 import { AuthenticateAdministratorUseCase } from '@Domain/social-network/application/use-cases/authenticate-administrator';
 import { AuthenticateCommonUserUseCase } from '@Domain/social-network/application/use-cases/authenticate-common-user';
 import { AuthenticateOrganizationUseCase } from '@Domain/social-network/application/use-cases/authenticate-organization';
+import { CreateCommentUseCase } from '@Domain/social-network/application/use-cases/create-comment';
 import { CreatePetUseCase } from '@Domain/social-network/application/use-cases/create-pet';
 import { CreatePostUseCase } from '@Domain/social-network/application/use-cases/create-post';
 import { DeleteCommonUserUseCase } from '@Domain/social-network/application/use-cases/delete-common-user';
@@ -26,6 +27,7 @@ import { Module } from '@nestjs/common';
 import { AuthenticateAdministratorController } from './controllers/authenticate-administrator.controller';
 import { AuthenticateCommonUserController } from './controllers/authenticate-common-user.controller';
 import { AuthenticateOrganizationController } from './controllers/authenticate-organization.controller';
+import { CreateCommentController } from './controllers/create-comment.controller';
 import { CreatePetController } from './controllers/create-pet.controller';
 import { CreatePostController } from './controllers/create-post.controller';
 import { DeleteCommonUserController } from './controllers/delete-common-user.controller';
@@ -71,6 +73,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     SearchManyOrganizationsController,
     HealthCheckController,
     FindOrganizationDetailsByUsernameController,
+    CreateCommentController,
   ],
   providers: [
     AuthenticateCommonUserUseCase,
@@ -94,6 +97,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     DeletePostUseCase,
     SearchManyOrganizationsUseCase,
     FetchTimelinePostsUseCase,
+    CreateCommentUseCase,
   ],
 })
 export class HttpModule {}

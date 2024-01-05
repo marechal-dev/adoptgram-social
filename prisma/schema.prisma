@@ -131,18 +131,17 @@ model Post {
 }
 
 model Comment {
-  id          String    @id @default(uuid())
-  content     String
-  postId      String    @map("post_Id")
-  commenterID String    @map("commenter_id")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime? @updatedAt
+  id        String   @id @default(uuid())
+  content   String
+  postID    String   @map("post_Id")
+  creatorID String   @map("creator_id")
+  createdAt DateTime @default(now()) @map("created_at")
 
-  commenter CommonUser @relation(fields: [commenterID], references: [id], onDelete: Cascade)
-  post      Post       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  creator CommonUser @relation(fields: [creatorID], references: [id], onDelete: Cascade)
+  post    Post       @relation(fields: [postID], references: [id], onDelete: Cascade)
 
-  @@index([commenterID], map: "commenter_id_comment_idx", type: BTree)
-  @@index([postId], map: "comment_post_id_idx", type: BTree)
+  @@index([creatorID], map: "commenter_id_comment_idx", type: BTree)
+  @@index([postID], map: "comment_post_id_idx", type: BTree)
   @@map("comments")
 }
 

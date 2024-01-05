@@ -13,6 +13,7 @@ export class PetPresenter {
       requireMedicalAttention: pet.requireMedicalAttention,
       size: pet.size,
       energyLevel: pet.energyLevel,
+      ownerOrganizationID: pet.ownerOrganizationID.toString(),
       createdAt: pet.createdAt,
     };
   }

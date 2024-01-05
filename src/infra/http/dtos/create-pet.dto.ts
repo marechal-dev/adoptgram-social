@@ -15,7 +15,7 @@ const createPetSchema = z.object({
     .number()
     .int('A idade do Pet não pode ser fracionária.')
     .nonnegative('A idade do Pet não pode ser negativa.'),
-  profilePictureURL: z.string().url(),
+  profilePictureURL: z.string().min(1),
   isCastrated: z.boolean(),
   requireMedicalAttention: z.boolean(),
   isVaccinated: z.boolean(),

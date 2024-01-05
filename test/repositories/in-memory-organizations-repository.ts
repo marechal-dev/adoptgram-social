@@ -60,12 +60,15 @@ export class InMemoryOrganizationsRepository extends OrganizationsRepository {
       return null;
     }
 
-    const follows =
-      await this.followsRepository.findManyByOrganizationID(username);
-    const posts =
-      await this.postsRepository.fetchManyByOrganizationID(username);
-    const pets =
-      await this.petsRepository.fetchManyByOwnerOrganizationID(username);
+    const follows = await this.followsRepository.findManyByOrganizationID(
+      organization.id.toString(),
+    );
+    const posts = await this.postsRepository.fetchManyByOrganizationID(
+      organization.id.toString(),
+    );
+    const pets = await this.petsRepository.fetchManyByOwnerOrganizationID(
+      organization.id.toString(),
+    );
 
     return OrganizationDetails.create({
       id: organization.id,
