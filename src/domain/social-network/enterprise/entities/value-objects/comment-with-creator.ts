@@ -13,7 +13,13 @@ export interface CommentWithCreatorProps {
 
 export class CommentWithCreator extends ValueObject<CommentWithCreatorProps> {
   public static create(props: CommentWithCreatorProps) {
-    return new CommentWithCreator(props);
+    return new CommentWithCreator({
+      id: props.id,
+      postID: props.postID,
+      content: props.content,
+      creator: props.creator,
+      createdAt: props.createdAt,
+    });
   }
 
   public get id() {

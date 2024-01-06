@@ -15,6 +15,7 @@ import { ZodValidationPipe } from 'nestjs-zod';
 import { AllowedRoles } from '../decorators/allowed-roles.decorator';
 import { CreateCommentDTO } from '../dtos/create-comment.dto';
 import { RolesGuard } from '../guards/roles.guard';
+import { CommentPresenter } from '../presenters/comment-presenter';
 
 @Controller('/comments')
 @UsePipes(ZodValidationPipe)
@@ -42,7 +43,7 @@ export class CreateCommentController {
       throw new NotFoundException(error);
     }
 
-    const comment = result.value.comment;
+    const comment = CommentPresenter.toHTTP(result.value.comment);
 
     return {
       comment,

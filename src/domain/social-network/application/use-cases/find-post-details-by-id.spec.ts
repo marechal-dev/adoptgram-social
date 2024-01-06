@@ -1,5 +1,5 @@
 import { makeOrganization } from '@Testing/factories/organization-factory';
-import { makePet } from '@Testing/factories/pet-factory';
+import { makePost } from '@Testing/factories/post-factory';
 import { InMemoryCommentsRepository } from '@Testing/repositories/in-memory-comments-repository';
 import { InMemoryCommonUsersRepository } from '@Testing/repositories/in-memory-common-users-repository';
 import { InMemoryFollowsRepository } from '@Testing/repositories/in-memory-follows-repository';
@@ -8,31 +8,30 @@ import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory
 import { InMemoryPetsRepository } from '@Testing/repositories/in-memory-pets-repository';
 import { InMemoryPostsRepository } from '@Testing/repositories/in-memory-posts-repository';
 
-import { FetchManyPetsByOwnerOrganizationIdUseCase } from './fetch-many-pets-by-owner-organization-id';
+import { FindPostDetailsByIdUseCase } from './find-post-details-by-id';
 
-let inMemoryFollowsRepository: InMemoryFollowsRepository;
 let inMemoryMediasRepository: InMemoryMediasRepository;
-let inMemoryCommonUsersRepository: InMemoryCommonUsersRepository;
+let inMemoryFollowsRepository: InMemoryFollowsRepository;
 let inMemoryCommentsRepository: InMemoryCommentsRepository;
-let inMemoryPostsRepository: InMemoryPostsRepository;
-let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;
+let inMemoryCommonUsersRepository: InMemoryCommonUsersRepository;
 let inMemoryPetsRepository: InMemoryPetsRepository;
-let systemUnderTest: FetchManyPetsByOwnerOrganizationIdUseCase;
+let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;
+let inMemoryPostsRepository: InMemoryPostsRepository;
+let systemUnderTest: FindPostDetailsByIdUseCase;
 
-describe('Fetch Many Pets by Owner Organization ID Test Suite', () => {
+describe('Find Post Details By ID Test Suite', () => {
   beforeEach(() => {
-    inMemoryFollowsRepository = new InMemoryFollowsRepository();
     inMemoryMediasRepository = new InMemoryMediasRepository();
+    inMemoryFollowsRepository = new InMemoryFollowsRepository();
     inMemoryCommonUsersRepository = new InMemoryCommonUsersRepository();
     inMemoryCommentsRepository = new InMemoryCommentsRepository(
       inMemoryCommonUsersRepository,
     );
-    inMemoryPostsRepository ==
-      new InMemoryPostsRepository(
-        inMemoryMediasRepository,
-        inMemoryOrganizationsRepository,
-        inMemoryCommentsRepository,
-      );
+    inMemoryPostsRepository = new InMemoryPostsRepository(
+      inMemoryMediasRepository,
+      inMemoryOrganizationsRepository,
+      inMemoryCommentsRepository,
+    );
     inMemoryPetsRepository = new InMemoryPetsRepository();
     inMemoryOrganizationsRepository = new InMemoryOrganizationsRepository(
       inMemoryFollowsRepository,
@@ -43,48 +42,30 @@ describe('Fetch Many Pets by Owner Organization ID Test Suite', () => {
     inMemoryPostsRepository.inMemoryOrganizationsRepository =
       inMemoryOrganizationsRepository;
 
-    systemUnderTest = new FetchManyPetsByOwnerOrganizationIdUseCase(
-      inMemoryPetsRepository,
-    );
+    systemUnderTest = new FindPostDetailsByIdUseCase(inMemoryPostsRepository);
   });
 
-  it("should be able to fetch Pets from an existent organization by it's ID", async () => {
+  it('should be able to fetch an existent Post with theirs details by ID', async () => {
     const organization = makeOrganization({
-      title: 'Lambeijos de Luz',
+      username: 'lambeijos',
     });
 
     await inMemoryOrganizationsRepository.create(organization);
 
-    const pet1 = makePet({
-      name: 'Bolt',
-      ownerOrganizationID: organization.id,
+    const post = makePost({
+      organizationID: organization.id,
+      textContent: 'Test test',
     });
 
-    const pet2 = makePet({
-      name: 'Bolinha',
-      ownerOrganizationID: organization.id,
-    });
-
-    await inMemoryPetsRepository.create(pet1);
-    await inMemoryPetsRepository.create(pet2);
+    await inMemoryPostsRepository.create(post);
 
     const result = await systemUnderTest.execute({
-      ownerOrganizationID: organization.id.toString(),
+      id: post.id.toString(),
     });
 
     expect(result.isRight()).toBe(true);
     if (result.isRight()) {
-      expect(result.value.pets).toHaveLength(2);
-      expect(result.value.pets).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            name: 'Bolt',
-          }),
-          expect.objectContaining({
-            name: 'Bolinha',
-          }),
-        ]),
-      );
+      expect(result.value.post.textContent).toEqual('Test test');
     }
   });
 });

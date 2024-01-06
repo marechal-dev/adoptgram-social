@@ -15,6 +15,7 @@ import { FetchTimelinePostsUseCase } from '@Domain/social-network/application/us
 import { FindOrganizationByIdUseCase } from '@Domain/social-network/application/use-cases/find-organization-by-id';
 import { FindOrganizationDetailsByUsernameUseCase } from '@Domain/social-network/application/use-cases/find-organization-details-by-username';
 import { FindPetByIdUseCase } from '@Domain/social-network/application/use-cases/find-pet-by-id';
+import { FindPostDetailsByIdUseCase } from '@Domain/social-network/application/use-cases/find-post-details-by-id';
 import { FollowOrganizationUseCase } from '@Domain/social-network/application/use-cases/follow-organization';
 import { RegisterCommonUserUseCase } from '@Domain/social-network/application/use-cases/register-common-user';
 import { RegisterOrganizationUseCase } from '@Domain/social-network/application/use-cases/register-organization';
@@ -41,6 +42,7 @@ import { FetchTimelinePostsController } from './controllers/fetch-timeline-posts
 import { FindOrganizationByIdController } from './controllers/find-organization-by-id.controller';
 import { FindOrganizationDetailsByUsernameController } from './controllers/find-organization-details-by-username.controller';
 import { FindPetByIdController } from './controllers/find-pet-by-id.controller';
+import { FindPostDetailsByIdController } from './controllers/find-post-details-by-id.controller';
 import { FollowOrganizationController } from './controllers/follow-organization.controller';
 import { HealthCheckController } from './controllers/health-check.controller';
 import { RegisterCommonUserController } from './controllers/register-common-user.controller';
@@ -74,6 +76,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     HealthCheckController,
     FindOrganizationDetailsByUsernameController,
     CreateCommentController,
+    FindPostDetailsByIdController,
   ],
   providers: [
     AuthenticateCommonUserUseCase,
@@ -98,6 +101,7 @@ import { UnfollowOrganizationController } from './controllers/unfollow-organizat
     SearchManyOrganizationsUseCase,
     FetchTimelinePostsUseCase,
     CreateCommentUseCase,
+    FindPostDetailsByIdUseCase,
   ],
 })
 export class HttpModule {}

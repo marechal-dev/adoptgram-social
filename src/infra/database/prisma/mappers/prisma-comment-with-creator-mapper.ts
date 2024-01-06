@@ -14,7 +14,8 @@ export type PrismaCommentWithCreator = PrismaComment & {
 export class PrismaCommentWithCreatorMapper {
   public static toDomain(raw: PrismaCommentWithCreator) {
     return CommentWithCreator.create({
-      postID: new UniqueEntityID(raw.id),
+      id: new UniqueEntityID(raw.id),
+      postID: new UniqueEntityID(raw.postID),
       creator: PrismaCommonUserMapper.toDomain(raw.creator),
       content: raw.content,
       createdAt: raw.createdAt,

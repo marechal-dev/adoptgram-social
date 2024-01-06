@@ -11,6 +11,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { AllowedRoles } from '../decorators/allowed-roles.decorator';
 import { RolesGuard } from '../guards/roles.guard';
+import { PostDetailsPresenter } from '../presenters/post-deitails-presenter';
 
 @Controller('/posts/:id/details')
 export class FindPostDetailsByIdController {
@@ -30,8 +31,10 @@ export class FindPostDetailsByIdController {
       throw new NotFoundException(result.value.message);
     }
 
+    const post = PostDetailsPresenter.toHTTP(result.value.post);
+
     return {
-      post: result.value.post,
+      post,
     };
   }
 }

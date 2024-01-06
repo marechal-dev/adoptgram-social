@@ -3,13 +3,19 @@ import { faker } from '@faker-js/faker';
 import { makeMedia } from '@Testing/factories/media-factory';
 import { makeOrganization } from '@Testing/factories/organization-factory';
 import { makePost } from '@Testing/factories/post-factory';
+import { InMemoryCommentsRepository } from '@Testing/repositories/in-memory-comments-repository';
+import { InMemoryFollowsRepository } from '@Testing/repositories/in-memory-follows-repository';
 import { InMemoryMediasRepository } from '@Testing/repositories/in-memory-medias-repository';
 import { InMemoryOrganizationsRepository } from '@Testing/repositories/in-memory-organizations-repository';
+import { InMemoryPetsRepository } from '@Testing/repositories/in-memory-pets-repository';
 import { InMemoryPostsRepository } from '@Testing/repositories/in-memory-posts-repository';
 
 import { FetchTimelinePostsUseCase } from './fetch-timeline-posts';
 
 let inMemoryMediasRepository: InMemoryMediasRepository;
+let inMemoryFollowsRepository: InMemoryFollowsRepository;
+let inMemoryCommentsRepository: InMemoryCommentsRepository;
+let inMemoryPetsRepository: InMemoryPetsRepository;
 let inMemoryOrganizationsRepository: InMemoryOrganizationsRepository;
 let inMemoryPostsRepository: InMemoryPostsRepository;
 let systemUnderTest: FetchTimelinePostsUseCase;
@@ -17,11 +23,22 @@ let systemUnderTest: FetchTimelinePostsUseCase;
 describe('Fetch Timeline Posts Test Suite', () => {
   beforeEach(() => {
     inMemoryMediasRepository = new InMemoryMediasRepository();
-    inMemoryOrganizationsRepository = new InMemoryOrganizationsRepository();
+    inMemoryFollowsRepository = new InMemoryFollowsRepository();
     inMemoryPostsRepository = new InMemoryPostsRepository(
       inMemoryMediasRepository,
       inMemoryOrganizationsRepository,
+      inMemoryCommentsRepository,
     );
+    inMemoryPetsRepository = new InMemoryPetsRepository();
+    inMemoryOrganizationsRepository = new InMemoryOrganizationsRepository(
+      inMemoryFollowsRepository,
+      inMemoryPostsRepository,
+      inMemoryPetsRepository,
+    );
+
+    inMemoryPostsRepository.inMemoryOrganizationsRepository =
+      inMemoryOrganizationsRepository;
+
     systemUnderTest = new FetchTimelinePostsUseCase(inMemoryPostsRepository);
 
     vi.useFakeTimers();

@@ -23,8 +23,6 @@ export class FetchTimelinePostsController {
     if (result.isRight()) {
       const resultValue = result.value.timelinePosts;
 
-      console.log(resultValue);
-
       return {
         timelinePosts: resultValue.map(TimelinePostPresenter.toHTTP),
       };
